@@ -1,55 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-    const [movies, setMovies] = useState([
-      {
-        id: 1,
-        title: "Pride & Prejudice",
-        image: "https://m.media-amazon.com/images/I/71GspoOXkeL._SL1500_.jpg",
-        summary:
-          "Five sisters in an English family deal with issues of marriage, morality, and misconceptions when two wealthy bachelors arrive in their neighborhood.",
-        genre: "Romance",
-        director: "Joe Wright",
-      },
-      {
-        id: 2,
-        title: "The Scent of Green Papaya",
-        image: "https://m.media-amazon.com/images/I/71t6r3Y3WtL._SL1077_.jpg",
-        summary:
-          "In 1950s Saigon, a young servant girl, Mui, begins work for a wealthy but troubled Vietnamese family, finding beauty in her attentive daily routines.",
-        genre: "Drama",
-        director: "Trần Anh Hùng",
-      },
-      {
-        id: 3,
-        title: "A Room with a View",
-        image: "https://m.media-amazon.com/images/I/819maqMLyOL._SL1500_.jpg",
-        summary:
-          "A young Englishwoman, Lucy, on a tour of Italy must choose between a charming, free-spirited man she meets there and a wealthy, priggish suitor back home.",
-        genre: "Romantic Comedy, Drama",
-        director: "James Ivory",
-      },
-      {
-        id: 4,
-        title: "Stand by Me",
-        image: "https://m.media-amazon.com/images/I/81PmlArGyfS._SL1500_.jpg",
-        summary:
-          "Four young friends in a small Oregon town go on an unforgettable, two-day search for the body of a missing boy, leading to a journey of self-discovery.",
-        genre: "Adventure, Humor, Family",
-        director: "Rob Reiner",
-      },
-    ]);
+    const [movies, setMovies] = useState([]);
 
     const [selectedMovie, setSelectedMovie] = useState(null);
+    
+    useEffect(() => {
+        fetch("https://my-flix-movies-0d84af3d4373.herokuapp.com/movies")
+        .then((response) => response.json())
+        .then((data) => {
+            const moviesFromApi = data.map((doc) => {
+                return {
+                    id: doc._id,
+                    title: doc.title,
+                    summary: doc.summary,
+                    director: doc.directors.map(director => director.director_name),
+                    genre: doc.genres.map(genre => genre.genre_name)
+                };
+            });
+
+            setMovies(moviesFromApi);
+        });
+    }, []);
 
     if (selectedMovie) {
         return (
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
+            <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+            />
         );
     }
 
@@ -58,16 +39,16 @@ export const MainView = () => {
     }
 
     return (
-      <div>
+        <div>
         {movies.map((movie) => (
-          <MovieCard
+            <MovieCard
             key={movie.id}
             movie={movie}
             onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
+                setSelectedMovie(newSelectedMovie);
             }}
-          />
+            />
         ))}
-      </div>
+        </div>
     );
 };
