@@ -46,6 +46,8 @@ export const LoginView = ({ onLoggedIn }) => {
                     required
                 />
             </label>
+            <br />
+            <br />
             <label>
                 Password:
                 <input 
@@ -55,8 +57,11 @@ export const LoginView = ({ onLoggedIn }) => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
+                <br />
+                <br />
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
+            <br />
         </form>
     );
 };
