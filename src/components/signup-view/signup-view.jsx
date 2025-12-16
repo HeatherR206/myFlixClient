@@ -20,7 +20,7 @@ export const SignupView = () => {
             Birthdate: birthdate
         };
 
-        fetch("https://my-flix-movies-0d84af3d4373.herokuapp.com", {
+        fetch("https://my-flix-movies-0d84af3d4373.herokuapp.com/users", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -48,6 +48,8 @@ export const SignupView = () => {
                     minLength="6"
                 />
             </label>
+            <br />
+            <br />            
             <label>
                 Password:
                 <input
@@ -58,6 +60,8 @@ export const SignupView = () => {
                     minLength="10"
                 />
             </label>
+            <br />
+            <br />            
             <label>
                 Email:
                 <input
@@ -67,6 +71,8 @@ export const SignupView = () => {
                     required
                 />        
             </label>
+            <br />
+            <br />            
             <label>
                 First Name:
                 <input
@@ -75,6 +81,8 @@ export const SignupView = () => {
                     onChange={(e) => setFirstName(e.target.value)}
                 />
             </label>
+            <br />
+            <br />            
             <label>
                 Last Name:
                 <input 
@@ -83,6 +91,8 @@ export const SignupView = () => {
                     onChange={(e) => setLastName(e.target.value)}
                 />
             </label>
+            <br />
+            <br />            
             <label>
                 Birthdate:
                 <input
@@ -90,8 +100,11 @@ export const SignupView = () => {
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                 />
+                <br />
+                <br />
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit">Register</button>
+            <br />
         </form>
     );
 };
