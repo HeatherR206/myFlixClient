@@ -1,5 +1,7 @@
-import React from "react";
 import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { API_URL } from "../../config";
 
 export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState("");
@@ -8,49 +10,52 @@ export const LoginView = ({ onLoggedIn }) => {
         event.preventDefault();
 
         const data = {
-            Username: username,
-            Password: password
+            username: username,
+            password: password
         };
 
-        fetch("https://my-flix-movies-0d84af3d4373.herokuapp.com/login", {
+        fetch(`${API_URL}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Login response: ", data);
-                if (data.user) {
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                    localStorage.setItem("token", data.token);
-                    onLoggedIn(data.user, data.token);
-                } else {
-                    alert("Login failed: No such user");
-                }
-            })
-            .catch((e) => {
-                alert("Something went wrong");
-            });
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 401) {
+                throw new Error("Invalid username or password");
+            } else {
+                throw new Error("Something went wrong on the server");
+            }
+        })
+        .then((data) => {
+            console.log("Login response: ", data);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+            onLoggedIn(data.user, data.token);
+        })
+        .catch((e) => {
+            alert(e.message);
+        });
     };
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input 
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formUsername">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
                     type="text"
                     value={username}
                     minLength="6"
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                />
-            </label>
+                    />
+            </Form.Group>
             <br />
-            <br />
-            <label>
-                Password:
-                <input 
+            <Form.Group controlId="formPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
                     type="password" 
                     value={password}
                     minLength="10"
@@ -58,10 +63,11 @@ export const LoginView = ({ onLoggedIn }) => {
                     required
                 />
                 <br />
-                <br />
-            </label>
-            <button type="submit">Login</button>
+            </Form.Group>
+            <Button className="btn-lg" variant="primary" type="submit">
+                Login
+            </Button>
             <br />
-        </form>
+        </Form>
     );
 };

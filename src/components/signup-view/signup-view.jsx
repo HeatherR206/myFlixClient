@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { API_URL } from "../../config";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export const SignupView = () => {
     const [username, setUsername] = useState("");
@@ -6,21 +9,21 @@ export const SignupView = () => {
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [birthdate, setBirthdate] = useState("");
+    const [birthDate, setBirthDate] = useState("");
     
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const data = {
-            Username: username,
-            Password: password,
-            Email: email,
-            FirstName: firstName,
-            LastName: lastName,
-            Birthdate: birthdate
+            username: username,
+            password: password,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            birthDate: birthDate
         };
 
-        fetch("https://my-flix-movies-0d84af3d4373.herokuapp.com/users", {
+        fetch(`${API_URL}/users`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -31,80 +34,77 @@ export const SignupView = () => {
                 alert("Signup was successful");
                 window.location.reload();
             } else {
-                alert("Signup failed");
+                response.text().then(text => alert(`Signup failed: ${text}`));
             }
+        }).catch(e => {
+                console.error("Signup error:", e);
+                alert("Something went wrong");
         });
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="signUpFormUsername">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     minLength="6"
                 />
-            </label>
-            <br />
+            </Form.Group>
             <br />            
-            <label>
-                Password:
-                <input
+            <Form.Group controlId="signUpFormPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength="10"
                 />
-            </label>
-            <br />
+            </Form.Group>
             <br />            
-            <label>
-                Email:
-                <input
+            <Form.Group controlId="signUpFormEmail">
+                <Form.Label>Email:</Form.Label> 
+                <Form.Control  
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />        
-            </label>
-            <br />
+            </Form.Group>
             <br />            
-            <label>
-                First Name:
-                <input
+            <Form.Group controlId="signUpFormFirstName">
+                <Form.Label>First Name:</Form.Label>
+                <Form.Control
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                 />
-            </label>
-            <br />
+            </Form.Group>
             <br />            
-            <label>
-                Last Name:
-                <input 
+            <Form.Group controlId="signUpFormLastName">
+                <Form.Label>Last Name:</Form.Label>
+                <Form.Control
                     type="text" 
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                 />
-            </label>
-            <br />
+            </Form.Group>
             <br />            
-            <label>
-                Birthdate:
-                <input
+            <Form.Group controlId="signUpBirthDate">
+                <Form.Label>Birth Date:</Form.Label>
+                <Form.Control
                     type="date"
-                    value={birthdate}
-                    onChange={(e) => setBirthdate(e.target.value)}
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
                 />
                 <br />
-                <br />
-            </label>
-            <button type="submit">Register</button>
+            </Form.Group>
+            <Button className="btn-lg" variant="primary" type="submit">Register</Button>
             <br />
-        </form>
+        </Form>
     );
 };

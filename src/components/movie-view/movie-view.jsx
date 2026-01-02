@@ -1,42 +1,52 @@
 import PropTypes from "prop-types";
-
+import "./movie-view.scss";
 
 export const MovieView = ({ movie, onBackClick }) => {
     return (
       <div>
         <div>
-          <img src={movie.image} alt={movie.title} />
+          <img className="w-100" src={movie.imagePath} alt={movie.title} />
         </div>
         <br />
 
         <div>
-          <span>
-            <strong>Title: </strong>
-          </span>
+          <span><strong>Title: </strong></span>
           <span>{movie.title}</span>
         </div>
         <br />
 
         <div>
-          <span>
-            <strong>Summary: </strong>
-          </span>
+          <span><strong>Summary: </strong></span>
           <span>{movie.summary}</span>
         </div>
         <br />
 
         <div>
-            <span><strong>Genre: </strong></span>
-            <span>{movie.genre.join(', ')}</span>
+            <span><strong>Genres: </strong></span>
+            <span>
+                {movie.genres && movie.genres.length > 0 
+                    ? movie.genres.map(g => g.genreName).join(', ') 
+                    : 'N/A'}
+            </span>
         </div>
         <br />
 
         <div>
-          <span><strong>Director: </strong></span>
-          <span>{movie.director.join(', ')}</span>
+            <span><strong>Directors: </strong></span>
+            <span>
+                {movie.directors && movie.directors.length > 0
+                    ? movie.directors.map(d => d.directorName).join(', ')
+                    : 'N/A'}
+            </span>
         </div>
         <br />
-        <button onClick={onBackClick}>Back</button>
+        <button 
+            onClick={onBackClick}   
+            className="back-button"
+            style={{ cursor: "pointer "}}
+            >
+            Back
+        </button>
       </div>
     );
 };
@@ -44,11 +54,14 @@ export const MovieView = ({ movie, onBackClick }) => {
 MovieView.propTypes = {
     movie: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        image: PropTypes.string,
+        imagePath: PropTypes.string,
         summary: PropTypes.string.isRequired,
-        director: PropTypes.arrayOf(PropTypes.string).isRequired,
-        genre: PropTypes.arrayOf(PropTypes.string).isRequired
-    }).isRequired,
-    
+        directors: PropTypes.arrayOf(PropTypes.shape({
+            directorName: PropTypes.string.isRequired
+        })).isRequired,
+        genres: PropTypes.arrayOf(PropTypes.shape({
+            genreName: PropTypes.string.isRequired
+        })).isRequired
+    }).isRequired,    
     onBackClick: PropTypes.func.isRequired,
 };
