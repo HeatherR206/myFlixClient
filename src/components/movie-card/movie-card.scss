@@ -1,0 +1,26 @@
+.custom-card-border {
+  border: 2px solid #30363d !important; 
+  border-radius: 8px; 
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.433);
+  }
+}
+
+.custom-badge-outline {
+  color: #4d4848 !important;
+  border: 1.5px solid #4d4848;
+  background-color: transparent;
+  padding: 0.4em 0.8em;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.text-truncate-container {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  height: 4.5em; 
+}
