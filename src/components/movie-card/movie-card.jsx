@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Badge } from "react-bootstrap";
+import "./movie-card.scss";
 
 export const MovieCard = ({ movie, onMovieClick }) => {
     return (
-        <Card className="h-100" onClick={() => onMovieClick(movie)}>
+        <Card className="h-100 shadow-md custom-card-border">
             <Card.Img 
                 variant="top" 
                 src={movie.imagePath?.startsWith('http')
@@ -11,10 +12,20 @@ export const MovieCard = ({ movie, onMovieClick }) => {
                     : "https://via.placeholder.com/500x750?text=No+Poster+Available"}
                 alt={movie.title} 
             />
-            <Card.Body>
-                <Card.Title>{movie.title}</Card.Title>
-                <Card.Text>{movie.summary}</Card.Text>
-                <Button onClick={() => onMovieClick(movie)} variant="link">Movie Details</Button>
+            <Card.Body className="d-flex flex-column">
+                <Card.Title><strong>{movie.title}</strong></Card.Title>                
+                <div className="mb-2">
+                    <Badge pill bg="none" className="custom-badge-outline">
+                        {new Date(movie.releaseDate).getFullYear()}
+                    </Badge>
+                </div>
+                <br />
+                <Card.Text className="text-truncate-container">{movie.summary}</Card.Text>
+                <br />
+                <div className="mt-auto">
+                    <Button onClick={() => onMovieClick(movie)} className="w-100" variant="primary">More
+                    </Button>
+                </div>
             </Card.Body>
         </Card>
     );

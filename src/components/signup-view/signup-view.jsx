@@ -44,66 +44,76 @@ export const SignupView = () => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="signUpFormUsername">
-                <Form.Label>Username:</Form.Label>
+            <Form.Group controlId="formSignupUsername">
+                <Form.Label className="fw-bold">Username (required): </Form.Label>
                 <Form.Control
+                    size="lg"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     minLength="6"
                 />
+                <Form.Text id="usernameHelpBlock" muted>Your username must contain at least 6 characters. Emojis are not allowed.</Form.Text>
             </Form.Group>
             <br />            
-            <Form.Group controlId="signUpFormPassword">
-                <Form.Label>Password:</Form.Label>
+            <Form.Group controlId="formSignupPassword">
+                <Form.Label className="fw-bold">Password (required): </Form.Label>
                 <Form.Control
+                    size="lg"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength="10"
                 />
+                <Form.Text id="passwordHelpBlock" muted>Your password must contain at least 10 characters. Spaces and emojis are not allowed.</Form.Text>
             </Form.Group>
             <br />            
-            <Form.Group controlId="signUpFormEmail">
-                <Form.Label>Email:</Form.Label> 
-                <Form.Control  
+            <Form.Group controlId="formSignupEmail">
+                <Form.Label className="fw-bold">Email (required): </Form.Label> 
+                <Form.Control
+                    size="lg" 
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                />        
+                />
+                <Form.Text id="emailHelpBlock" muted>Example: name@email.com</Form.Text> 
             </Form.Group>
             <br />            
-            <Form.Group controlId="signUpFormFirstName">
-                <Form.Label>First Name:</Form.Label>
+            <Form.Group controlId="formSignupFirstName">
+                <Form.Label className="fw-bold">First Name:</Form.Label>
                 <Form.Control
+                    size="lg"
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                 />
             </Form.Group>
             <br />            
-            <Form.Group controlId="signUpFormLastName">
-                <Form.Label>Last Name:</Form.Label>
+            <Form.Group controlId="formSignupLastName">
+                <Form.Label className="fw-bold">Last Name:</Form.Label>
                 <Form.Control
+                    size="lg"
                     type="text" 
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                 />
             </Form.Group>
             <br />            
-            <Form.Group controlId="signUpBirthDate">
-                <Form.Label>Birth Date:</Form.Label>
+            <Form.Group controlId="formSignupBirthDate">
+                <Form.Label className="fw-bold">Birth Date:</Form.Label>
                 <Form.Control
+                    size="lg"
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
                 />
                 <br />
             </Form.Group>
-            <Button className="btn-lg" variant="primary" type="submit">Register</Button>
+            <br />
+            <Button className="btn-lg" variant="primary" type="submit">Signup</Button>
             <br />
         </Form>
     );

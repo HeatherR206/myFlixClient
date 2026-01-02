@@ -21,7 +21,7 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null);    
 
-    const onLogout = () => {
+    const onLoggedOut = () => {
         setUser(null);
         setToken(null);
         localStorage.clear(); 
@@ -71,7 +71,7 @@ export const MainView = () => {
             ) : (
                 <>
                     <Col md={12} className="text-end mb-4">
-                        <Button variant="link" onClick={onLogout}>Logout</Button>
+                        <Button variant="outline-danger" onClick={onLoggedOut} size="md" className="ms-2">Logout</Button>
                     </Col>
                     {movies.map((movie) => (
                         <Col className="mb-5" key={movie._id} md={3}>
