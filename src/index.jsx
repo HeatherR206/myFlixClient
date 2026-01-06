@@ -14,5 +14,4 @@ const MyFlixApplication = () => {
 
 const container = document.querySelector("#root");
 const root = createRoot(container);
-
 root.render(<MyFlixApplication />);
