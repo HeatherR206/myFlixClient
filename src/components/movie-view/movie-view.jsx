@@ -1,15 +1,33 @@
 import PropTypes from "prop-types";
 import { useParams } from "react-router";
+import { API_URL } from "../../config";
 import { Link } from "react-router-dom";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Button } from "react-bootstrap";
 import "./movie-view.scss";
 
-export const MovieView = ({ movies }) => {
+export const MovieView = ({ movies, user, token, setUser }) => {
     const { movieId } = useParams();
-
     const movie = movies.find((m) => m._id === movieId);
 
+    if (!user) return <div>Loading user data...</div>
     if (!movie) return <div>Movie not found in database</div>;
+
+    const isFavorite = user.favoriteMovies && user.favoriteMovies.includes(movie._id);
+
+    const toggleFavorite = () => {
+        const method = isFavorite ? "DELETE" : "POST";
+        
+        fetch(`${API_URL}/users/${user.username}/movies/${movie._id}`, {
+            method: method,
+            headers: { 
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}` 
+            }
+        })
+        .then(response => response.json())
+        .then(updatedUser => setUser(updatedUser))
+        .catch(error => console.error(error));
+    };
 
     return (
         <Row className="justify-content-center">
@@ -17,7 +35,13 @@ export const MovieView = ({ movies }) => {
                 <Card className="movie-view-card h-100 shadow-md custom-card-border">
                     <Card.Img variant="top" src={movie.imagePath} alt={movie.title} />
                     <Card.Body>
-                        <Card.Title className="display-6"><strong>{movie.title}</strong></Card.Title>
+                        <div className="d-flex justify-content-between align-items-start">
+                            <Card.Title className="display-6"><strong>{movie.title}</strong></Card.Title>
+                            <Button variant={isFavorite ? "danger" : "outline-danger"} onClick={toggleFavorite}>
+                                {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                            </Button>
+                        </div>
+                        
                         <Card.Text className="mb-1 text-muted">
                             <strong>Release Date: </strong>
                             {new Date(movie.releaseDate).toLocaleDateString()}
@@ -56,7 +80,7 @@ export const MovieView = ({ movies }) => {
                                 variant="primary"   
                                 className="back-button w-100"
                                 style={{ cursor: "pointer "}}>
-                                Back to Movies List
+                                Back to List
                             </button>
                         </Link>
                     </Card.Body>
@@ -71,11 +95,24 @@ MovieView.propTypes = {
         title: PropTypes.string.isRequired,
         imagePath: PropTypes.string,
         summary: PropTypes.string.isRequired,
+        cast: PropTypes.arrayOf(PropTypes.shape({
+            castName: PropTypes.string.isRequired
+        })).isRequired,
         directors: PropTypes.arrayOf(PropTypes.shape({
             directorName: PropTypes.string.isRequired
         })).isRequired,
         genres: PropTypes.arrayOf(PropTypes.shape({
             genreName: PropTypes.string.isRequired
         })).isRequired
-    }).isRequired,    
+    }).isRequired,
+    user: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        favoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        birthDate: PropTypes.string
+    }).isRequired,
+    token: PropTypes.string.isRequired,
+    setUser: PropTypes.func.isRequired,
 };
