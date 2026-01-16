@@ -1,24 +1,24 @@
 {
-  "name": "myflix-client",
+  "name": "myflixclient",
   "version": "1.0.0",
   "description": "Client-Side repo for myFlix movie app",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --dist-dir dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "parcel build src/index.html --dist-dir dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HeatherR206/myFlix-client.git"
+    "url": "git+https://github.com/HeatherR206/myFlixClient.git"
   },
   "author": "Heather Ricarte",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HeatherR206/myFlix-client/issues"
+    "url": "https://github.com/HeatherR206/myFlixClient/issues"
   },
-  "homepage": "https://github.com/HeatherR206/myFlix-client#readme",
+  "homepage": "https://github.com/HeatherR206/myFlixClient#readme",
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "parcel": "^2.13.3",
     "prop-types": "^15.8.1",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
