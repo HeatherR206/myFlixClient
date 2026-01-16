@@ -3,7 +3,7 @@ import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
-export const NavBar = ({ user, onLoggedOut }) => {
+export const NavBar = ({ user, onLoggedOut, onSearch }) => {
     return (
         <Navbar 
             className="navbar" 
@@ -21,8 +21,9 @@ export const NavBar = ({ user, onLoggedOut }) => {
                                     size="lg"
                                     type="text"
                                     placeholder="Search database"
-                                    className="search-input me-3 bg-light"
+                                    className="search-input me-2 bg-light"
                                     aria-label="Search"
+                                    onChange={(e) => onSearch(e.target.value)}
                                 />
                                 <Button variant="outline-secondary">Search</Button>
                             </Form>
