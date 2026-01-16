@@ -1,0 +1,32 @@
+.favorite-poster-wrapper {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid rgb(77, 72, 72) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(122, 33, 114, 0.3);
+    }
+}
+
+.favorite-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-tabs {
+    .nav-link {
+        color: rgb(122, 33, 114);
+        &.active {
+            color: white !important;
+            background-color: rgb(122, 33, 114) !important;
+            border-color: rgb(122, 33, 114) !important;
+        }
+    }
+}

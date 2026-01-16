@@ -1,6 +1,11 @@
-$primary: #831189;
-$body-bg: #d533eb13;
-$body-color: #222121;
+$primary: rgb(122, 33, 114); 
+$secondary: rgb(161, 255, 19);
+$body-bg: rgba(250, 246, 237, 0.424);
+$body-dark: rgb(69, 69, 69);
+$input-border-color: rgb(122, 33, 114);
+$input: rgb(100, 100, 100);
+$navbar-dark-color: rgb(255, 255, 255);
+$navbar-dark-active-color: rgb(161, 255, 19);
 
 @import '~bootstrap/scss/bootstrap.scss';
 
