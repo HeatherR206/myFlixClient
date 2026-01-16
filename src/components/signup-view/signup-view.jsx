@@ -22,7 +22,7 @@ export const SignupView = () => {
             lastName: lastName,
             birthDate: birthDate
         };
-
+        
         fetch(`${API_URL}/users`, {
             method: "POST",
             body: JSON.stringify(data),
