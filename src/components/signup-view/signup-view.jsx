@@ -54,7 +54,7 @@ export const SignupView = () => {
                     required
                     minLength="6"
                 />
-                <Form.Text id="usernameHelpBlock" muted>Your username must contain at least 6 characters. Emojis are not allowed.</Form.Text>
+                <Form.Text id="usernameHelpBlock" muted>Your username must contain at least 6 characters.</Form.Text>
             </Form.Group>
             <br />            
             <Form.Group controlId="formSignupPassword">
@@ -67,7 +67,7 @@ export const SignupView = () => {
                     required
                     minLength="10"
                 />
-                <Form.Text id="passwordHelpBlock" muted>Your password must contain at least 10 characters. Spaces and emojis are not allowed.</Form.Text>
+                <Form.Text id="passwordHelpBlock" muted>Your password must contain at least 10 characters.</Form.Text>
             </Form.Group>
             <br />            
             <Form.Group controlId="formSignupEmail">
