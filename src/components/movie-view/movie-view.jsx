@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useParams } from "react-router";
 import { API_URL } from "../../config";
@@ -5,8 +6,9 @@ import { Link } from "react-router-dom";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import "./movie-view.scss";
 
-export const MovieView = ({ movies, user, token, setUser }) => {
+export const MovieView = ({ user, token, setUser }) => {
     const { movieId } = useParams();
+    const movies = useSelector((state) => state.movies);
     const movie = movies.find((m) => m._id === movieId);
 
     if (!user) return <div>Loading user data...</div>
@@ -91,20 +93,6 @@ export const MovieView = ({ movies, user, token, setUser }) => {
 };
 
 MovieView.propTypes = {
-    movie: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        imagePath: PropTypes.string,
-        summary: PropTypes.string.isRequired,
-        cast: PropTypes.arrayOf(PropTypes.shape({
-            castName: PropTypes.string.isRequired
-        })).isRequired,
-        directors: PropTypes.arrayOf(PropTypes.shape({
-            directorName: PropTypes.string.isRequired
-        })).isRequired,
-        genres: PropTypes.arrayOf(PropTypes.shape({
-            genreName: PropTypes.string.isRequired
-        })).isRequired
-    }).isRequired,
     user: PropTypes.shape({
         username: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,

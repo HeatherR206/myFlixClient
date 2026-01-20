@@ -6,20 +6,26 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavBar } from "../nav-bar/nav-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { API_URL } from "../../config";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
 
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
+    const movies = useSelector((state) => state.movies);
     const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
+
+    const dispatch = useDispatch();
+
     const [token, setToken] = useState(() => localStorage.getItem("token"));
-    const [movies, setMovies] = useState([]);
+
     const [loading, setLoading] = useState(false);
     const [filter, setFilter] = useState("");
     
     useEffect(() => {
         if (!token) {
-            setMovies([]);
+            dispatch(setMovies([]));
             return;
         }
 
@@ -34,7 +40,7 @@ export const MainView = () => {
         })
         .then((movies) => {
             const moviesArray = Array.isArray(movies) ? movies : [];
-            setMovies(moviesArray);
+            dispatch(setMovies(moviesArray));
             setLoading(false);
         })
         .catch(e => {
@@ -100,7 +106,7 @@ export const MainView = () => {
                             }
                         />
 
-                        <Route
+                        {/* <Route
                             path="/movies/:movieId"
                             element={
                                 !user ? <Navigate to="/login" replace /> :
@@ -122,7 +128,7 @@ export const MainView = () => {
                                 )
                             }
                         />
-
+ */}
                         <Route
                             path="/users/:username"
                             element={
