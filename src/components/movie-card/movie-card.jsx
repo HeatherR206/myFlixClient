@@ -1,12 +1,17 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 import PropTypes from "prop-types";
 import { API_URL } from "../../config";
 import { Button, Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, user, token, setUser }) => {
-    if (!user) return null;
+export const MovieCard = ({ movie, token }) => {
+        const dispatch = useDispatch();
+        const user = useSelector((state) => state.user);
+    
+    if (!user || !movie ) return null;
     
     const isFavorite = user.favoriteMovies && user.favoriteMovies.includes(movie._id);    
     
@@ -27,7 +32,7 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
         .then((updatedUser) => {
             if (updatedUser) {
                 localStorage.setItem("user", JSON.stringify(updatedUser));
-                setUser(updatedUser);
+                dispatch(setUser(updatedUser));
             }
          })
          .catch((e) => alert(e.message));
@@ -70,24 +75,11 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
 
 MovieCard.propTypes = {
     movie: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         imagePath: PropTypes.string,
-        summary: PropTypes.string.isRequired,
-        directors: PropTypes.arrayOf(PropTypes.shape({
-            directorName: PropTypes.string.isRequired
-        })).isRequired,
-        genres: PropTypes.arrayOf(PropTypes.shape({
-            genreName: PropTypes.string.isRequired
-        })).isRequired
-    }).isRequired,
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
-        favoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-        firstName: PropTypes.string,
-        lastName: PropTypes.string,
-        birthDate: PropTypes.string
+        releaseDate: PropTypes.string,
+        summary: PropTypes.string
     }).isRequired,
     token: PropTypes.string.isRequired,
-    setUser: PropTypes.func.isRequired,
 };

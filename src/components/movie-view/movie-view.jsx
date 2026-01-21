@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 import PropTypes from "prop-types";
 import { useParams } from "react-router";
 import { API_URL } from "../../config";
@@ -6,12 +7,16 @@ import { Link } from "react-router-dom";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import "./movie-view.scss";
 
-export const MovieView = ({ user, token, setUser }) => {
+export const MovieView = ({ token }) => {
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user);
+    const movies = useSelector((state) => state.movies.list);
+
     const { movieId } = useParams();
-    const movies = useSelector((state) => state.movies);
     const movie = movies.find((m) => m._id === movieId);
 
-    if (!user) return <div>Loading user data...</div>
+    if (!user) return <div>Loading user data...</div>;
     if (!movie) return <div>Movie not found in database</div>;
 
     const isFavorite = user.favoriteMovies && user.favoriteMovies.includes(movie._id);
@@ -27,7 +32,10 @@ export const MovieView = ({ user, token, setUser }) => {
             }
         })
         .then(response => response.json())
-        .then(updatedUser => setUser(updatedUser))
+        .then(updatedUser => {
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            dispatch(setUser(updatedUser));
+        })
         .catch(error => console.error(error));
     };
 
@@ -77,13 +85,10 @@ export const MovieView = ({ user, token, setUser }) => {
                         </div>
                         <br />
 
-                        <Link to={`/`}>
-                            <button 
-                                variant="primary"   
-                                className="back-button w-100"
-                                style={{ cursor: "pointer "}}>
+                        <Link to={`/`} className="w-100">
+                            <Button variant="primary" className="w-100 mt-3">
                                 Back to List
-                            </button>
+                            </Button>
                         </Link>
                     </Card.Body>
                 </Card>
@@ -93,14 +98,5 @@ export const MovieView = ({ user, token, setUser }) => {
 };
 
 MovieView.propTypes = {
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
-        favoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-        firstName: PropTypes.string,
-        lastName: PropTypes.string,
-        birthDate: PropTypes.string
-    }).isRequired,
     token: PropTypes.string.isRequired,
-    setUser: PropTypes.func.isRequired,
 };
