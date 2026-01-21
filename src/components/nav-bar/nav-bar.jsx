@@ -1,9 +1,20 @@
-import "./nav-bar.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { setFilter } from "../../redux/reducers/filter";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./nav-bar.scss";
 
 
-export const NavBar = ({ user, onLoggedOut, onSearch }) => {
+export const NavBar = () => {
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const filter = useSelector((state) => state.filter);
+    const onLoggedOut = () => {
+        localStorage.clear();
+        dispatch(setUser(null));
+    };
+
     return (
         <Navbar 
             className="navbar" 
@@ -21,9 +32,10 @@ export const NavBar = ({ user, onLoggedOut, onSearch }) => {
                                     size="lg"
                                     type="text"
                                     placeholder="Search database"
+                                    value={filter}
                                     className="search-input me-2 bg-light"
                                     aria-label="Search"
-                                    onChange={(e) => onSearch(e.target.value)}
+                                    onChange={(e) => dispatch(setFilter(e.target.value))}
                                 />
                                 <Button variant="outline-secondary">Search</Button>
                             </Form>
@@ -40,8 +52,14 @@ export const NavBar = ({ user, onLoggedOut, onSearch }) => {
                         {user && (
                             <>
                                 <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                <Nav.Link as={Link} to="/users/${username}">Profile</Nav.Link>
-                                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                                <Nav.Link as={Link} to={`/users/${user.username}`}>Profile</Nav.Link>
+                                <Nav.Link onClick={() => {
+                                    dispatch(setUser(null));
+                                    localStorage.clear();
+                                }}
+                                >
+                                    Logout
+                                </Nav.Link>
                             </>
                         )}
                     </Nav>
