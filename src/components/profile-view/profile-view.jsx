@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { MovieCard } from "../movie-card/movie-card";
 import PropTypes from "prop-types";
 import { Row, Col, Button, Tabs, Tab } from "react-bootstrap";
 import { Link } from "react-router-dom"
@@ -7,11 +10,20 @@ import { UpdateUser } from "./update-user";
 import { API_URL } from "../../config";
 import "./profile-view.scss";
 
-export const ProfileView = ({ user, movies, token, setUser }) => {
-    const favoriteMovies = movies.filter((m) => 
-        user.favoriteMovies && user.favoriteMovies.includes(m._id)
+export const ProfileView = ({ token }) => {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const allMovies = useSelector((state) => state.movies.list);
+    const filter = useSelector((state) => state.filter);
+
+    const favoriteMovies = allMovies.filter((m) => 
+        user.favoriteMovies.includes(m._id)
+    );    
+    const filterFavorites = favoriteMovies.filter((m) => m.title.toLowerCase().includes(filter.toLowerCase())
     );
-    
+    const filterAllMovies = allMovies.filter((m) => m.title.toLowerCase().includes(filter.toLowerCase())
+    );
+
     const handleUpdate = (formData) => {
         const dataToSend = { ...formData };
         if (!dataToSend.password) {
@@ -38,7 +50,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
                 if (user.username !== updatedUser.username) {
                     localStorage.setItem("user", JSON.stringify(updatedUser));
                 }
-                setUser(updatedUser);
+                dispatch(setUser(updatedUser));
             }
         })
         .catch((error) => { 
@@ -56,7 +68,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
                     ...user,
                     favoriteMovies: user.favoriteMovies.filter((id) => id !== movieId),
                 };
-                setUser(UpdatedUser);
+                dispatch(setUser(UpdatedUser));
             }
         });   
     };  
@@ -68,9 +80,8 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
                 headers: { Authorization: `Bearer ${token}` },
             }).then((response) => {
                 if (response.ok) {
-                    setUser(null);
+                    dispatch(setUser(null));
                     localStorage.clear();
-                    window.location.reload();
                 }
             });
         }
@@ -80,16 +91,38 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
 
     return (
         <div className="profile-view">
+            {filter.length > 0 && (
+                <div className="search-results-section mb-5 bg-light p-3 rounded border">
+                    <Row>
+                        <Col md={12}>
+                            <h4>Search Results (All Movies)</h4>
+                            <Row>
+                                {filterAllMovies.length === 0 ? (
+                                    <p className="text-muted">No movies match "{filter}"</p>
+                                ) : (
+                                    filterAllMovies.map((movie) => (
+                                        <Col className="mb-4" key={movie._id} md={3}>
+                                            <MovieCard movie={movie} />
+                                        </Col>
+                                    ))
+                                )}
+                            </Row>
+                            <hr />
+                        </Col>
+                    </Row>
+                </div>
+            )}
+
             <Row>
                 <Col md={12} className="mt-3 mb-5">
-                    <h3>Favorite Movies</h3>
+                    <h3>Your Favorite Movies</h3>
                     <Row>
-                        {favoriteMovies.length === 0 ? (
+                        {filterFavorites.length === 0 ? (
                             <Col>
-                                <p className="text-muted mt-3">You haven't added any movies to Favorites yet</p>
+                                <p className="text-muted mt-3">No favorite movies match your search.</p>
                             </Col>
                         ) : (
-                            favoriteMovies.map((movie) => (
+                            filterFavorites.map((movie) => (
                                 <Col className="mb-4" key={movie._id} xs={6} md={3} lg={2}>
                                     <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
                                         <div className="favorite-poster-wrapper">
@@ -150,12 +183,5 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
 };
 
 ProfileView.propTypes = {
-    movies: PropTypes.array.isRequired,
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
-        favoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-    }).isRequired,
     token: PropTypes.string.isRequired,
-    setUser: PropTypes.func.isRequired,
 };
