@@ -1,15 +1,18 @@
-import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/reducers/user";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../redux/reducers/user";
+import { setToken } from "../../redux/reducers/token";
+import { Button, Form } from "react-bootstrap";
 import { API_URL } from "../../config";
 
-export const LoginView = ({ onLoggedInToken }) => {
+export const LoginView = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -35,20 +38,21 @@ export const LoginView = ({ onLoggedInToken }) => {
             }
         })
         .then((data) => {
-            if (data.user) {
+            if (data.user && data.token) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("token", data.token);
                 
                 dispatch(setUser(data.user));
+                dispatch(setToken(data.token));
 
-                console.log("Login response: ", data);
-                onLoggedInToken(data.token);
+                navigate("/");
             }
         })
         .catch((e) => {
             alert(e.message);
         });
     };
+
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername">
@@ -57,9 +61,9 @@ export const LoginView = ({ onLoggedInToken }) => {
                     size="lg"
                     type="text"
                     value={username}
-                    minLength="6"
                     onChange={(e) => setUsername(e.target.value)}
                     required
+                    minLength="6"
                     />
             </Form.Group>
             <br />
@@ -69,16 +73,15 @@ export const LoginView = ({ onLoggedInToken }) => {
                     size="lg"
                     type="password" 
                     value={password}
-                    minLength="10"
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength="10"
                 />
-                <br />
             </Form.Group>
+            <br />
             <Button className="btn-lg" variant="primary" type="submit">
                 Login
             </Button>
-            <br />
         </Form>
     );
 };
