@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { setUser } from "../../redux/reducers/user";
+import { useDispatch } from "react-redux";
+import { useApi } from "../../hooks/useApi";
+import { API_URL } from "../../config";
+
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-export const UpdateUser = ({ user, onUpdate }) => { 
+export const UpdateUser = () => { 
+    const dispatch = useDispatch();
+    const { authFetch, user } = useApi(); 
+
     const [formData, setFormData] = useState({
-        username: user.username,
-        email: user.email,
+        username: user?.username,
+        email: user?.email,
         password: "",
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        birthDate: user.birthDate ? user.birthDate.split('T')[0] : "" 
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        birthDate: user?.birthDate ? user.birthDate.split('T')[0] : "" 
     });
 
     const handleChange = (e) => {
@@ -27,28 +35,54 @@ export const UpdateUser = ({ user, onUpdate }) => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onUpdate(formData);
+        
+        const dataToSend = { ...formData };
+        if (!dataToSend.password) {
+            delete dataToSend.password;
+        }
+
+        try {
+            const response = await authFetch(`${API_URL}/users/${user.username}`, {
+                method: "PUT",
+                body: JSON.stringify(dataToSend),
+            });
+
+            if (response && response.ok) {
+                const updatedUser = await response.json();
+                alert("Profile updated successfully!");
+
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                dispatch(setUser(updatedUser));
+                setFormData(prev => ({...prev, password: ""}));
+            } else if (response) {
+                throw new Error("Update failed");
+            }
+        } catch(error) {
+            alert(error.message);
+        }     
     };
 
     useEffect(() => {
-        setFormData({
-            username: user.username,
-            email: user.email,
-            password: "",
-            firstName: user.firstName || "",
-            lastName: user.lastName || "",
-            birthDate: user.birthDate ? user.birthDate.split('T')[0] : "" 
-        });
+        if (user) {
+            setFormData({
+                username: user.username,
+                email: user.email,
+                password: "",
+                firstName: user.firstName || "",
+                lastName: user.lastName || "",
+                birthDate: user.birthDate ? user.birthDate.split('T')[0] : "" 
+            });
+        }
     }, [user]);
 
     return (
-        <Form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
-            <h4>Update Profile Information</h4>
+        <Form onSubmit={handleSubmit} className="p-4 border rounded bg-dark">
+            <h4><span className="fw-bold mb-3">Edit Profile</span></h4>
             <br />
             <Form.Group controlId="formUsername" className="mb-3">
-                <Form.Label className="fw-bold">Username</Form.Label>
+                <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
                 <Form.Control
                     size="lg"
                     type="text"
@@ -58,13 +92,13 @@ export const UpdateUser = ({ user, onUpdate }) => {
                     onChange={handleChange}
                     required
                 />
-                <Form.Text muted>6+ characters, no emojis</Form.Text>
+                <Form.Text muted>Min 6 characters</Form.Text>
             </Form.Group>
 
             <br />  
 
             <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label className="fw-bold">Email</Form.Label> 
+                <Form.Label className="fw-bold text-muted small text-uppercase">Email</Form.Label> 
                 <Form.Control
                     size="lg" 
                     type="email"
@@ -78,7 +112,7 @@ export const UpdateUser = ({ user, onUpdate }) => {
             <br />
 
             <Form.Group controlId="formPassword" title="mb-3">
-                <Form.Label className="fw-bold">New Password</Form.Label>
+                <Form.Label className="fw-bold text-muted small text-uppercase">New Password</Form.Label>
                 <Form.Control
                     size="lg"
                     type="password"
@@ -88,9 +122,7 @@ export const UpdateUser = ({ user, onUpdate }) => {
                     placeholder="Leave blank to keep current password"            
                     minLength="10" 
                 />
-                <Form.Text className="text-muted">
-                    Must be 10+ characters, no spaces or emojis
-                </Form.Text>
+                <Form.Text className="text-muted">Min 10 characters</Form.Text>
             </Form.Group>
 
             <br />  
@@ -98,7 +130,7 @@ export const UpdateUser = ({ user, onUpdate }) => {
             <Row className="mb-3">
                 <Col>
                     <Form.Group controlId="formFirstName">
-                        <Form.Label className="fw-bold">First Name</Form.Label>
+                        <Form.Label className="fw-bold text-muted small text-uppercase">First Name</Form.Label>
                         <Form.Control
                             size="lg"
                             type="text"
@@ -108,9 +140,10 @@ export const UpdateUser = ({ user, onUpdate }) => {
                         />
                     </Form.Group>
                 </Col>
+
                 <Col>
                     <Form.Group controlId="formLastName">
-                        <Form.Label className="fw-bold">Last Name:</Form.Label>
+                        <Form.Label className="fw-bold text-muted small text-uppercase">Last Name:</Form.Label>
                         <Form.Control
                             size="lg"
                             type="text"
@@ -120,10 +153,10 @@ export const UpdateUser = ({ user, onUpdate }) => {
                         />
                     </Form.Group>
                 </Col>
-            </Row>
+            
                 <Col>
                     <Form.Group controlId="formBirthDate" className="mb-3">
-                        <Form.Label className="fw-bold">Birth Date</Form.Label>
+                        <Form.Label className="fw-bold text-muted small text-uppercase">Birth Date</Form.Label>
                         <Form.Control
                             size="lg"
                             type="date"
@@ -133,14 +166,11 @@ export const UpdateUser = ({ user, onUpdate }) => {
                         />
                     </Form.Group>
                 </Col>
-
+                </Row>
             <div className="d-flex justify-content-between align-items-center mt-4">
-                <Button variant="primary" type="submit">Save Changes
-                </Button>
-                <Button variant="outline-danger" type="button" onClick={handleReset}>Reset to Original
-                </Button>
+                <Button variant="primary" type="submit">Save Changes</Button>
+                <Button variant="outline-danger" type="button" onClick={handleReset}>Reset to Original</Button>
             </div>
-            <br />
         </Form>
     );
 };

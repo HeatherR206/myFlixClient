@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { API_URL } from "../../config";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";import { API_URL } from "../../config";
+import { Button, Form }from "react-bootstrap";
 
 export const SignupView = () => {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -31,11 +32,16 @@ export const SignupView = () => {
             }
         }).then((response) => {
             if (response.ok) {
-                alert("Signup was successful");
-                window.location.reload();
+                alert("Signup was successful. Please login.");
+                navigate("/login");
+
             } else {
-                response.text().then(text => alert(`Signup failed: ${text}`));
-            }
+                response.json().then(errorData => {
+                    const message = errorData.errors ? errorData.errors.map(e => e.msg).join(", ") : errorData;
+                    alert(`Signup failed: ${message}`);
+                });
+            } 
+            
         }).catch(e => {
                 console.error("Signup error:", e);
                 alert("Something went wrong");
@@ -43,78 +49,78 @@ export const SignupView = () => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formSignupUsername">
-                <Form.Label className="fw-bold">Username (required): </Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    minLength="6"
-                />
-                <Form.Text id="usernameHelpBlock" muted>Your username must contain at least 6 characters.</Form.Text>
-            </Form.Group>
-            <br />            
-            <Form.Group controlId="formSignupPassword">
-                <Form.Label className="fw-bold">Password (required): </Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength="10"
-                />
-                <Form.Text id="passwordHelpBlock" muted>Your password must contain at least 10 characters.</Form.Text>
-            </Form.Group>
-            <br />            
-            <Form.Group controlId="formSignupEmail">
-                <Form.Label className="fw-bold">Email (required): </Form.Label> 
-                <Form.Control
-                    size="lg" 
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <Form.Text id="emailHelpBlock" muted>Example: name@email.com</Form.Text> 
-            </Form.Group>
-            <br />            
-            <Form.Group controlId="formSignupFirstName">
-                <Form.Label className="fw-bold">First Name:</Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-            </Form.Group>
-            <br />            
-            <Form.Group controlId="formSignupLastName">
-                <Form.Label className="fw-bold">Last Name:</Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="text" 
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-            </Form.Group>
-            <br />            
-            <Form.Group controlId="formSignupBirthDate">
-                <Form.Label className="fw-bold">Birth Date:</Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="date"
-                    value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
-                />
-                <br />
-            </Form.Group>
-            <br />
-            <Button className="btn-lg" variant="primary" type="submit">Signup</Button>
-            <br />
-        </Form>
+        <div>    
+            <Form onSubmit={handleSubmit} className="mt-4">
+                <Form.Group controlId="formSignupUsername">
+                    <Form.Label className="fw-bold">Username (required): </Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        minLength="6"
+                    />
+                    <Form.Text className="text-muted">Min 6 characters.</Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mt-3" controlId="formSignupPassword">
+                    <Form.Label className="fw-bold">Password (required): </Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        minLength="10"
+                    />
+                    <Form.Text className="text-muted">Min 10 characters.</Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mt-3" controlId="formSignupEmail">
+                    <Form.Label className="fw-bold">Email (required): </Form.Label> 
+                    <Form.Control
+                        size="lg" 
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-3" controlId="formSignupFirstName">
+                    <Form.Label className="fw-bold">First Name:</Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-3"controlId="formSignupLastName">
+                    <Form.Label className="fw-bold">Last Name:</Form.Label>
+                    <Form.Control 
+                        size="lg"
+                        type="text" 
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-3" controlId="formSignupBirthDate">
+                    <Form.Label className="fw-bold">Birth Date:</Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="date"
+                        value={birthDate}
+                        onChange={(e) => setBirthDate(e.target.value)}
+                    />
+                </Form.Group>
+                <Button className="btn-lg mt-4 w-100" variant="primary" type="submit">
+                    Create Account
+                </Button>
+            </Form>
+        </div>                
     );
 };

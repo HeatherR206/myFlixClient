@@ -1,4 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import { setFilter } from "../../redux/reducers/filter";
+import { useApi } from "../../hooks/useApi";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -7,162 +14,125 @@ import { NavBar } from "../nav-bar/nav-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { API_URL } from "../../config";
 
-import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 export const MainView = () => {
-    const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
-    const [token, setToken] = useState(() => localStorage.getItem("token"));
-    const [movies, setMovies] = useState([]);
+    const dispatch = useDispatch();
+    const movies = useSelector((state) => state.movies);
+    const filter = useSelector((state) => state.filter);
+    const { authFetch, user, token } = useApi();
+
     const [loading, setLoading] = useState(false);
-    const [filter, setFilter] = useState("");
-    
-    useEffect(() => {
-        if (!token) {
-            setMovies([]);
-            return;
-        }
+    const initialLoadDone = useRef(false);
 
-        setLoading(true);
-
-        fetch(`${API_URL}/movies`, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-            if (!response.ok) throw new Error("Failed to fetch movies");
-            return response.json();
-        })
-        .then((movies) => {
-            const moviesArray = Array.isArray(movies) ? movies : [];
-            setMovies(moviesArray);
-            setLoading(false);
-        })
-        .catch(e => {
-            console.error(e);
-            setLoading(false);
-        });
-    }, [token]);    
-    
     const filteredMovies = movies.filter((movie) =>
         movie.title.toLowerCase().includes(filter.toLowerCase())
     );
+
+    useEffect(() => {
+        if (!token) {
+            initialLoadDone.current = false;
+            return;
+        }
+
+        const fetchMovies = async () => {
+            if (movies.length === 0) setLoading(true);
+
+            try {
+                const response = await authFetch(`${API_URL}/movies`);
+            
+                if (response && response.ok) {
+                    const moviesData = await response.json();
+                    dispatch(setMovies(moviesData));
+                }
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+            } finally {
+                setLoading(false);
+                initialLoadDone.current = true;
+            }
+        };
+
+        fetchMovies();
+    }, [token, authFetch, dispatch, movies.length]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(setFilter(""));
+        };
+    }, [dispatch]);    
             
     return (
-        <BrowserRouter>
-            <NavBar
-                user={user}
-                onLoggedOut={() => {
-                    setUser(null);
-                    setToken(null);
-                    localStorage.clear();
-                }}
-                onSearch={(value) => setFilter(value)}
-            />
+        <>
+            <NavBar />
             <Container>
                 <Row className="justify-content-md-center mt-4">
                     <Routes>
                         <Route
                             path="/signup"
-                            element={
-                                user ? <Navigate to="/" /> : (
-                                    <Col md={5}>
-                                        <Card>
-                                            <Card.Body>
-                                                <Card.Title>Signup</Card.Title>
-                                                <SignupView />
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                )
-                            }
+                            element={user ? <Navigate to="/" /> : (
+                                <Col md={6}>
+                                    <Card className="mt-4 shadow-sm">
+                                        <Card.Body>
+                                            <Card.Title className="fw-bold text-center mb-4">Create Account</Card.Title>
+                                            <SignupView />
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            )}
                         />
 
                         <Route
                             path="/login"
-                            element={
-                                user ? <Navigate to="/" /> : (
-                                    <Col md={5}>
-                                        <Card>
-                                            <Card.Body>
-                                                <Card.Title>Login</Card.Title>
-                                                <LoginView 
-                                                    onLoggedIn={(user, token) => {
-                                                        setUser(user);
-                                                        setToken(token);
-                                                        localStorage.setItem("user", JSON.stringify(user));
-                                                        localStorage.setItem("token", token);
-                                                    }}
-                                                />    
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                )
-                            }
-                        />
-
-                        <Route
-                            path="/movies/:movieId"
-                            element={
-                                !user ? <Navigate to="/login" replace /> :
-                                loading ? (
-                                    <Col className="text-center mt-5">
-                                        <Spinner animation="border" variant="primary" />
-                                    </Col>
-                                ) : movies.length === 0 ? (
-                                    <Col md={12}>The movie list is empty!</Col>
-                                ) : (
-                                    <Col md={8}> 
-                                        <MovieView 
-                                            movies={movies}
-                                            user={user}
-                                            token={token}
-                                            setUser={setUser}
-                                        />
-                                    </Col>
-                                )
-                            }
+                            element={user ? <Navigate to="/" /> : (
+                                <Col md={6}>
+                                    <Card className="mt-4 shadow-sm">
+                                        <Card.Body>
+                                            <Card.Title className="fw-bold text-center mb-4">Login</Card.Title>
+                                            <LoginView />
+                                        </Card.Body>                              
+                                    </Card>
+                                </Col>
+                            )}
                         />
 
                         <Route
                             path="/users/:username"
-                            element={
-                                !user ? <Navigate to="/login" replace /> :
-                                loading ? (
-                                    <Col className="text-center mt-5">
-                                        <Spinner animation="border" variant="primary" />
-                                    </Col>    
-                                ) : (
-                                    <Col md={8}>
-                                        <ProfileView 
-                                            movies={movies}
-                                            user={user}
-                                            token={token}
-                                            setUser={setUser}
-                                        />        
-                                    </Col>
-                                )
-                            }
+                            element={!user ? <Navigate to="/login" replace /> : (
+                                <Col md={12}><ProfileView /></Col>
+                            )}
                         /> 
+
+                        <Route
+                            path="/movies/:movieId"
+                            element={!user ? <Navigate to="/login" replace /> : (
+                                <Col md={8}><MovieView /></Col>
+                            )}
+                        />  
 
                         <Route
                             path="/"
                             element={
-                                !user ? <Navigate to="/login" replace /> :
-                                loading ? (
+                                !user || !token ? (
+                                    <Navigate to="/login" replace />
+                                ) : (loading && movies.length === 0) ? (
                                     <Col className="text-center mt-5">
                                         <Spinner animation="border" variant="primary" />
+                                        <p className="mt-2 text-muted">Loading movies...</p>
+                                    </Col>
+                                ) : movies.length === 0 ? (
+                                    <Col className="text-center mt-5">
+                                        <p className="text-muted">Synchronizing data...</p>
                                     </Col>
                                 ) : filteredMovies.length === 0 ? (
-                                    <Col md={12}>No movies found matching that search</Col>
-                                ) :  (
+                                    <Col md={12} className="text-center mt-5">
+                                        <p>No movies found matching "{filter}"</p>
+                                        <Button variant="outline-primary" onClick={() => dispatch(setFilter(""))}>
+                                            Clear Search
+                                        </Button>
+                                    </Col>
+                                ) : (
                                     filteredMovies.map((movie) => (
-                                        <Col className="mb-5" key={movie._id} md={3}>
-                                            <MovieCard 
-                                                movie={movie} 
-                                                user={user}
-                                                token={token}
-                                                setUser={setUser}
-                                            />
+                                        <Col className="mb-5" key={movie._id} md={4} lg={3}>
+                                            <MovieCard movie={movie} />
                                         </Col>
                                     ))
                                 )
@@ -171,6 +141,6 @@ export const MainView = () => {
                     </Routes>
                 </Row>
             </Container>
-        </BrowserRouter>
+        </>    
     );
 };

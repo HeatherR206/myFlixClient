@@ -15,16 +15,20 @@
   "bugs": {
     "url": "https://github.com/HeatherR206/myFlixClient/issues"
   },
-  "homepage": "https://github.com/HeatherR206/myFlixClient#readme",
+  "homepage": "https://myflixclient-five.vercel.app",
   "dependencies": {
-    "bootstrap": "^5.3.8",
-    "parcel": "^2.13.3",
-    "@parcel/transformer-sass": "2.16.3",
-    "prop-types": "^15.8.1",
+    "@reduxjs/toolkit": "^2.5.0",
+    "react-redux": "^9.2.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^6.30.2"
+    "react-router-dom": "^6.30.2",
+    "bootstrap": "^5.3.8",
+    "parcel": "^2.13.3",
+    "@parcel/transformer-sass": "2.16.3",
+    "prop-types": "^15.8.1"
+    
+
   },
   "devDependencies": {
 
