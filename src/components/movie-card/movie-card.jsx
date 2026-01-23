@@ -1,43 +1,40 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
+import { useApi } from '../../hooks/useApi';
 import PropTypes from "prop-types";
-import { API_URL } from "../../config";
 import { Button, Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../config";
+
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, token }) => {
-        const dispatch = useDispatch();
-        const user = useSelector((state) => state.user);
-    
+export const MovieCard = ({ movie }) => {
+    const dispatch = useDispatch();
+
+    const { authFetch, user } = useApi();
     if (!user || !movie ) return null;
     
-    const isFavorite = user.favoriteMovies && user.favoriteMovies.includes(movie._id);    
+    const isFavorite = user.favoriteMovies && user.favoriteMovies.includes(movie._id);
     
-    const toggleFavorite = () => {
+    const toggleFavorite = async () => {
         const method = isFavorite ? "DELETE" : "POST";
         const url = `${API_URL}/users/${user.username}/movies/${movie._id}`;
 
-        fetch(url, {
-            method: method,
-            headers: { Authorization: `Bearer ${token}` }
-        }).then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error("Failed to update Favorite Movies");
-            }
-        })
-        .then((updatedUser) => {
-            if (updatedUser) {
+        try {
+            const response = await authFetch(url, { method });
+
+            if (response && response.ok) {
+                const updatedUser = await response.json();
                 localStorage.setItem("user", JSON.stringify(updatedUser));
                 dispatch(setUser(updatedUser));
+            } else if (response && !response.ok) {
+                alert("Failed to update Favorite Movies");
             }
-         })
-         .catch((e) => alert(e.message));
+        } catch (error) {
+            console.error("Error updating favorites:", error);
+        }
     };
-
 
     return (
         <Card className="h-100 shadow-md custom-card-border position-relative">
@@ -46,27 +43,36 @@ export const MovieCard = ({ movie, token }) => {
                 src={movie.imagePath?.startsWith('http')
                     ? movie.imagePath
                     : "https://via.placeholder.com/500x750?text=No+Poster+Available"}
-                alt={movie.title} />
+                alt={movie.title} 
+            />
             <Card.Body className="d-flex flex-column">
-                <Card.Title><strong>{movie.title}</strong></Card.Title>
-                <Button
-                    variant="link"
-                    className="position-absolute top-0 end-0 m-2 text-danger favorite-button"
-                    onClick={toggleFavorite}
-                    style={{ fontSize: "2rem", color: isFavorite ? "red" : "grey", textDecoration: "none"}}
-                >
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                    <Card.Title className="mb-0"><strong>{movie.title}</strong></Card.Title>
+                    <Button
+                        variant="link"
+                        className="p-0 text-danger"
+                        onClick={toggleFavorite}
+                        style={{ 
+                            fontSize: "2rem",
+                            textDecoration: "none",
+                        }}
+                    >
                         {isFavorite ? "❤️" : "🤍"}
-                </Button>         
+                    </Button>
+                </div>
+
                 <div className="mb-2">
-                    <Badge pill bg="none" className="custom-badge-outline">
-                        {new Date(movie.releaseDate).getFullYear()}
+                    <Badge pill bg="none" className="custom-badge-outline small">
+                        {movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "N/A"}
                     </Badge>
                 </div>
-                <br />
-                <Card.Text className="text-truncate-container">{movie.summary}</Card.Text>
-                <br />
-                <Link className="mt-auto" to={`/movies/${encodeURIComponent(movie._id)}`}>
-                    <Button variant="primary" className="w-100">More</Button>
+
+                <Card.Text className="text-truncate-container">
+                    {movie.summary}
+                </Card.Text>
+        
+                <Link className="mt-3" to={`/movies/${encodeURIComponent(movie._id)}`}>
+                    <Button variant="primary" className="w-100">More Info</Button>
                 </Link>
             </Card.Body>
         </Card>
@@ -81,5 +87,4 @@ MovieCard.propTypes = {
         releaseDate: PropTypes.string,
         summary: PropTypes.string
     }).isRequired,
-    token: PropTypes.string.isRequired,
 };
