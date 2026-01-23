@@ -78,7 +78,7 @@ export const UpdateUser = () => {
     }, [user]);
 
     return (
-        <Form onSubmit={handleSubmit} className="p-4 border rounded bg-dark">
+        <Form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
             <h4><span className="fw-bold mb-3">Edit Profile</span></h4>
             <br />
             <Form.Group controlId="formUsername" className="mb-3">
