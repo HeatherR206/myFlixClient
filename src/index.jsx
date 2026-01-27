@@ -3,8 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { MainView } from "./components/main-view/main-view";
-
-import "./index.scss";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "./styles/style.scss";
 
 const MyFlixApplication = () => {
     return (
