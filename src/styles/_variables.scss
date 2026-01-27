@@ -1,0 +1,81 @@
+// MYFLIX BRAND COLORS
+$brand-purple: #7a2172; 
+$brand-lavender: #ce8dd6;
+$brand-green: #baff51;
+$bg-main: #484a52;
+$bg-card: #f8eafb;
+$text-main: #1f1c1c;
+$text-alt: #fefcfd;
+$border-main: #848484;
+$shadow-main: rgba(207, 207, 207, 0.565);
+$shadow-hover: rgba(122, 33, 114, 0.05);
+$box-shadow-custom: 0 0.125rem 0.25rem rgba(5, 5, 5, 0.1);
+$box-shadow-hover: 0 4px 12px rgba(122, 33, 114, 0.05);
+
+
+// BOOTSTRAP OVERRIDES
+$primary: $brand-purple;
+$secondary: $brand-lavender;
+$emphasis-color: $brand-green;
+$info: $brand-lavender;
+$danger: #cf3544;
+
+
+// UI OVERRIDES
+$body-bg: $bg-main;
+$card-bg: $bg-card;
+$body-color: $text-main;
+$body-light-color: $text-alt;
+$border-color: $border-main;
+$link-color: $brand-purple;
+$enable-shadows: true;
+$enable-gradients: false;
+$spacer: 1rem;
+
+
+// TYPOGRAPHY
+$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace:  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$font-size-base: 1rem;
+$font-size-sm: $font-size-base * .85;
+$font-size-lg: $font-size-base * 1.25;
+
+$font-weight-lighter: 100;
+$font-weight-light:   200;
+$font-weight-normal:  400;
+$font-weight-bold:    500;
+$font-weight-bolder:  600;
+
+$h1-font-size: $font-size-base * 2.5;
+$h2-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.5;
+$headings-font-weight: 600;
+$headings-color: $brand-purple;
+$headings-margin-bottom: 1.2rem;
+
+.custom-profile-list {
+        background-color: $bg-card !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    
+    .list-group-item {
+        background-color: $bg-card !important; 
+        color: $text-main;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.9) !important; 
+    border: 1px solid $brand-purple;
+    color: $text-main;
+
+    &:focus {
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 0.25rem rgba($bg-card, 0.25);
+    }
+}
