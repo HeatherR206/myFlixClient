@@ -19,7 +19,6 @@ export const MainView = () => {
     const movies = useSelector((state) => state.movies);
     const filter = useSelector((state) => state.filter);
     const { authFetch, user, token } = useApi();
-
     const [loading, setLoading] = useState(false);
     const initialLoadDone = useRef(false);
 
@@ -52,7 +51,7 @@ export const MainView = () => {
         };
 
         fetchMovies();
-    }, [token, authFetch, dispatch, movies.length]);
+    }, [token, dispatch]);
 
     useEffect(() => {
         return () => {
