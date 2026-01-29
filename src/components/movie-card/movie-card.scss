@@ -1,26 +1,131 @@
-.custom-card-border {
-  border: 2px solid rgb(77, 72, 72) !important; 
-  border-radius: 8px; 
-  transition: transform 0.2s ease-in-out;
+.custom-card-border, .custom-card-horizontal {
+    .more-button {        
+        width: 100%;
+        color: $text-alt;
+        background-color: $brand-purple;
+        border: 1px solid $brand-lavender;
+        cursor: pointer;
+        @include hover-lift(0, $brand-lavender);
 
-  &:hover {
-    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.433);
-  }
+        &:hover {
+            background-color: $brand-lavender !important;
+            color: $text-main !important;
+            border-color: $brand-purple !important;
+        }
+
+        &.horizonal { padding: 8px; font-size: 0.5rem; }
+        &.vertical { padding: 12px 16px; font-size: $font-size-base; }
+    }
+
+    .glass-heart-button {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        z-index: 10;    
+        @include glass-effect(0.6, 8px, 0.3);
+
+        &.vertical {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 1rem;
+        }
+
+        &.horizontal {
+            width: 32px;
+            height: 32px;
+            position: static;
+            flex-shrink: 0;
+        }
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.8) !important;
+            transform: scale(1.1) translateY(-2px);
+            filter: brightness(1.2);
+        }
+
+        i {
+            font-size: 1.2rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: normal;
+            &.horizontal { font-size: 1rem; }
+        }
+    }
+}
+
+.custom-card-border {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    border: 2px solid $border-main !important;
+    border-radius: 8px;
+    margin: 1rem;
+    @include hover-lift(-1px, $brand-purple);
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+    }
+
+    .mt-auto-container {
+        margin-top: auto;
+        width: 100%;
+        padding-top: 1rem;
+    }
+}
+
+.custom-card-horizontal {
+    border: 2px solid $border-main; 
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1rem;
+    @include hover-lift(-1px, $brand-purple);
+
+    .horizontal-poster-wrapper {
+        height: 150px;
+        overflow: hidden;
+        img { height: 100%; min-height: 100%; object-fit: cover; }
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .horizontal-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        font-size: 0.9rem;
+        color: $text-main;
+    }
 }
 
 .custom-badge-outline {
-  color: rgb(77, 72, 72) !important;
-  border: 1.5px solid rgb(77, 72, 72);
-  background-color: transparent;
-  padding: 0.4em 0.8em;
-  font-weight: 600;
-  font-size: 0.85rem;
+    color: $bg-main !important;
+    border: 1.5px solid $bg-main;
+    background-color: transparent;
+    padding: 0.4em 0.8em;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 .text-truncate-container {
-  display: -webkit-box;
-  -webkit-line-clamp: 3; 
-  -webkit-box-orient: vertical;  
-  overflow: hidden;
-  height: 4.5em; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    height: 4.5em; 
 }

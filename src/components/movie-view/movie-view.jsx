@@ -1,14 +1,15 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setFilter } from "../../redux/reducers/filter";
 import { useApi } from "../../hooks/useApi";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import { API_URL } from "../../config";
-import "./movie-view.scss";
 
 export const MovieView = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const movies = useSelector((state) => state.movies);
     const { authFetch, user } = useApi();
     const { movieId } = useParams();
@@ -22,25 +23,56 @@ export const MovieView = () => {
     const toggleFavorite = async () => {
         const method = isFavorite ? "DELETE" : "POST";
         const url = `${API_URL}/users/${user.username}/movies/${movie._id}`;
-        const response = await authFetch(url, { method});
 
-        if (response && response.ok) {
-            const updatedUser = await response.json();
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            dispatch(setUser(updatedUser));
+        try {
+            const response = await authFetch(url, { method });
+
+            if (response && response.ok) {
+                let updatedUser;
+
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.includes("application/json")) {
+                    updatedUser = await response.json();
+                } else {
+                    const currentFavorites = user.favoriteMovies || [];
+                    const updatedFavorites = isFavorite
+                        ? currentFavorites.filter((id) => id !== movie._id)
+                        : [...currentFavorites, movie._id];
+                    
+                    updatedUser = { ...user, favoriteMovies: updatedFavorites };
+                }
+
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                dispatch(setUser(updatedUser));
+
+            } else {
+                if (response && response.status === 401) {
+                    navigate("/login");
+                } else {
+                alert("Failed to update favorites.");
+                }
+            }
+        } catch (error) {
+            console.error("Network or logic error:", error);
         }
     };
 
     return (
         <Row className="justify-content-center">
             <Col xs={12} md={10} lg={8}>
-                <Card className="movie-view-card h-100 shadow-md custom-card-border">
+                <Card className="movie-view-card h-100 shadow-md">
                     <Card.Img variant="top" src={movie.imagePath} className="img-fluid rounded-start" alt={movie.title} />
                     <Card.Body>
                         <div className="d-flex justify-content-between align-items-start mb-3">
-                            <Card.Title className="display-6"><strong>{movie.title}</strong></Card.Title>
-                            <Button variant={isFavorite ? "danger" : "outline-danger"} onClick={toggleFavorite}>
-                                {isFavorite ? "Unfavorite" : "Favorite"}
+                            <Card.Title className="display-6 mb-0"><strong>{movie.title}</strong></Card.Title>
+                            <Button
+                                variant="link"
+                                onClick={toggleFavorite}
+                                className="glass-heart-button rounded-circle shadow-sm text-decoration-none"
+                                title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                            >
+                                <i className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart text-dark"}`}></i>
                             </Button>
                         </div>
                         
@@ -77,13 +109,15 @@ export const MovieView = () => {
                                 {movie.cast?.map((c) => c.castName).join(', ') || 'N/A'}
                             </span>
                         </div>
-                        <br />
 
-                        <Link to="/" className="w-100" onClick={() => dispatch(setFilter(""))}>
-                            <Button variant="primary" className="w-100 mt-3">
-                                Back to List
-                            </Button>
-                        </Link>
+                        <Button 
+                            onClick={() => {
+                                dispatch(setFilter(""));
+                                navigate(-1);
+                            }}
+                            className="back-button rounded-pill">
+                            Back
+                        </Button>
                     </Card.Body>
                 </Card>
             </Col>

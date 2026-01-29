@@ -1,16 +1,51 @@
+.user-mngmt-column {
+    @include glass-effect(0.9, 12px, 0.2);
+    background-color: rgba($bg-card, 0.9) !important;
+    border: 2px solid $brand-lavender !important;
+    border-radius: 15px;
+
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+.danger-zone-card {
+    background-color: rgba($danger, 0.8) !important;
+    border: 1px dashed rgba($danger, 0.4) !important;
+    transition: all 0.3s ease;
+    
+
+    &:hover {
+        background-color: rgba($danger, 0.08) !important;
+        border-style: solid;
+        box-shadow: 0 4px 12px rgba($danger, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+.my-faves {
+    background-color: $bg-card !important; 
+    border: 2px solid $brand-lavender;
+    margin-top: 1.5rem;
+}
+
 .favorite-poster-wrapper {
     position: relative;
     aspect-ratio: 2 / 3;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid rgb(77, 72, 72) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid $border-main !important;
+    box-shadow: 0 4px 8px $shadow-main;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     cursor: pointer;
 
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 6px 15px rgba(122, 33, 114, 0.3);
+        box-shadow: $box-shadow-hover;
     }
 }
 
@@ -22,11 +57,18 @@
 
 .custom-tabs {
     .nav-link {
-        color: rgb(122, 33, 114);
+        color: $brand-purple;
+
+        &:hover {
+            background-color: $brand-lavender;
+            border-color: $brand-lavender;
+            color: $text-main;
+        }
+
         &.active {
-            color: white !important;
-            background-color: rgb(122, 33, 114) !important;
-            border-color: rgb(122, 33, 114) !important;
+            color: $emphasis-color !important;
+            background-color: $brand-purple !important;
+            border-color: $brand-purple !important;
         }
     }
 }

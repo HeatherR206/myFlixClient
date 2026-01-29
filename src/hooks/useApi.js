@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../redux/reducers/user";
 import { clearToken } from "../redux/reducers/token";
@@ -7,7 +8,7 @@ export const useApi = () => {
     const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
-    const authFetch = async (URL, options = {}) => {
+    const authFetch = useCallback (async (URL, options = {}) => {
         const headers = {
             ...options.headers,
             "Content-Type": "application/json",
@@ -30,6 +31,7 @@ export const useApi = () => {
             console.error("Fetch error:", error);
             throw error;
         }
-    };
+    }, [token, dispatch]);
+    
     return { authFetch, user, token };
 };

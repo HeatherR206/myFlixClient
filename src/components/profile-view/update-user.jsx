@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useApi } from "../../hooks/useApi";
 import { API_URL } from "../../config";
 
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 export const UpdateUser = () => { 
     const dispatch = useDispatch();
@@ -78,99 +78,87 @@ export const UpdateUser = () => {
     }, [user]);
 
     return (
-        <Form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
-            <h4><span className="fw-bold mb-3">Edit Profile</span></h4>
-            <br />
-            <Form.Group controlId="formUsername" className="mb-3">
-                <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="text"
-                    name="username"
-                    minLength="6"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                />
-                <Form.Text muted>Min 6 characters</Form.Text>
-            </Form.Group>
+        <div className="p-2">
+            <h5 className="fw-bold mb-4">Edit Profile</h5>
+            <Form onSubmit={handleSubmit}>        
+                <Form.Group controlId="formUsername" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="username"
+                        minLength="6"
+                        value={formData.username}
+                        onChange={handleChange}
+                        className="w-75"
+                        required
+                    />
+                    <Form.Text muted>Min 6 characters</Form.Text>
+                </Form.Group>
 
-            <br />  
+                <Form.Group controlId="formEmail" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Email</Form.Label>
+                    <Form.Control
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </Form.Group>
 
-            <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label className="fw-bold text-muted small text-uppercase">Email</Form.Label> 
-                <Form.Control
-                    size="lg" 
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange} 
-                    required
-                />
-            </Form.Group>
+                <Form.Group controlId="formPassword" title="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">New Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Leave blank to keep current password"
+                        className="w-75"
+                        minLength="10"
+                    />
+                    <Form.Text className="text-muted">Min 10 characters</Form.Text>
+                </Form.Group>
 
-            <br />
+                <hr className="my-4 text-muted" />  
 
-            <Form.Group controlId="formPassword" title="mb-3">
-                <Form.Label className="fw-bold text-muted small text-uppercase">New Password</Form.Label>
-                <Form.Control
-                    size="lg"
-                    type="password"
-                    name="password"       
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Leave blank to keep current password"            
-                    minLength="10" 
-                />
-                <Form.Text className="text-muted">Min 10 characters</Form.Text>
-            </Form.Group>
+                <Form.Group controlId="formFirstName" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">First Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="firstName"
+                        className="w-75"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <br />  
+                <Form.Group controlId="formLastName" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Last Name:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="lastName"
+                        className="w-75"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Row className="mb-3">
-                <Col>
-                    <Form.Group controlId="formFirstName">
-                        <Form.Label className="fw-bold text-muted small text-uppercase">First Name</Form.Label>
-                        <Form.Control
-                            size="lg"
-                            type="text"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </Col>
-
-                <Col>
-                    <Form.Group controlId="formLastName">
-                        <Form.Label className="fw-bold text-muted small text-uppercase">Last Name:</Form.Label>
-                        <Form.Control
-                            size="lg"
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </Col>
-            
-                <Col>
-                    <Form.Group controlId="formBirthDate" className="mb-3">
-                        <Form.Label className="fw-bold text-muted small text-uppercase">Birth Date</Form.Label>
-                        <Form.Control
-                            size="lg"
-                            type="date"
-                            name="birthDate"
-                            value={formData.birthDate}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </Col>
-                </Row>
-            <div className="d-flex justify-content-between align-items-center mt-4">
-                <Button variant="primary" type="submit">Save Changes</Button>
-                <Button variant="outline-danger" type="button" onClick={handleReset}>Reset to Original</Button>
-            </div>
-        </Form>
+                <Form.Group controlId="formBirthDate" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Birth Date</Form.Label>
+                    <Form.Control
+                        type="date"
+                        name="birthDate"
+                        value={formData.birthDate}
+                        className="w-50"
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+                <Button variant="primary" type="submit" className="rounded-pill px-3 mb-3 w-100">Save Changes</Button>
+                <Button variant="outline-danger" size="sm" type="button" onClick={handleReset} className="rounded-pill mt-2 px-3 w-100 border-1">
+                    Reset
+                </Button>
+            </Form>
+        </div>
     );
 };
