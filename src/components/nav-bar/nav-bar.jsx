@@ -1,17 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/reducers/user";
 import { setFilter } from "../../redux/reducers/filter";
 import { clearToken } from "../../redux/reducers/token";
 import { useApi } from "../../hooks/useApi";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
-import "./nav-bar.scss";
-
 
 export const NavBar = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.filter);
-
     const { user } = useApi();
 
     const onLoggedOut = () => {
@@ -38,17 +36,27 @@ export const NavBar = () => {
                                         type="text"
                                         placeholder="Search movies..."
                                         value={filter}
-                                        className="search-input pe-5 bg-light"
-                                        onChange={(e) => dispatch(setFilter(e.target.value))}
+                                        className="search-input pe-5"
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            dispatch(setFilter(value));
+                                            
+                                            const isHome = window.location.pathname === "/";
+                                            const isProfile = window.location.pathname.includes("/users/");
+
+                                            if (!isHome && !isProfile) {
+                                                navigate("/");
+                                            }
+                                        }}
                                     />
                                     {filter && (
                                         <Button
                                             variant="link"
-                                            className="position-absolute end-0 top-50 translate-middle-y text-secondary text-decoration-none"
+                                            className="position-absolute end-0 top-50 text-muted pe-3 translate-middle-y text-decoration-none"
                                             onClick={clearFilter}
-                                            style={{ zIndex: 5 }}
+                                            style={{ zIndex: 5, fontSize: "0.8rem" }}
                                         >
-                                            x
+                                            <i className="bi bi-x-circle-fill"></i>
                                         </Button>
                                     )}
                                 </div>
