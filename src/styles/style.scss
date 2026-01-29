@@ -1,2 +1,8 @@
 @import "variables";
+@import "mixins";
 @import "~bootstrap/scss/bootstrap.scss";
+
+@import "../components/movie-view/movie-view.scss";
+@import "../components/movie-card/movie-card.scss";
+@import "../components/profile-view/profile-view.scss";
+@import "../components/nav-bar/nav-bar.scss";
