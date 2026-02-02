@@ -1,7 +1,7 @@
 .user-mngmt-column {
     @include glass-effect(0.9, 12px, 0.2);
-    background-color: rgba($bg-card, 0.9) !important;
-    border: 2px solid $brand-lavender !important;
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
     border-radius: 15px;
 
     .card-body {
@@ -10,49 +10,68 @@
 }
 
 .danger-zone-card {
-    background-color: rgba($danger, 0.8) !important;
-    border: 1px dashed rgba($danger, 0.4) !important;
-    transition: all 0.3s ease;
-    
+    border-radius: 15px;
+    background-color: rgba(255, 209, 213, 0.872) !important;
+    @include hover-lift(-2px, $danger);
+    transition: all 0.3s ease-in-out;
 
     &:hover {
-        background-color: rgba($danger, 0.08) !important;
-        border-style: solid;
-        box-shadow: 0 4px 12px rgba($danger, 0.1);
+        background-color: rgba(254, 235, 237, 0.936) !important;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 2.5px dashed rgba($danger, 0.8) !important;
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            border: 2.5px solid rgba($danger, 0.8) !important;
+        }
     }
 
     .card-title {
-        font-size: 1.1rem;
-        letter-spacing: 0.5px;
+        color: $danger;
+        font-size: 1.3rem;
+        letter-spacing: 0.9px;
     }
 }
 
 .my-faves {
-    background-color: $bg-card !important; 
-    border: 2px solid $brand-lavender;
-    margin-top: 1.5rem;
-}
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
+    border-radius: 15px;
 
-.favorite-poster-wrapper {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid $border-main !important;
-    box-shadow: 0 4px 8px $shadow-main;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    cursor: pointer;
+    .favorite-poster-wrapper {
+        position: relative;
+        aspect-ratio: 2 / 3;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid $border-main !important;
+        box-shadow: 0 4px 8px $shadow-main;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: $box-shadow-hover;
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 15px rgba($brand-purple, 0.6);
+        }
+    }
+
+    .favorite-poster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 
-.favorite-poster-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.search-card {
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
+    border-radius: 15px;
 }
 
 .custom-tabs {
