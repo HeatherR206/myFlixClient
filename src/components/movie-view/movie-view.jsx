@@ -1,14 +1,19 @@
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setFilter } from "../../redux/reducers/filter";
 import { useApi } from "../../hooks/useApi";
-import { Card, Col, Row, Button } from "react-bootstrap";
+import { Card, Col, Row, Button, Badge } from "react-bootstrap";
 import { API_URL } from "../../config";
 
 export const MovieView = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const movies = useSelector((state) => state.movies);
     const { authFetch, user } = useApi();
@@ -19,7 +24,7 @@ export const MovieView = () => {
     if (!movie) return <div>Movie not found in database</div>;
 
     const isFavorite = user?.favoriteMovies?.includes(movie._id);
-    
+
     const toggleFavorite = async () => {
         const method = isFavorite ? "DELETE" : "POST";
         const url = `${API_URL}/users/${user.username}/movies/${movie._id}`;
@@ -39,18 +44,17 @@ export const MovieView = () => {
                     const updatedFavorites = isFavorite
                         ? currentFavorites.filter((id) => id !== movie._id)
                         : [...currentFavorites, movie._id];
-                    
+
                     updatedUser = { ...user, favoriteMovies: updatedFavorites };
                 }
 
                 localStorage.setItem("user", JSON.stringify(updatedUser));
                 dispatch(setUser(updatedUser));
-
             } else {
                 if (response && response.status === 401) {
                     navigate("/login");
                 } else {
-                alert("Failed to update favorites.");
+                    alert("Failed to update favorites.");
                 }
             }
         } catch (error) {
@@ -59,66 +63,76 @@ export const MovieView = () => {
     };
 
     return (
-        <Row className="justify-content-center">
-            <Col xs={12} md={10} lg={8}>
-                <Card className="movie-view-card h-100 shadow-md">
-                    <Card.Img variant="top" src={movie.imagePath} className="img-fluid rounded-start" alt={movie.title} />
-                    <Card.Body>
-                        <div className="d-flex justify-content-between align-items-start mb-3">
-                            <Card.Title className="display-6 mb-0"><strong>{movie.title}</strong></Card.Title>
-                            <Button
-                                variant="link"
-                                onClick={toggleFavorite}
-                                className="glass-heart-button rounded-circle shadow-sm text-decoration-none"
-                                title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-                            >
-                                <i className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart text-dark"}`}></i>
-                            </Button>
-                        </div>
-                        
-                        <Card.Text className="mb-1 text-muted">
-                            <strong>Release Date: </strong>
-                            {movie.releaseDate ? new Date(movie.releaseDate).toLocaleDateString() : "N/A"}
-                        </Card.Text>
+        <Row className="justify-content-center mt-5 pb-5">
+            <Col lg={12}>
+                <Card className="movie-view-card shadow-lg overflow-hidden">
+                    <Row className="g-0">
+                        <Col lg={4}>
+                            <Card.Img
+                                src={movie.imagePath}
+                                className="img-fluid rounded-start h-100 object-fit-cover"
+                                alt={movie.title}
+                            />
+                        </Col>
 
-                        <br />
+                        <Col md={8}>
+                            <Card.Body className="p-4">
+                                <div className="d-flex justify-content-between align-items-start mb-3">
+                                    <h2 className="display-5 fw-bold mb-3">{movie.title}</h2>
+                                    <Button
+                                        variant="link"
+                                        onClick={toggleFavorite}
+                                        className="glass-heart-button rounded-circle shadow-sm"
+                                        title={
+                                            isFavorite
+                                                ? "Remove from Favorites"
+                                                : "Add to Favorites"
+                                        }
+                                    >
+                                        <i
+                                            className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart"}`}
+                                        ></i>
+                                    </Button>
+                                </div>
 
-                        <Card.Text>
-                            <strong>Summary: </strong>{movie.summary}
-                        </Card.Text>
+                                <Card.Text className="mb-3 text-muted">
+                                    <strong>Release Date: </strong>
+                                    {movie.releaseDate
+                                        ? new Date(movie.releaseDate).toLocaleDateString()
+                                        : "N/A"}
+                                </Card.Text>
 
-                        <hr />
+                                <p className="lead mb-4">{movie.summary}</p>
 
-                        <div className="mb-2">
-                            <strong>Genre(s): </strong>
-                            <span>
-                                {movie.genres?.map((g) => g.genreName).join(', ') || 'N/A'}
-                            </span>
-                        </div>
+                                <div className="movie-metadata mt-4">
+                                    <p>
+                                        <strong>Genre:</strong>{" "}
+                                        {movie.genres?.map((g) => g.genreName).join(", ")}
+                                    </p>
+                                    <p>
+                                        <strong>Director:</strong>{" "}
+                                        {movie.directors?.map((d) => d.directorName).join(", ")}
+                                    </p>
+                                    <p>
+                                        <strong>Cast:</strong>{" "}
+                                        {movie.cast?.map((c) => c.castName).join(", ")}
+                                    </p>
+                                </div>
 
-                        <div className="mb-2">
-                            <strong>Director(s): </strong>
-                            <span>
-                                {movie.directors?.map((d) => d.directorName).join(', ') || 'N/A'}
-                            </span>
-                        </div>
-
-                        <div className="mb-4">
-                            <strong>Cast: </strong>
-                            <span>
-                                {movie.cast?.map((c) => c.castName).join(', ') || 'N/A'}
-                            </span>
-                        </div>
-
-                        <Button 
-                            onClick={() => {
-                                dispatch(setFilter(""));
-                                navigate(-1);
-                            }}
-                            className="back-button rounded-pill">
-                            Back
-                        </Button>
-                    </Card.Body>
+                                <Button
+                                    size="lg"
+                                    variant="primary"
+                                    onClick={() => {
+                                        dispatch(setFilter(""));
+                                        navigate(-1);
+                                    }}
+                                    className="glow-on-hover mt-5"
+                                >
+                                    Back
+                                </Button>
+                            </Card.Body>
+                        </Col>
+                    </Row>
                 </Card>
             </Col>
         </Row>
