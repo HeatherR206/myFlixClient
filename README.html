@@ -1,245 +1,441 @@
-<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>&ast;&ast;myFlix Client &lpar;using React&rpar;&ast;&ast;</title>
-            <style>
-/* From extension vscode.github */
-/*---------------------------------------------------------------------------------------------
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>&ast;&ast;myFlix&colon; A Movie Discovery SPA&ast;&ast;</title>
+        <style>
+            /* From extension vscode.github */
+            /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-.vscode-dark img[src$=\#gh-light-mode-only],
-.vscode-light img[src$=\#gh-dark-mode-only],
-.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
-.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
-	display: none;
-}
+            .vscode-dark img[src$="\#gh-light-mode-only"],
+            .vscode-light img[src$="\#gh-dark-mode-only"],
+            .vscode-high-contrast:not(.vscode-high-contrast-light) img[src$="\#gh-light-mode-only"],
+            .vscode-high-contrast-light img[src$="\#gh-dark-mode-only"] {
+                display: none;
+            }
+        </style>
 
-</style>
-            
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-<style>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css"
+        />
+        <style>
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", system-ui, "Ubuntu",
+                    "Droid Sans", sans-serif;
                 font-size: 14px;
                 line-height: 1.6;
             }
         </style>
         <style>
-.task-list-item {
-    list-style-type: none;
-}
+            .task-list-item {
+                list-style-type: none;
+            }
 
-.task-list-item-checkbox {
-    margin-left: -20px;
-    vertical-align: middle;
-    pointer-events: none;
-}
-</style>
-<style>
-:root {
-  --color-note: #0969da;
-  --color-tip: #1a7f37;
-  --color-warning: #9a6700;
-  --color-severe: #bc4c00;
-  --color-caution: #d1242f;
-  --color-important: #8250df;
-}
+            .task-list-item-checkbox {
+                margin-left: -20px;
+                vertical-align: middle;
+                pointer-events: none;
+            }
+        </style>
+        <style>
+            :root {
+                --color-note: #0969da;
+                --color-tip: #1a7f37;
+                --color-warning: #9a6700;
+                --color-severe: #bc4c00;
+                --color-caution: #d1242f;
+                --color-important: #8250df;
+            }
+        </style>
+        <style>
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --color-note: #2f81f7;
+                    --color-tip: #3fb950;
+                    --color-warning: #d29922;
+                    --color-severe: #db6d28;
+                    --color-caution: #f85149;
+                    --color-important: #a371f7;
+                }
+            }
+        </style>
+        <style>
+            .markdown-alert {
+                padding: 0.5rem 1rem;
+                margin-bottom: 16px;
+                color: inherit;
+                border-left: 0.25em solid #888;
+            }
 
-</style>
-<style>
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-note: #2f81f7;
-    --color-tip: #3fb950;
-    --color-warning: #d29922;
-    --color-severe: #db6d28;
-    --color-caution: #f85149;
-    --color-important: #a371f7;
-  }
-}
+            .markdown-alert > :first-child {
+                margin-top: 0;
+            }
 
-</style>
-<style>
-.markdown-alert {
-  padding: 0.5rem 1rem;
-  margin-bottom: 16px;
-  color: inherit;
-  border-left: .25em solid #888;
-}
+            .markdown-alert > :last-child {
+                margin-bottom: 0;
+            }
 
-.markdown-alert>:first-child {
-  margin-top: 0
-}
+            .markdown-alert .markdown-alert-title {
+                display: flex;
+                font-weight: 500;
+                align-items: center;
+                line-height: 1;
+            }
 
-.markdown-alert>:last-child {
-  margin-bottom: 0
-}
+            .markdown-alert .markdown-alert-title .octicon {
+                margin-right: 0.5rem;
+                display: inline-block;
+                overflow: visible !important;
+                vertical-align: text-bottom;
+                fill: currentColor;
+            }
 
-.markdown-alert .markdown-alert-title {
-  display: flex;
-  font-weight: 500;
-  align-items: center;
-  line-height: 1
-}
+            .markdown-alert.markdown-alert-note {
+                border-left-color: var(--color-note);
+            }
 
-.markdown-alert .markdown-alert-title .octicon {
-  margin-right: 0.5rem;
-  display: inline-block;
-  overflow: visible !important;
-  vertical-align: text-bottom;
-  fill: currentColor;
-}
+            .markdown-alert.markdown-alert-note .markdown-alert-title {
+                color: var(--color-note);
+            }
 
-.markdown-alert.markdown-alert-note {
-  border-left-color: var(--color-note);
-}
+            .markdown-alert.markdown-alert-important {
+                border-left-color: var(--color-important);
+            }
 
-.markdown-alert.markdown-alert-note .markdown-alert-title {
-  color: var(--color-note);
-}
+            .markdown-alert.markdown-alert-important .markdown-alert-title {
+                color: var(--color-important);
+            }
 
-.markdown-alert.markdown-alert-important {
-  border-left-color: var(--color-important);
-}
+            .markdown-alert.markdown-alert-warning {
+                border-left-color: var(--color-warning);
+            }
 
-.markdown-alert.markdown-alert-important .markdown-alert-title {
-  color: var(--color-important);
-}
+            .markdown-alert.markdown-alert-warning .markdown-alert-title {
+                color: var(--color-warning);
+            }
 
-.markdown-alert.markdown-alert-warning {
-  border-left-color: var(--color-warning);
-}
+            .markdown-alert.markdown-alert-tip {
+                border-left-color: var(--color-tip);
+            }
 
-.markdown-alert.markdown-alert-warning .markdown-alert-title {
-  color: var(--color-warning);
-}
+            .markdown-alert.markdown-alert-tip .markdown-alert-title {
+                color: var(--color-tip);
+            }
 
-.markdown-alert.markdown-alert-tip {
-  border-left-color: var(--color-tip);
-}
+            .markdown-alert.markdown-alert-caution {
+                border-left-color: var(--color-caution);
+            }
 
-.markdown-alert.markdown-alert-tip .markdown-alert-title {
-  color: var(--color-tip);
-}
+            .markdown-alert.markdown-alert-caution .markdown-alert-title {
+                color: var(--color-caution);
+            }
+        </style>
+    </head>
+    <body class="vscode-body vscode-light">
+        <h2 id="myflix-a-movie-discovery-spa"><strong>myFlix: A Movie Discovery SPA</strong></h2>
+        <p>
+            A high-performance React application that allows users to explore a rich database of
+            movies, manage personal favorites, and customize their profile. This project showcases
+            the evolution from a basic React setup to a professional-grade architecture.
+        </p>
+        <hr />
+        <h3 id="-key-features"><strong>✨ Key Features</strong></h3>
+        <ul>
+            <li>
+                <p>
+                    <strong>Dynamic Movie Discovery:</strong> Responsive dual-layout
+                    (Grid/Horizontal) browsing with high-end Glassmorphic UI elements.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Global State Management:</strong> Centralized Redux Toolkit store for
+                    lag-free searching and real-time &quot;Favorite&quot; synchronization.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Advanced UI/UX:</strong> Custom SCSS design system featuring real-time
+                    password strength validation and reactive form fields with &quot;glow&quot;
+                    effects.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Secure Auth:</strong> Full JWT-based authentication flow integrated with
+                    a custom <code>useApi</code> hook for seamless session management.
+                </p>
+            </li>
+        </ul>
+        <hr />
+        <h3 id="-live-demo"><strong>🌐 Live Demo</strong></h3>
+        <p>
+            Live myFlix application:
+            <a href="https://myflixclient-five.vercel.app">https://myflixclient-five.vercel.app</a>
+        </p>
+        <p>
+            GitHub API Repository:
+            <a href="https://github.com/HeatherR206/myFlix.git"
+                >https://github.com/HeatherR206/myFlix.git</a
+            >
+        </p>
+        <h4 id="test-credentials"><strong>Test Credentials</strong></h4>
+        <p>
+            I encourage you to &quot;Signup&quot; but you can also explore myFlix as a
+            &quot;Guest&quot;: * <strong>Username:</strong> <code>myFlixGuest</code>
+            <strong>Password:</strong> <code>myFlixGuest8647!</code>
+        </p>
+        <hr />
+        <h3 id="️-technical-stack--architecture">
+            <strong>🛠️ Technical Stack &amp; Architecture</strong>
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Implementation</th>
+                    <th>Why?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Frontend</strong></td>
+                    <td>React 18+</td>
+                    <td>Component-based modularity.</td>
+                </tr>
+                <tr>
+                    <td><strong>State</strong></td>
+                    <td>Redux Toolkit</td>
+                    <td>&quot;Single Source of Truth&quot; for movie/user data.</td>
+                </tr>
+                <tr>
+                    <td><strong>Styling</strong></td>
+                    <td>SCSS / Bootstrap 5</td>
+                    <td>Variables and nesting for a maintainable design system.</td>
+                </tr>
+                <tr>
+                    <td><strong>Icons</strong></td>
+                    <td>Bootstrap Icons</td>
+                    <td>Interactive states (e.g., heart icons) for visual feedback.</td>
+                </tr>
+                <tr>
+                    <td><strong>Deployment</strong></td>
+                    <td>Vercel (CI/CD)</td>
+                    <td>Automated pipeline from GitHub to Production.</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+        <h3 id="-project-evolution-122025---012026">
+            <strong>📈 Project Evolution (12/2025 - 01/2026)</strong>
+        </h3>
+        <p>
+            This project has undergone a significant architectural refactor to improve scalability
+            and user experience.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: left">Feature</th>
+                    <th style="text-align: left">Dec 3 (Initial Setup)</th>
+                    <th style="text-align: left">Current State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: left"><strong>State Management</strong></td>
+                    <td style="text-align: left">Local <code>useState</code></td>
+                    <td style="text-align: left">Redux Toolkit (Global Store)</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left"><strong>Styling</strong></td>
+                    <td style="text-align: left">Basic CSS / Bootstrap</td>
+                    <td style="text-align: left">
+                        Modular SCSS with Glassmorphism and custom variables
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left"><strong>User Interaction</strong></td>
+                    <td style="text-align: left">Basic login</td>
+                    <td style="text-align: left">User Dashboard &amp; Favorite Movie Sync</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left"><strong>UX Design</strong></td>
+                    <td style="text-align: left">Text/Emoji Icons</td>
+                    <td style="text-align: left">Bootstrap Icons &amp; Real-time Validation</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left"><strong>API Integration</strong></td>
+                    <td style="text-align: left">Standard Fetch</td>
+                    <td style="text-align: left">Custom <code>useApi</code> Hook &amp; JWT Auth</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left"><strong>Deployment</strong></td>
+                    <td style="text-align: left">Localhost only</td>
+                    <td style="text-align: left">Live Production via Vercel and GitHub</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+        <h3 id="-project-structure--highlights">
+            <strong>📂 Project Structure &amp; Highlights</strong>
+        </h3>
+        <ul>
+            <li>
+                <p>
+                    <strong>Centralized API Logic:</strong> The custom <code>useApi</code> hook
+                    handles all authenticated fetch logic (headers and error states) in one place.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Global State:</strong> The use of <code>/redux</code> manages movie data
+                    and user favorites across the app.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Responsive Design System:</strong> SASS variables
+                    (<code>variables.scss</code>) enable glassmorphism, mixins, and modular styling.
+                    <strong>Bootstrap Grid</strong> ensures the form inputs are visually organized
+                    across mobile and desktop and eliminates the &quot;staircase&quot; effect in
+                    forms.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>User Feedback Tools:</strong> Real-time
+                    <strong>Password Strength Meter</strong> and interactive heart icons for
+                    favorites.
+                </p>
+            </li>
+        </ul>
+        <h4 id="project-structure"><strong>Project Structure</strong></h4>
+        <pre><code class="language-text">src/
+├── components/                 # UI Components (Login, MovieView, Signup)
+│   └── [Component]/            # Component-specific logic and style
+│       ├── [Component].jsx
+│       └── [Component].scss
+├── hooks/
+│   └── useApi.js               # Centralized API logic and Custom Auth Hooks
+├── redux/
+│   ├── reducers/               # Redux Toolkit Slices (User/Movies)               
+│   └── store.js                # Global State &quot;Single Source of Truth&quot;
+├── styles/                     # SCSS Design System
+│   ├── variables.scss          # Brand colors and theme overrides
+│   └── style.scss              # Global entry point and layout rules
+├── config.js                   # Centralized API_URL and environment settings
+└── index.jsx                   # Application entry point
 
-.markdown-alert.markdown-alert-caution {
-  border-left-color: var(--color-caution);
-}
+</code></pre>
+        <hr />
+        <h3 id="-getting-started"><strong>🚀 Getting Started</strong></h3>
+        <h4 id="1-prerequisites"><strong>1. Prerequisites</strong></h4>
+        <ul>
+            <li><strong>Node.js</strong> (LTS)</li>
+            <li><strong>A running instance of myFlix API</strong> (The backend server)</li>
+        </ul>
+        <h4 id="2-installation"><strong>2. Installation</strong></h4>
+        <pre><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/HeatherR206/myFlixClient.git
+<span class="hljs-built_in">cd</span> myFlixClient
+npm install
 
-.markdown-alert.markdown-alert-caution .markdown-alert-title {
-  color: var(--color-caution);
-}
+</code></pre>
+        <h4 id="3-environmental-configuration"><strong>3. Environmental Configuration</strong></h4>
+        <p>Create a <code>.env</code> file in the root directory:</p>
+        <pre><code class="language-text">API_URL=http://localhost:8080
 
-</style>
-        
-        </head>
-        <body class="vscode-body vscode-light">
-            <h1 id="myflix-client-using-react"><strong>myFlix Client (using React)</strong></h1>
-<p>This is a full-stack movie application designed to showcase a comprehensive <strong>RESTful API</strong> architecture alongside a modern client-side experience. The server is built using <strong>Node.js</strong> with <strong>Express</strong> and interacts with a <strong>MongoDB Atlas</strong> database to handle user authentication, movie data storage, and retrieval.</p>
-<p>The client-side is a <strong>Single Page Application (SPA)</strong> currently under development, built with <strong>React</strong> and managed using <strong>Yarn</strong>. <strong>Parcel</strong> is utilized as the blazing-fast, zero-configuration web application bundler for development and production builds. This project emphasizes a clear separation between a robust API and a dynamic, component-based frontend.</p>
-<br>
-<hr>  
-<h2 id="tech-stack"><strong>Tech Stack</strong></h2>
-<h3 id="server--database-completed"><strong>Server &amp; Database (Completed)</strong></h3>
-<ul>
-<li><strong>Server Language/Runtime:</strong> Node.js</li>
-<li><strong>Server Framework:</strong> Express</li>
-<li><strong>Database:</strong> MongoDB Atlas</li>
-<li><strong>API Host:</strong> Heroku</li>
-<li><strong>Authentication/Data Security:</strong> bcrypt, passport, JSON Web Tokens (JWT), CORS, express-validator, environment variables</li>
-</ul>
-<h3 id="client-under-development"><strong>Client (Under Development)</strong></h3>
-<ul>
-<li><strong>Frontend Library:</strong> React (component-based UI)</li>
-<li><strong>Language:</strong> JavaScript (ES6+)</li>
-<li><strong>Build Tool/Bundler:</strong> Parcel (zero-config build tool)</li>
-<li><strong>Package Manager:</strong> Yarn (installs dependencies consistently)</li>
-</ul>
-<br>
-<hr>
-<h2 id="getting-started"><strong>Getting Started</strong></h2>
-<h3 id="prerequisites"><strong>Prerequisites</strong></h3>
-<p>You will need to globally install the following software on your machine:</p>
-<ul>
-<li><strong>Node.js</strong> (LTS recommended)</li>
-<li><strong>Yarn</strong> (or preferred package manager)</li>
-<li><strong>MongoDB Community Server</strong> (or preferred database software)</li>
-</ul>
-<br>
-<h3 id="installation"><strong>Installation</strong></h3>
-<ol>
-<li><strong>Clone the repository</strong><pre class="language-md">git clone at https://github.com/HeatherR206/myFlix-client.git
-cd myFlix
-</pre>
-</li>
-</ol>
-<br>
-<ol start="2">
-<li><strong>Install Server Dependencies</strong><pre class="language-md">cd server
-yarn install
-</pre>
-</li>
-</ol>
-<br>
-<ol start="3">
-<li><strong>Install Client Dependencies</strong><pre class="language-md">cd ../client
-yarn install
-</pre>
-</li>
-</ol>
-<br>
-<h3 id="configuration"><strong>Configuration</strong></h3>
-<ol>
-<li>
-<p><strong>Server Setup</strong></p>
-<ul>
-<li>Create a file named &quot;.env&quot; inside the /server directory</li>
-<li>Add your environment variables (e.g. database connection string, JWT secret key)</li>
-</ul>
-<p><strong>Code snippet example</strong></p>
-<pre class="language-md">MONGODB_URI=mongodb://localhost:27017/myFlixDB
-jwtSecret=your_jwt_secret
-port=8080
-</pre>
-</li>
-</ol>
-<br>
-<h3 id="deployment"><strong>Deployment</strong></h3>
-<p>These steps will set you up to run the project locally.</p>
-<ol>
-<li><strong>Start the Database</strong>
-<ul>
-<li>Make sure your <strong>database</strong> server (e.g. MongoDB Atlas) is running</li>
-</ul>
-</li>
-</ol>
-<br>
-<ol>
-<li><strong>Start your Server/API</strong><pre class="language-md">// In the /server directory
-yarn start
-// The server will run on http://localhost:8080 (or your configured port)
-</pre>
-</li>
-</ol>
-<br>
-<ol start="3">
-<li><strong>Start the Client/Frontend</strong><pre class="language-md">// In the /client directory
-yarn start
-// The app will open your browser, likely at http://localhost:1234
-</pre>
-</li>
-</ol>
-<br>
-<hr>
-<h2 id="contact"><strong>Contact</strong></h2>
-<p><strong>Author:</strong> Heather Ricarte<br>
-<strong>Email:</strong> <a href="mailto:ricarte.heather@gmail.com">ricarte.heather@gmail.com</a></p>
+</code></pre>
+        <h4 id="4-run-development"><strong>4. Run Development</strong></h4>
+        <pre><code class="language-bash">npm start
+<span class="hljs-comment"># The app will launch at http://localhost:1234 (Parcel)</span>
 
-            
-            
-        </body>
-        </html>
+</code></pre>
+        <hr />
+        <h3 id="-references--documentation"><strong>📚 References &amp; Documentation</strong></h3>
+        <p>
+            Please refer to the official documentation for information on the core technologies used
+            in this project:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <strong>Frontend Architecture:</strong>
+                    <a href="https://react.dev/">React 18+</a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Global State:</strong>
+                    <a href="https://redux-toolkit.js.org/">Redux Toolkit</a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Styling &amp; UI:</strong>
+                    <a href="https://sass-lang.com/documentation/">SASS/SCSS</a> &amp;
+                    <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/"
+                        >Bootstrap 5</a
+                    >
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Icons:</strong>
+                    <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                </p>
+            </li>
+            <li>
+                <p><strong>Build Tooling:</strong> <a href="https://parceljs.org/">Parcel</a></p>
+            </li>
+            <li>
+                <p><strong>Deployment:</strong> <a href="https://vercel.com/docs">Vercel</a></p>
+            </li>
+        </ul>
+        <hr />
+        <h3 id="contact"><strong>Contact</strong></h3>
+        <p>
+            <strong>Heather Ricarte</strong> -
+            <a href="mailto:ricarte.heather@gmail.com">ricarte.heather@gmail.com</a>
+        </p>
+        <h4 id="-license"><strong>📜 License</strong></h4>
+        <p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
+        <h4 id="-how-to-contribute"><strong>🤝 How to Contribute</strong></h4>
+        <p>
+            I am always looking to improve myFlix! If you have suggestions for new features, UI
+            improvements, or bug fixes, feel free to contribute:
+        </p>
+        <ol>
+            <li><strong>Fork the Project</strong></li>
+            <li>
+                <strong>Create your Feature Branch</strong> (<code
+                    >git checkout -b feature/AmazingFeature</code
+                >)
+            </li>
+            <li>
+                <strong>Commit your Changes</strong> (<code
+                    >git commit -m 'Add some AmazingFeature'</code
+                >)
+            </li>
+            <li>
+                <strong>Push to the Branch</strong> (<code
+                    >git push origin feature/AmazingFeature</code
+                >)
+            </li>
+            <li><strong>Open a Pull Request</strong></li>
+        </ol>
+        <p>
+            For major changes, please open an issue first to discuss what you would like to change.
+        </p>
+        <hr />
+    </body>
+</html>
