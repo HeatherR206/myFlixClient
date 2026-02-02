@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Client-Side repo for myFlix movie app",
   "scripts": {
+    "clean": "rm -rf .parcel-cache dist",
+    "prestart": "npm run clean",
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --dist-dir dist"
+    "build": "npm run clean && parcel build src/index.html --dist-dir dist"
   },
   "repository": {
     "type": "git",
