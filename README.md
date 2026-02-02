@@ -1,110 +1,168 @@
-# **myFlix Client (using React)**
+## **myFlix: A Movie Discovery SPA**
 
-This is a full-stack movie application designed to showcase a comprehensive **RESTful API** architecture alongside a modern client-side experience. The server is built using **Node.js** with **Express** and interacts with a **MongoDB Atlas** database to handle user authentication, movie data storage, and retrieval. 
+A high-performance React application that allows users to explore a rich database of movies, manage personal favorites, and customize their profile. This project showcases the evolution from a basic React setup to a professional-grade architecture.
 
-The client-side is a **Single Page Application (SPA)** currently under development, built with **React** and managed using **Yarn**. **Parcel** is utilized as the blazing-fast, zero-configuration web application bundler for development and production builds. This project emphasizes a clear separation between a robust API and a dynamic, component-based frontend.
+---
 
-<br>   
+### **✨ Key Features**
 
-## **Tech Stack**
-### **Server & Database (Completed)**
+* **Dynamic Movie Discovery:** Responsive dual-layout (Grid/Horizontal) browsing with high-end Glassmorphic UI elements.
 
-- **Server Language/Runtime:** Node.js
-- **Server Framework:** Express
-- **Database:** MongoDB Atlas
-- **API Host:** Heroku
-- **Authentication/Data Security:** bcrypt, passport, JSON Web Tokens (JWT), CORS, express-validator, environment variables
+* **Global State Management:** Centralized Redux Toolkit store for lag-free searching and real-time "Favorite" 
+synchronization. 
 
-### **Client (Under Development)**
-- **Frontend Library:** React (component-based UI)
-- **Language:** JavaScript (ES6+)
-- **Build Tool/Bundler:** Parcel (zero-config build tool)
-- **Package Manager:** Yarn (installs dependencies consistently)
+* **Advanced UI/UX:** Custom SCSS design system featuring real-time password strength validation and reactive form fields with "glow" effects. 
 
-<br>
+* **Secure Auth:** Full JWT-based authentication flow integrated with a custom `useApi` hook for seamless session management.
 
-## **Getting Started**
-### **Prerequisites**
-You will need to globally install the following software on your machine:
+---
 
-- **Node.js** (LTS recommended)
-- **Yarn** (or preferred package manager)
-- **MongoDB Community Server** (or preferred database software) 
+### **🌐 Live Demo**
 
-<br>
+Live myFlix application: https://myflixclient-five.vercel.app
 
-### **Installation**
-1. **Clone the repository**
-    
-    ```md
-    git clone at https://github.com/HeatherR206/myFlix-client.git
-    cd myFlix
-    ```
+GitHub API Repository: https://github.com/HeatherR206/myFlix.git
 
-<br>
+#### **Test Credentials**
+I encourage you to "Signup" but you can also explore myFlix as a "Guest":
+*
+**Username:** `myFlixGuest`
+**Password:** `myFlixGuest8647!`
 
-2. **Install Server Dependencies**
-    
-    ```md
-    cd server
-    yarn install
-    ```
+---
 
-<br>
+### **🛠️ Technical Stack & Architecture**
 
-3. **Install Client Dependencies**
-    
-    ```md
-    cd ../client
-    yarn install
-    ```
+| Feature        | Implementation     | Why?                                                        |
+| -------------- | ------------------ | ----------------------------------------------------------- |
+| **Frontend**   | React 18+          | Component-based modularity.                                 |
+| **State**      | Redux Toolkit      | "Single Source of Truth" for movie/user data.               |
+| **Styling**    | SCSS / Bootstrap 5 | Variables and nesting for a maintainable design system.     |
+| **Icons**      | Bootstrap Icons    | Interactive states (e.g., heart icons) for visual feedback. |
+| **Deployment** | Vercel (CI/CD)     | Automated pipeline from GitHub to Production.               |
 
-<br>
+---
 
-### **Configuration**
+### **📈 Project Evolution (12/2025 - 01/2026)**
 
-1. **Server Setup**
-    - Create a file named ".env" inside the /server directory
-    - Add your environment variables (e.g. database connection string, JWT secret key)
+This project has undergone a significant architectural refactor to improve scalability and user experience.
 
-    **Code snippet example**
+| Feature              | Dec 3 (Initial Setup) | Current State                                        |
+| :------------------- | :-------------------- | :--------------------------------------------------- |
+| **State Management** | Local `useState`      | Redux Toolkit (Global Store)                         |
+| **Styling**          | Basic CSS / Bootstrap | Modular SCSS with Glassmorphism and custom variables |
+| **User Interaction** | Basic login           | User Dashboard & Favorite Movie Sync                 |
+| **UX Design**        | Text/Emoji Icons      | Bootstrap Icons & Real-time Validation               |
+| **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Auth                      |
+| **Deployment**       | Localhost only        | Live Production via Vercel and GitHub                |
 
-    ```md
-    MONGODB_URI=mongodb://localhost:27017/myFlixDB
-    jwtSecret=your_jwt_secret
-    port=8080
-    ```
+---
 
-<br>
- 
-### **Deployment**
-These steps will set you up to run the project locally.   
+### **📂 Project Structure & Highlights**
 
-1. **Start the Database**
-    - Make sure your **database** server (e.g. MongoDB Atlas) is running 
+* **Centralized API Logic:** The custom `useApi` hook handles all authenticated fetch logic (headers and error states) in one place.
+* **Global State:** The use of `/redux` manages movie data and user favorites across the app.
 
-<br>
+* **Responsive Design System:** SASS variables (`variables.scss`) enable glassmorphism, mixins, and modular styling. **Bootstrap Grid** ensures the form inputs are visually organized across mobile and desktop and eliminates the "staircase" effect in forms.
 
-1. **Start your Server/API**
-    
-    ```md
-    // In the /server directory
-    yarn start
-    // The server will run on http://localhost:8080 (or your configured port)
-    ```
+* **User Feedback Tools:** Real-time **Password Strength Meter** and interactive heart icons for favorites.
 
-<br>
 
-3. **Start the Client/Frontend**
-    
-    ```md
-    // In the /client directory
-    yarn start
-    // The app will open your browser, likely at http://localhost:1234
-    ```
+#### **Project Structure**
 
-<br>
+```text
+src/
+├── components/                 # UI Components (Login, MovieView, Signup)
+│   └── [Component]/            # Component-specific logic and style
+│       ├── [Component].jsx
+│       └── [Component].scss
+├── hooks/
+│   └── useApi.js               # Centralized API logic and Custom Auth Hooks
+├── redux/
+│   ├── reducers/               # Redux Toolkit Slices (User/Movies)               
+│   └── store.js                # Global State "Single Source of Truth"
+├── styles/                     # SCSS Design System
+│   ├── variables.scss          # Brand colors and theme overrides
+│   └── style.scss              # Global entry point and layout rules
+├── config.js                   # Centralized API_URL and environment settings
+└── index.jsx                   # Application entry point
 
-## **Contact**
-**Author:** Heather Ricarte    
-**Email:** ricarte.heather@gmail.com 
+```
+
+---
+
+### **🚀 Getting Started**
+
+#### **1. Prerequisites**
+
+* **Node.js** (LTS)
+* **A running instance of myFlix API** (The backend server)
+
+#### **2. Installation**
+
+```bash
+git clone https://github.com/HeatherR206/myFlixClient.git
+cd myFlixClient
+npm install
+
+```
+
+#### **3. Environmental Configuration**
+
+Create a `.env` file in the root directory:
+
+```text
+API_URL=http://localhost:8080
+
+```
+
+#### **4. Run Development**
+
+```bash
+npm start
+# The app will launch at http://localhost:1234 (Parcel)
+
+```
+
+---
+
+
+### **📚 References & Documentation**
+
+Please refer to the official documentation for information on the core technologies used in this project:
+
+* **Frontend Architecture:** [React 18+](https://react.dev/)
+
+* **Global State:** [Redux Toolkit](https://redux-toolkit.js.org/)
+
+* **Styling & UI:** [SASS/SCSS](https://sass-lang.com/documentation/) & [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+
+* **Icons:** [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+* **Build Tooling:** [Parcel](https://parceljs.org/)
+
+* **Deployment:** [Vercel](https://vercel.com/docs)
+
+---
+
+### **Contact**
+
+**Heather Ricarte** - [ricarte.heather@gmail.com](mailto:ricarte.heather@gmail.com)
+
+
+#### **📜 License**
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+#### **🤝 How to Contribute**
+I am always looking to improve myFlix! If you have suggestions for new features, UI improvements, or bug fixes, feel free to contribute:
+
+1. **Fork the Project**
+2. **Create your Feature Branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your Changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the Branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+For major changes, please open an issue first to discuss what you would like to change.
+
+---
