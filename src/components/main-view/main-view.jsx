@@ -37,7 +37,7 @@ export const MainView = () => {
 
             try {
                 const response = await authFetch(`${API_URL}/movies`);
-            
+
                 if (response && response.ok) {
                     const moviesData = await response.json();
                     dispatch(setMovies(moviesData));
@@ -57,8 +57,8 @@ export const MainView = () => {
         return () => {
             dispatch(setFilter(""));
         };
-    }, [dispatch]);    
-            
+    }, [dispatch]);
+
     return (
         <>
             <NavBar />
@@ -67,52 +67,70 @@ export const MainView = () => {
                     <Routes>
                         <Route
                             path="/signup"
-                            element={user ? <Navigate to="/" /> : (
-                                <Col md={6}>
-                                    <Card className="mt-4 shadow-sm">
-                                        <Card.Body>
-                                            <Card.Title className="fw-bold text-center mb-4">Create Account</Card.Title>
-                                            <SignupView />
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            )}
+                            element={
+                                user ? (
+                                    <Navigate to="/" />
+                                ) : (
+                                    <Col md={6}>
+                                        <Card className="mt-4 shadow-sm">
+                                            <Card.Body>
+                                                <SignupView />
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                )
+                            }
                         />
 
                         <Route
                             path="/login"
-                            element={user ? <Navigate to="/" /> : (
-                                <Col md={6}>
-                                    <Card className="mt-4 shadow-sm">
-                                        <Card.Body>
-                                            <Card.Title className="fw-bold text-center mb-4">Login</Card.Title>
-                                            <LoginView />
-                                        </Card.Body>                              
-                                    </Card>
-                                </Col>
-                            )}
+                            element={
+                                user ? (
+                                    <Navigate to="/" />
+                                ) : (
+                                    <Col md={6}>
+                                        <Card className="mt-4 shadow-sm">
+                                            <Card.Body>
+                                                <LoginView />
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                )
+                            }
                         />
 
                         <Route
                             path="/users/:username"
-                            element={!user ? <Navigate to="/login" replace /> : (
-                                <Col md={12}><ProfileView /></Col>
-                            )}
-                        /> 
+                            element={
+                                !user ? (
+                                    <Navigate to="/login" replace />
+                                ) : (
+                                    <Col md={12}>
+                                        <ProfileView />
+                                    </Col>
+                                )
+                            }
+                        />
 
                         <Route
                             path="/movies/:movieId"
-                            element={!user ? <Navigate to="/login" replace /> : (
-                                <Col md={8}><MovieView /></Col>
-                            )}
-                        />  
+                            element={
+                                !user ? (
+                                    <Navigate to="/login" replace />
+                                ) : (
+                                    <Col md={12}>
+                                        <MovieView />
+                                    </Col>
+                                )
+                            }
+                        />
 
                         <Route
                             path="/"
                             element={
                                 !user || !token ? (
                                     <Navigate to="/login" replace />
-                                ) : (loading && movies.length === 0) ? (
+                                ) : loading && movies.length === 0 ? (
                                     <Col className="text-center mt-5">
                                         <Spinner animation="border" variant="primary" />
                                         <p className="mt-2 text-muted">Loading movies...</p>
@@ -124,22 +142,25 @@ export const MainView = () => {
                                 ) : filteredMovies.length === 0 ? (
                                     <Col md={12} className="text-center mt-5">
                                         <p>No movies found matching "{filter}"</p>
-                                        <Button variant="outline-primary" onClick={() => dispatch(setFilter(""))}>
+                                        <Button
+                                            variant="outline-primary"
+                                            onClick={() => dispatch(setFilter(""))}
+                                        >
                                             Clear Search
                                         </Button>
                                     </Col>
                                 ) : (
                                     filteredMovies.map((movie) => (
-                                        <Col className="mb-5" key={movie._id} md={4} lg={3}>
+                                        <Col className="mb-5" key={movie._id} md={5} lg={4}>
                                             <MovieCard movie={movie} />
                                         </Col>
                                     ))
                                 )
                             }
-                        />    
+                        />
                     </Routes>
                 </Row>
             </Container>
-        </>    
+        </>
     );
 };

@@ -1,20 +1,14 @@
-.custom-card-border, .custom-card-horizontal {
-    .more-button {        
-        width: 100%;
-        color: $text-alt;
-        background-color: $brand-purple;
-        border: 1px solid $brand-lavender;
-        cursor: pointer;
-        @include hover-lift(0, $brand-lavender);
-
-        &:hover {
-            background-color: $brand-lavender !important;
-            color: $text-main !important;
-            border-color: $brand-purple !important;
+.custom-card-border,
+.custom-card-horizontal {
+    .more-button {
+        &.horizonal {
+            padding: 8px;
+            font-size: 0.5rem;
         }
-
-        &.horizonal { padding: 8px; font-size: 0.5rem; }
-        &.vertical { padding: 12px 16px; font-size: $font-size-base; }
+        &.vertical {
+            padding: 12px 16px;
+            font-size: $font-size-base;
+        }
     }
 
     .glass-heart-button {
@@ -24,8 +18,34 @@
         align-items: center;
         justify-content: center;
         padding: 0;
-        z-index: 10;    
-        @include glass-effect(0.6, 8px, 0.3);
+        text-decoration: none !important;
+        z-index: 10;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: rgba(255, 255, 255, 0.4) !important;
+        backdrop-filter: blur(15px) saturate(200%) contrast(110%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border: 1px solid rgba(190, 190, 190, 0.539) !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+        &.rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        &:hover {
+            background: rgba($brand-purple, 0.1) !important;
+            border: 1px solid $brand-purple !important;
+            transform: scale(1.2) translateY(-3px);
+            box-shadow: 0 8px 25px rgba($brand-purple, 0.2);
+
+            i {
+                color: $brand-purple !important;
+            }
+        }
+
+        &:active {
+            transform: scale(0.9) translateY(0);
+            background: rgba($brand-purple, 0.2) !important;
+        }
 
         &.vertical {
             position: absolute;
@@ -40,7 +60,7 @@
             position: static;
             flex-shrink: 0;
         }
-        
+
         &:hover {
             background: rgba(255, 255, 255, 0.8) !important;
             transform: scale(1.1) translateY(-2px);
@@ -48,13 +68,15 @@
         }
 
         i {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             font-style: normal;
-            &.horizontal { font-size: 1rem; }
+            &.horizontal {
+                font-size: 1rem;
+            }
         }
     }
 }
@@ -83,7 +105,7 @@
 }
 
 .custom-card-horizontal {
-    border: 2px solid $border-main; 
+    border: 2px solid $border-main;
     border-radius: 12px;
     overflow: hidden;
     margin: 1rem;
@@ -92,7 +114,11 @@
     .horizontal-poster-wrapper {
         height: 150px;
         overflow: hidden;
-        img { height: 100%; min-height: 100%; object-fit: cover; }
+        img {
+            height: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
     }
 
     .card-title {
@@ -114,8 +140,8 @@
 }
 
 .custom-badge-outline {
-    color: $bg-main !important;
-    border: 1.5px solid $bg-main;
+    color: $border-main !important;
+    border: 1.5px solid $border-main;
     background-color: transparent;
     padding: 0.4em 0.8em;
     font-weight: 600;
@@ -124,8 +150,8 @@
 
 .text-truncate-container {
     display: -webkit-box;
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical;  
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 4.5em; 
+    height: 4.5em;
 }

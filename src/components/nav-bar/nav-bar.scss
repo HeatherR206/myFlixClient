@@ -14,41 +14,25 @@
         text-transform: lowercase;
     }
 
-    .nav-link {
-        color: $text-alt;
-        transition: all 0.3s ease;
-        font-weight: $font-weight-bolder;
-        font-size: 1rem;
-        text-transform: capitalize;
+    .navbar-nav {
+        .nav-link {
+            color: $text-alt !important;
+            transition: all 0.3s ease;
+            font-weight: $font-weight-bold;
+            font-size: 1rem;
+            text-transform: capitalize;
 
-        &:hover {
-            color: $brand-lavender !important;
-            transform: translateY(-1px);
-        }
+            &:hover {
+                color: $brand-lavender !important;
+                transform: translateY(-1px);
+            }
 
-        &:active {
-            color: $brand-green !important;
-        }
-    }
-
-    .search-input {
-        background-color: $text-alt;
-        color: $text-main;
-        border: 2px solid transparent;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        min-width: 250px;
-
-        &::placeholder {
-            color: $border-main;
-        }
-
-        &:focus {
-            background-color: #fff;
-            color: $text-main;
-            border-color: $brand-green;
-            box-shadow: 0 0 0 0.25rem rgba($brand-green, 0.4);
-            outline: none;
+            &.active {
+                color: $brand-green !important;
+                font-weight: $font-weight-bolder;
+                border-bottom: 2px solid $brand-green;
+                cursor: default;
+            }
         }
     }
 }
