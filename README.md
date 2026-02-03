@@ -4,16 +4,21 @@ A high-performance React application that allows users to explore a rich databas
 
 ---
 
-### **✨ Key Features**
+### **✨ Key Features**   
 
-* **Dynamic Movie Discovery:** Responsive dual-layout (Grid/Horizontal) browsing with high-end Glassmorphic UI elements.
+
+* **Authentication:** User signup/login with JWT-based persistence.
+  
+* **Password Security:** Real-time strength validation and visibility toggling.
+  
+* **Movie Discovery:** Filterable movie database with detailed director and genre views.
 
 * **Global State Management:** Centralized Redux Toolkit store for lag-free searching and real-time "Favorite" 
 synchronization. 
 
-* **Advanced UI/UX:** Custom SCSS design system featuring real-time password strength validation and reactive form fields with "glow" effects. 
+* **Responsive UI/UX:** A unified, functional aesthetic using Glassmorphism design, interactive components horizontal/vertical layouts, and independent column scrolling. 
 
-* **Secure Auth:** Full JWT-based authentication flow integrated with a custom `useApi` hook for seamless session management.
+* **Account Management:** User profile updates and secure account deletion with modal confirmation.
 
 ---
 
@@ -33,13 +38,15 @@ I encourage you to "Signup" but you can also explore myFlix as a "Guest":
 
 ### **🛠️ Technical Stack & Architecture**
 
-| Feature        | Implementation     | Why?                                                        |
-| -------------- | ------------------ | ----------------------------------------------------------- |
-| **Frontend**   | React 18+          | Component-based modularity.                                 |
-| **State**      | Redux Toolkit      | "Single Source of Truth" for movie/user data.               |
-| **Styling**    | SCSS / Bootstrap 5 | Variables and nesting for a maintainable design system.     |
-| **Icons**      | Bootstrap Icons    | Interactive states (e.g., heart icons) for visual feedback. |
-| **Deployment** | Vercel (CI/CD)     | Automated pipeline from GitHub to Production.               |
+| Feature        | Implementation        | Why?                                                             |
+| -------------- | --------------------- | ---------------------------------------------------------------- |
+| **Frontend**   | React, React-Boostrap | Modular component architecture for a responsive SPA              |
+| **State**      | Redux Toolkit         | Centralized "Single Source of Truth" for movie and user data.    |
+| **Routing**    | React Router v6       | Optimized `NavLink` logic for active state tracking.             |
+| **Styling**    | SCSS (Sass)           | Scalable design system using mixins, variables, and nested rules |
+| **Security**   | Zxcvbn-style logic    | Client-side password validation with visual feedback.            |
+| **Build Tool** | Parcel                | Zero-config bundling with "clean" scripts for deployment.        |
+| **Dev Ops**    | Vercel & Prettier     | CI/CD automation and envorded code formatting consistency.       |
 
 ---
 
@@ -72,7 +79,7 @@ This project has undergone a significant architectural refactor to improve scala
 
 ```text
 src/
-├── components/                 # UI Components (Login, MovieView, Signup)
+├── components/                 # UI Components (Login, MovieView, Signup, etc.)
 │   └── [Component]/            # Component-specific logic and style
 │       ├── [Component].jsx
 │       └── [Component].scss
