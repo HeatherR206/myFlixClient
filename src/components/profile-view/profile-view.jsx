@@ -20,12 +20,6 @@ export const ProfileView = () => {
 
     const { authFetch, user } = useApi();
 
-    useEffect(() => {
-        return () => {
-            dispatch(setFilter(""));
-        };
-    }, [dispatch]);
-
     const favoriteMovies = allMovies.filter((m) => user?.favoriteMovies?.includes(m._id));
 
     const filterFavorites = favoriteMovies.filter((m) =>
@@ -88,32 +82,24 @@ export const ProfileView = () => {
     if (!user) return <div className="text-center mt-5">Loading user profile...</div>;
 
     return (
-        <Container className="profile-view mt-4">
-            <Row>
+        <Container fluid className="profile-view-container mt-3">
+            <Row className="profile-view-row">
                 <Col
                     lg={5}
-                    className="mb-4"
+                    className="mb-4 left-hide-scrollbar"
                     style={{
-                        maxHeight: "85vh",
+                        maxHeight: "90vh",
                         overflowY: "auto",
-                        scrollbarWidth: "none",
-                        msOverflowStyle: "none",
+                        paddingRight: "15px",
                     }}
                 >
-                    <div className="d-flex flex-column gap-3 pe-2">
+                    <div className="d-flex flex-column gap-3">
                         <Card className="user-mngmt-column shadow-sm border-0">
-                            <Card.Body
-                                className="p-4"
-                                style={{
-                                    maxHeight: "70vh",
-                                    overflowY: "auto",
-                                    scrollbarWidth: "thin",
-                                }}
-                            >
+                            <Card.Body className="p-4">
                                 <Tabs
                                     defaultActiveKey="info"
                                     id="profile-tabs"
-                                    className="mb-3 custom-tabs"
+                                    className="custom-tabs text-sm"
                                 >
                                     <Tab eventKey="info" title="Account Details">
                                         <div className="mt-3">
@@ -133,7 +119,7 @@ export const ProfileView = () => {
                                 <Card.Title className="fw-extra-bold text-danger mb-3">
                                     ! Danger Zone !
                                 </Card.Title>
-                                <div className="fw-bold  text-muted mb-1">
+                                <div className="fw-bold text-muted mb-1">
                                     Deleting your account is <strong>permanent</strong> and will
                                     erase all saved data.
                                 </div>
@@ -153,9 +139,8 @@ export const ProfileView = () => {
                     lg={7}
                     className="mb-4 right-scroll-column"
                     style={{
-                        maxHeight: "85vh",
+                        maxHeight: "90vh",
                         overflowY: "auto",
-                        paddingRight: "10px",
                     }}
                 >
                     {filter.length > 0 && (
@@ -253,31 +238,30 @@ export const ProfileView = () => {
                         Confirm Account Deletion
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="text-center py-4">
+                <Modal.Body className="text-center mb-3 py-4">
                     <i
-                        className="bi bi-exclamation-triangle-fill text-danger mb-3"
+                        className="bi bi-exclamation-triangle-fill text-danger mb-4"
                         style={{ fontSize: "3rem" }}
                     ></i>
-                    <h5>Are you certain you want to delete your account?</h5>
-                    <p className="text-muted">
-                        This will <strong>permanently</strong> delete your profile and favorite
-                        movies list. <strong>This action cannot be undone.</strong>
-                    </p>
+                    <h5>Are you absolutely certain?</h5>
+                    <p className="text-muted">This will <strong>permanently</strong> delete your Profile and "myFlix
+                        Faves" movies.</p>
+                    <p><strong>This action cannot be undone.</strong></p>
                 </Modal.Body>
-                <Modal.Footer className="border-0 justify-content-center pb-4">
-                    <Button
-                        variant="secondary"
-                        className="rounded-pill px-4"
-                        onClick={() => setShowDeleteModal(false)}
-                    >
-                        Cancel
-                    </Button>
+                <Modal.Footer className="border-0 pb-4">
                     <Button
                         variant="outline-danger"
-                        className="rounded-pill px-4"
+                        className="rounded-pill px-4 border-0 btn-sm"
                         onClick={confirmDeleteAccount}
                     >
                         Yes, Delete Everything
+                    </Button>
+                    <Button
+                        variant="primary"
+                        className="rounded-pill px-4 btn-lg"
+                        onClick={() => setShowDeleteModal(false)}
+                    >
+                        Cancel
                     </Button>
                 </Modal.Footer>
             </Modal>

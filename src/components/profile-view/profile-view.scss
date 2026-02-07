@@ -1,3 +1,14 @@
+// .profile-view-container {
+//     height: calc(100vh - 80px);
+//     overflow: hidden;
+//     margin: 0 5px 0 0;
+// }
+
+// .profile-view-row {
+//     height: 100%;
+//     overflow: hidden;
+// }
+
 .user-mngmt-column {
     @include glass-effect(0.9, 12px, 0.2);
     background-color: $bg-card !important;
@@ -35,8 +46,45 @@
 
     .card-title {
         color: $danger;
-        font-size: 1.3rem;
+        font-size: $sz-title;
         letter-spacing: 0.9px;
+    }
+}
+
+.custom-modal {
+    .modal-content {
+        background-color: $bg-card !important;
+        border: 2px solid $danger;
+        border-radius: 20px;
+        color: $text-main;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .btn-close {
+            filter: invert(1);
+        }
+    }
+
+    .modal-body {
+        h5 {
+            color: $text-main;
+            font-weight: 700;
+        }
+        .text-muted {
+            color: $shadow-main !important;
+        }
+    }
+
+    .modal-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        padding: 1.2rem;
+
+        .btn {
+            margin: 0;
+        }
     }
 }
 
@@ -75,19 +123,67 @@
 }
 
 .custom-tabs {
+    font-family: $f-title;
+    font-size: 12px;
     .nav-link {
         color: $brand-purple;
+    }
+}
 
-        &:hover {
-            background-color: $brand-lavender;
-            border-color: $brand-lavender;
+.custom-modal {
+    .modal-content {
+        background-color: $bg-card !important;
+        border: 2px solid $danger;
+        border-radius: 20px;
+        color: $text-main;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba($text-main, 0.2);
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    }
+
+    .modal-title {
+        color: $danger !important;
+        font-family: $f-head;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    .modal-body {
+        h5 {
             color: $text-main;
+            font-weight: 700;
+            margin-top: 1rem;
         }
 
-        &.active {
-            color: $emphasis-color !important;
-            background-color: $brand-purple !important;
-            border-color: $brand-purple !important;
+        p.text-muted {
+            color: rgba($text-main, 0.7) !important;
+        }
+
+        strong {
+            color: danger;
+        }
+
+        i.bi-exclamation-triangle-fill {
+            filter: drop-shadow(0 0 10px rgba($danger, 0.4));
+        }
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding-top: 0;
+
+        .delete-btn {
+            bottom: 20px;
+            left: 20px;
+        }
+        .btn-corner {
+            bottom: 20px;
+            right: 20px;
         }
     }
 }
