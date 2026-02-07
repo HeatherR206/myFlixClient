@@ -1,157 +1,150 @@
-.custom-card-border,
+.custom-card-vertical,
 .custom-card-horizontal {
-    .more-button {
-        &.horizonal {
-            padding: 8px;
-            font-size: 0.5rem;
-        }
-        &.vertical {
-            padding: 12px 16px;
-            font-size: $font-size-base;
-        }
+    position: relative;
+    border: 2px solid $border-main !important;
+    border-radius: $card-border-radius;
+    background-color: $card-bg;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-main;
+    }
+
+    .btn-corner {
+        position: absolute !important;
+        bottom: 15px !important;
+        right: 15px !important;
+        z-index: 20;
+        text-decoration: none;
     }
 
     .glass-heart-button {
-        width: 40px;
-        height: 40px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 30;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0;
-        text-decoration: none !important;
-        z-index: 10;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        background: rgba(255, 255, 255, 0.4) !important;
-        backdrop-filter: blur(15px) saturate(200%) contrast(110%);
-        -webkit-backdrop-filter: blur(15px) saturate(180%);
-        border: 1px solid rgba(190, 190, 190, 0.539) !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-
-        &.rounded-circle {
-            border-radius: 50% !important;
-        }
+        background: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(12px) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(190, 190, 190, 0.8) !important;
+        border-radius: 50% !important;
+        transition: all 0.2s ease;
 
         &:hover {
-            background: rgba($brand-purple, 0.1) !important;
-            border: 1px solid $brand-purple !important;
-            transform: scale(1.2) translateY(-3px);
-            box-shadow: 0 8px 25px rgba($brand-purple, 0.2);
-
-            i {
-                color: $brand-purple !important;
-            }
-        }
-
-        &:active {
-            transform: scale(0.9) translateY(0);
-            background: rgba($brand-purple, 0.2) !important;
-        }
-
-        &.vertical {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 1rem;
-        }
-
-        &.horizontal {
-            width: 32px;
-            height: 32px;
-            position: static;
-            flex-shrink: 0;
-        }
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.8) !important;
-            transform: scale(1.1) translateY(-2px);
-            filter: brightness(1.2);
+            background: rgba($secondary, 0.1);
+            border: 1px solid rgba($primary, 0.4);
+            transform: scale(1.2);
         }
 
         i {
-            font-size: 1.4rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-style: normal;
-            &.horizontal {
-                font-size: 1rem;
-            }
+            color: $primary;
+            font-size: $font-size-base;
         }
     }
 }
 
-.custom-card-border {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    height: 100%;
-    border: 2px solid $border-main !important;
-    border-radius: 8px;
-    margin: 1rem;
-    @include hover-lift(-1px, $brand-purple);
-
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;
-    }
-
-    .mt-auto-container {
-        margin-top: auto;
-        width: 100%;
-        padding-top: 1rem;
-    }
-}
-
-.custom-card-horizontal {
-    border: 2px solid $border-main;
-    border-radius: 12px;
+.card-title-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    margin: 1rem;
-    @include hover-lift(-1px, $brand-purple);
-
-    .horizontal-poster-wrapper {
-        height: 150px;
-        overflow: hidden;
-        img {
-            height: 100%;
-            min-height: 100%;
-            object-fit: cover;
-        }
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .horizontal-summary {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        margin-bottom: 0.5rem;
-        overflow: hidden;
-        font-size: 0.9rem;
-        color: $text-main;
-    }
+    text-overflow: ellipsis;
+    min-height: 1.3rem;
+    font-family: $f-main;
+    font-weight: $card-title-font-weight;
+    margin-bottom: 0.75rem;
 }
 
-.custom-badge-outline {
-    color: $border-main !important;
-    border: 1.5px solid $border-main;
-    background-color: transparent;
-    padding: 0.4em 0.8em;
-    font-weight: 600;
-    font-size: 0.8rem;
-}
-
-.text-truncate-container {
+.summary-clamp {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 4.5em;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    word-break: normal;
+    font-family: $f-main;
+    font-size: $sz-reg;
+    font-weight: $wt-semi;
+    color: $text-main;
+    margin-bottom: 0.5rem;
+}
+
+.custom-card-vertical {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .card-img-vertical {
+        height: 350px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 13px 13px 0 0;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        font-family: $f-main;
+        font-weight: $wt-semi;
+        font-size: $sz-large;
+        padding-bottom: 70px;
+    }
+
+    .summary-clamp {
+        min-height: 4.5rem;
+    }
+
+    .card-title {
+        font-size: $card-title-font-size;
+        -webkit-line-clamp: 2;
+    }
+}
+
+.custom-card-horizontal {
+    min-height: auto;
+    max-height: 180px;
+
+    .horizontal-poster-wrapper {
+        height: 100%;
+        min-height: 150px;
+        flex-basis: 150px;
+        display: flex;
+        img {
+            border-radius: 13px 0 0 13px;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .card-body {
+        font-size: $sz-reg;
+        font-weight: $wt-semi;
+        padding-top: 1rem;
+        padding-bottom: 50px;
+    }
+
+    .summary-clamp {
+        -webkit-line-clamp: 2;
+        word-break: break-word;
+        min-height: 0;
+        font-size: $sz-reg;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+}
+
+.custom-badge-outline {
+    border: 1.5px solid $border-main;
+    padding: 0.4em 0.8em;
 }
