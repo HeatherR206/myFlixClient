@@ -1,38 +1,9 @@
 .navbar {
     display: flex;
     align-items: center;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 8px 8px;
     padding: 0.8rem 0;
     box-shadow: 0 2px 10px $shadow-main;
     @include glass-effect(0.9, 10px, 0.1);
     background-color: rgba($brand-purple, 0.9) !important;
-
-    .navbar-brand {
-        color: $brand-green !important;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: lowercase;
-    }
-
-    .navbar-nav {
-        .nav-link {
-            color: $text-alt !important;
-            transition: all 0.3s ease;
-            font-weight: $font-weight-bold;
-            font-size: 1rem;
-            text-transform: capitalize;
-
-            &:hover {
-                color: $brand-lavender !important;
-                transform: translateY(-1px);
-            }
-
-            &.active {
-                color: $brand-green !important;
-                font-weight: $font-weight-bolder;
-                border-bottom: 2px solid $brand-green;
-                cursor: default;
-            }
-        }
-    }
 }

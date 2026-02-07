@@ -19,7 +19,7 @@ export const NavBar = () => {
     const clearFilter = () => dispatch(setFilter(""));
 
     return (
-        <Navbar className="navbar" variant="dark" expand="lg" sticky="top">
+        <Navbar className="navbar ms-auto text-end text-lg-start gap-2 gap-lg-3" variant="dark" expand="lg" sticky="top">
             <Container>
                 <Navbar.Brand as={Link} to="/" onClick={clearFilter}>
                     myFlix Movies
@@ -27,7 +27,7 @@ export const NavBar = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     {user && (
-                        <div className="mx-auto w-50">
+                        <div className="mx-lg-auto w-lg px-lg-4">
                             <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
                                 <InputGroup className="search-bar-custom mb-3">
                                     <Form.Control
@@ -62,7 +62,7 @@ export const NavBar = () => {
                         </div>
                     )}
 
-                    <Nav className="ms-auto">
+                    <Nav className="ms-auto gap-lg-3">
                         {!user ? (
                             <>
                                 <Nav.Link as={NavLink} to="/login">
