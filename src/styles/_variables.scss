@@ -1,81 +1,154 @@
-// MYFLIX BRAND COLORS
-$brand-purple: #7a2172; 
+// BRAND CONSTANTS
+$brand-purple: #7a2172;
 $brand-lavender: #ce8dd6;
 $brand-green: #baff51;
 $bg-main: #484a52;
 $bg-card: #f8eafb;
 $text-main: #1f1c1c;
 $text-alt: #fefcfd;
-$border-main: #848484;
+
+$border-main: rgba($text-main, 0.3);
 $shadow-main: rgba(207, 207, 207, 0.565);
-$shadow-hover: rgba(122, 33, 114, 0.05);
-$box-shadow-custom: 0 0.125rem 0.25rem rgba(5, 5, 5, 0.1);
-$box-shadow-hover: 0 4px 12px rgba(122, 33, 114, 0.05);
 
+$f-main: "Figtree", sans-serif;
+$f-head: "Red Hat Display", sans-serif;
+$f-alt: "Google Sans", serif;
+$f-title: "Outfit", sans-serif;
 
-// BOOTSTRAP OVERRIDES
+$wt-thin: 200;
+$wt-reg: 400;
+$wt-semi: 600;
+$wt-bold: 700;
+
+$sz-small: 0.8rem;
+$sz-reg: 1rem;
+$sz-large: 1.3rem;
+$sz-title: 1.3rem;
+
+$font-family-sans-serif: $f-main;
+
+$font-size-sm: $sz-small;
+$font-size-base: $sz-reg;
+$font-size-lg: $sz-large;
+
+$font-weight-light: $wt-thin;
+$font-weight-bold: $wt-bold;
+
+$headings-font-family: $f-head;
+$head1-sz: 2.2rem;
+$head2-sz: 2rem;
+$head3-sz: 1.75rem;
+$head4-sz: 1.5rem;
+$head5-sz: 1.2rem;
+
+$text-muted: $bg-main;
+
+// GLOBAL BOOTSTRAP OVERRIDES
 $primary: $brand-purple;
 $secondary: $brand-lavender;
 $emphasis-color: $brand-green;
 $info: $brand-lavender;
-$danger: #cf3544;
+$danger: #bb2c3a;
+$warning: #ff9100;
+$success: #20c20e;
 
-
-// UI OVERRIDES
 $body-bg: $bg-main;
-$card-bg: $bg-card;
 $body-color: $text-main;
-$body-light-color: $text-alt;
-$border-color: $border-main;
 $link-color: $brand-purple;
+
 $enable-shadows: true;
-$enable-gradients: false;
-$spacer: 1rem;
+$enable-gradients: true;
+
+$card-bg: $bg-card;
+
+$card-title-font-family: $f-title;
+$card-title-font-size: $sz-title;
+$card-title-font-weight: $wt-semi;
+$card-title-color: $brand-purple;
+
+$card-body-font-family: $f-main;
+$card-body-font-weight: $wt-reg;
+$card-body-font-size: $sz-large;
+
+$card-text-font-family: $f-main;
+$card-text-font-size: $sz-small;
+$card-border-radius: 15px;
+$card-color: $text-main;
+
+$form-text-font-size: 14px;
+$form-text-color: $bg-main;
+
+$form-label-font-weight: $wt-bold;
+$form-label-color: $text-main;
+
+$input-font-family: $f-alt;
+$input-font-size: 1rem;
+$input-font-weight: 500;
+$input-color: $text-main;
+
+$input-border-radius: 8px;
+$input-placeholder-color: $shadow-main;
 
 
-// TYPOGRAPHY
-$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-$font-family-monospace:  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$form-select-font-family: $f-main;
+$form-select-font-size: 14px;
+$form-select-color: $text-main;
 
-$font-size-base: 1rem;
-$font-size-sm: $font-size-base * .85;
-$font-size-lg: $font-size-base * 1.25;
+$nav-link-padding-x: 1.5rem;
+$nav-link-padding-y: .5rem;
+$nav-link-font-size: 18px;
+$nav-link-font-weight: $wt-semi;
 
-$font-weight-lighter: 100;
-$font-weight-light:   200;
-$font-weight-normal:  400;
-$font-weight-bold:    500;
-$font-weight-bolder:  600;
+$nav-tabs-link-hover-color: $brand-purple;
+$nav-tabs-link-hover-bg: $brand-lavender;
+$nav-tabs-link-hover-border-color: $brand-purple;
+$nav-tabs-link-active-color: $emphasis-color;
+$nav-tabs-link-active-bg: $brand-purple;
+$nav-tabs-link-active-border-color: $brand-lavender;
 
-$h1-font-size: $font-size-base * 2.5;
-$h2-font-size: $font-size-base * 2;
-$h3-font-size: $font-size-base * 1.5;
-$headings-font-weight: 600;
+$navbar-brand-font-size: $head3-sz;
+
+// BADGE OVERRIDES
+$badge-font-weight: $wt-bold;
+$badge-font-size: $sz-small;
+$badge-border-color: $bg-main;
+$badge-color: $bg-main;
+
+// HEADING OVERRIDES
+$h1-font-size: $head1-sz;
+$h2-font-size: $head2-sz;
+$h3-font-size: $head3-sz;
+$h4-font-size: $head4-sz;
+$h5-font-size: $head5-sz;
+
+
+$headings-font-weight: 700;
 $headings-color: $brand-purple;
-$headings-margin-bottom: 1.2rem;
 
-.custom-profile-list {
-        background-color: $bg-card !important;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-    
-    .list-group-item {
-        background-color: $bg-card !important; 
-        color: $text-main;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        
-        &:last-child {
-            border-bottom: none;
-        }
-    }
+// ACTUAL CSS RULES (Selectors)
+body {
+    font-family: $f-main;
+    -webkit-font-smoothing: antialiased;
+    background-color: $body-bg;
+    color: $body-color;
 }
 
-.form-control {
-    background-color: rgba(255, 255, 255, 0.9) !important; 
-    border: 1px solid $brand-purple;
-    color: $text-main;
-
-    &:focus {
-        border-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 0 0 0.25rem rgba($bg-card, 0.25);
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $f-head;
+    color: $headings-color;
 }
+
+::placeholder {
+    font-family: $f-alt;
+    font-size: $sz-reg;
+    opacity: 0.8;
+}
+
+::-webkit-input-placeholder { font-size: $sz-reg; }
+::-moz-placeholder { font-size: $sz-reg; }
+:-ms-input-placeholder { font-size: $sz-reg; }
