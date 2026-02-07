@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setFilter } from "../../redux/reducers/filter";
 import { useApi } from "../../hooks/useApi";
-import { Card, Col, Row, Button, Badge } from "react-bootstrap";
+import { Card, Col, Row, Button, Badge, Container } from "react-bootstrap";
 import { API_URL } from "../../config";
 
 export const MovieView = () => {
@@ -21,7 +21,14 @@ export const MovieView = () => {
 
     const movie = movies.find((m) => m._id === movieId);
 
-    if (!movie) return <div>Movie not found in database</div>;
+    if (!movie || movies.length === 0) {
+        return (
+            <Container className="text-center mt-5">
+                <div className="spinner-border text-primary" role="status"></div>
+                <p className="text-light mt-3">Loading movie details...</p>
+            </Container>
+        );
+    }
 
     const isFavorite = user?.favoriteMovies?.includes(movie._id);
 
@@ -65,24 +72,24 @@ export const MovieView = () => {
     return (
         <Row className="justify-content-center mt-5 pb-5">
             <Col lg={12}>
-                <Card className="movie-view-card shadow-lg overflow-hidden">
-                    <Row className="g-0">
-                        <Col lg={4}>
+                <Card className="movie-view-card shadow-lg">
+                    <Row className="g-0 h-100">
+                        <Col md={5} lg={4}>
                             <Card.Img
                                 src={movie.imagePath}
-                                className="img-fluid rounded-start h-100 object-fit-cover"
+                                className="img-fluid h-100 object-fit-cover"
                                 alt={movie.title}
                             />
                         </Col>
 
-                        <Col md={8}>
-                            <Card.Body className="p-4">
-                                <div className="d-flex justify-content-between align-items-start mb-3">
-                                    <h2 className="display-5 fw-bold mb-3">{movie.title}</h2>
+                        <Col md={7} lg={8} className="d-flex flex-column">
+                            <Card.Body className="p-4 flex-grow-1">
+                                <div className="d-flex justify-content-between align-items-start mb-2">
+                                    <Card.Title className="fw-bold mb-3">{movie.title}</Card.Title>
                                     <Button
                                         variant="link"
                                         onClick={toggleFavorite}
-                                        className="glass-heart-button rounded-circle shadow-sm"
+                                        className="glass-heart-button"
                                         title={
                                             isFavorite
                                                 ? "Remove from Favorites"
@@ -94,39 +101,38 @@ export const MovieView = () => {
                                         ></i>
                                     </Button>
                                 </div>
-
-                                <Card.Text className="mb-3 text-muted">
-                                    <strong>Release Date: </strong>
-                                    {movie.releaseDate
-                                        ? new Date(movie.releaseDate).toLocaleDateString()
-                                        : "N/A"}
+                                
+                                <Card.Text className="lead movie-summary mb-3">
+                                    {movie.summary}
                                 </Card.Text>
 
-                                <p className="lead mb-4">{movie.summary}</p>
-
                                 <div className="movie-metadata mt-4">
-                                    <p>
+                                    <p className="text-muted mb-1">
+                                        <strong>Release Date: </strong>
+                                        {movie.releaseDate
+                                            ? new Date(movie.releaseDate).toLocaleDateString()
+                                            : "N/A"}
+                                    </p>
+                                    <p className="mb-1">
                                         <strong>Genre:</strong>{" "}
-                                        {movie.genres?.map((g) => g.genreName).join(", ")}
+                                        {movie.genres?.length > 0 ? movie.genres.map(g => g.genreName).join(", ") : "N/A"}
                                     </p>
-                                    <p>
+                                    <p className="mb-1">
                                         <strong>Director:</strong>{" "}
-                                        {movie.directors?.map((d) => d.directorName).join(", ")}
+                                        {movie.directors?.length > 0 ? movie.directors.map(d => d.directorName).join(", ") : "N/A"}
                                     </p>
-                                    <p>
+                                    <p className="mb-1">
                                         <strong>Cast:</strong>{" "}
-                                        {movie.cast?.map((c) => c.castName).join(", ")}
+                                        {movie.cast?.length > 0 ? movie.cast.map(c => c.castName).join(", ") : "N/A"}
                                     </p>
                                 </div>
 
                                 <Button
-                                    size="lg"
                                     variant="primary"
                                     onClick={() => {
-                                        dispatch(setFilter(""));
                                         navigate(-1);
                                     }}
-                                    className="glow-on-hover mt-5"
+                                    className="btn-corner glow-on-hover"
                                 >
                                     Back
                                 </Button>
