@@ -3,6 +3,14 @@ import { Button, Form, Row, Col, InputGroup, ProgressBar } from "react-bootstrap
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config";
 
+const LIMITS = {
+    username: 25,
+    email: 45,
+    password: 35,
+    firstName: 22,
+    lastName: 30,
+};
+
 export const SignupView = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
@@ -55,25 +63,39 @@ export const SignupView = () => {
     };
 
     return (
-        <div className="signup-container py-3">
-            <h2 className="text-center mb-3 text-primary">Join myFlix</h2>
-            <h5 className="text-center mb-4 text-dark">Create an Account</h5>
+        <div className="signup-container px-4 py-4">
+            <h2 className="display-5 fw-bold text-center mb-4 text-primary">Join myFlix!</h2>
             <Form
                 onSubmit={handleSubmit}
                 className="signup-form mx-auto"
                 style={{ maxWidth: "800px" }}
             >
                 <Row>
-                    <Col md={12} className="mb-3">
+                    <Col md={12} className="my-3">
                         <Form.Group controlId="formSignupUsername">
-                            <Form.Label className="fw-bold">Username</Form.Label>
+                            <div className="d-flex justify-content-between">
+                                <Form.Label className="fw-bold">Username</Form.Label>
+                                {username.length > 0 && (
+                                    <small
+                                        className={
+                                            username.length >= LIMITS.username
+                                                ? "text-danger"
+                                                : "text-muted"
+                                        }
+                                    >
+                                        {username.length}/{LIMITS.username}
+                                    </small>
+                                )}
+                            </div>
                             <Form.Control
+                                className="w-ch-username"
                                 size="lg"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
                                 minLength="6"
+                                maxLength={LIMITS.username}
                                 placeholder="Choose a unique username"
                             />
                             <Form.Text className="small text-muted">
@@ -84,14 +106,28 @@ export const SignupView = () => {
 
                     <Col md={12} className="mb-3">
                         <Form.Group controlId="formSignupPassword">
-                            <Form.Label className="fw-bold">Password</Form.Label>
-                            <InputGroup size="lg">
+                            <div className="d-flex justify-content-between">
+                                <Form.Label className="fw-bold">Password</Form.Label>
+                                {password.length > 0 && (
+                                    <small
+                                        className={
+                                            password.length >= LIMITS.password
+                                                ? "text-danger"
+                                                : "text-muted"
+                                        }
+                                    >
+                                        {password.length}/{LIMITS.password}
+                                    </small>
+                                )}
+                            </div>
+                            <InputGroup size="lg" className="w-ch-password">
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     minLength="10"
+                                    maxLength={LIMITS.password}
                                     placeholder="Create a strong password"
                                 />
                                 <Button
@@ -116,32 +152,60 @@ export const SignupView = () => {
                                     </small>
                                 </div>
                             )}
-                            <Form.Text className="text-muted">
-                                Use uppercase, numbers, and symbols. Minimum 10 characters.
-                            </Form.Text>
+                            <Form.Text className="text-muted">Minimum 10 characters.</Form.Text>
                         </Form.Group>
                     </Col>
 
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupFirstName">
-                            <Form.Label className="fw-bold">First Name</Form.Label>
+                            <div className="d-flex justify-content-between">
+                                <Form.Label className="fw-bold">First Name</Form.Label>
+                                {firstName.length > 0 && (
+                                    <small
+                                        className={
+                                            firstName.length >= LIMITS.firstName
+                                                ? "text-danger"
+                                                : "text-muted"
+                                        }
+                                    >
+                                        {firstName.length}/{LIMITS.firstName}
+                                    </small>
+                                )}
+                            </div>
                             <Form.Control
+                                className="w-ch-name"
                                 size="lg"
                                 type="text"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
+                                maxLength={LIMITS.firstName}
                             />
                         </Form.Group>
                     </Col>
 
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupLastName">
-                            <Form.Label className="fw-bold">Last Name</Form.Label>
+                            <div className="d-flex justify-content-between">
+                                <Form.Label className="fw-bold">Last Name</Form.Label>
+                                {lastName.length > 0 && (
+                                    <small
+                                        className={
+                                            lastName.length >= LIMITS.lastName
+                                                ? "text-danger"
+                                                : "text-muted"
+                                        }
+                                    >
+                                        {lastName.length}/{LIMITS.lastName}
+                                    </small>
+                                )}
+                            </div>
                             <Form.Control
+                                className="w-ch-name"
                                 size="lg"
                                 type="text"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
+                                maxLength={LIMITS.lastName}
                             />
                         </Form.Group>
                     </Col>
@@ -150,6 +214,7 @@ export const SignupView = () => {
                         <Form.Group controlId="formSignupEmail">
                             <Form.Label className="fw-bold">Email</Form.Label>
                             <Form.Control
+                                className="w-ch-email"
                                 size="lg"
                                 type="email"
                                 value={email}
@@ -163,6 +228,7 @@ export const SignupView = () => {
                         <Form.Group controlId="formSignupBirthDate">
                             <Form.Label className="fw-bold">Birth Date</Form.Label>
                             <Form.Control
+                                className="w-ch-date"
                                 size="lg"
                                 type="date"
                                 value={birthDate}
@@ -172,7 +238,12 @@ export const SignupView = () => {
                     </Col>
                 </Row>
 
-                <Button className="btn-lg mt-5 glow-on-hover" variant="primary" type="submit">
+                <Button
+                    className="signup-btn btn-lg mt-5 glow-on-hover"
+                    variant="primary"
+                    type="submit"
+                    disabled={strength < 50}
+                >
                     Create Account
                 </Button>
             </Form>
