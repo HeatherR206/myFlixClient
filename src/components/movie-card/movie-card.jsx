@@ -55,7 +55,7 @@ export const MovieCard = ({ movie, isHorizontal = false }) => {
                 <Button
                     variant="link"
                     onClick={toggleFavorite}
-                    className="glass-heart-button shadow-sm text-decoration-none"
+                    className="glass-heart-button shadow-sm"
                     title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                 >
                     <i
@@ -70,7 +70,7 @@ export const MovieCard = ({ movie, isHorizontal = false }) => {
                         >
                             <Card.Img
                                 src={movie.imagePath}
-                                className="h-100 w-100 object-fit-cover"
+                                className="img-fluid h-100 w-100 object-fit-cover"
                             />
                         </div>
                     </Col>
@@ -99,7 +99,7 @@ export const MovieCard = ({ movie, isHorizontal = false }) => {
             <Button
                 variant="link"
                 onClick={toggleFavorite}
-                className="glass-heart-button shadow-sm text-decoration-none"
+                className="glass-heart-button shadow-sm"
                 title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
             >
                 <i

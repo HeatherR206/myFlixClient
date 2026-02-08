@@ -89,7 +89,7 @@ export const MovieView = () => {
                                     <Button
                                         variant="link"
                                         onClick={toggleFavorite}
-                                        className="glass-heart-button"
+                                        className="glass-heart-button shadow-sm"
                                         title={
                                             isFavorite
                                                 ? "Remove from Favorites"
@@ -130,7 +130,7 @@ export const MovieView = () => {
                                 <Button
                                     variant="primary"
                                     onClick={() => {
-                                        navigate(-1);
+                                        navigate(-1)
                                     }}
                                     className="btn-corner glow-on-hover"
                                 >
