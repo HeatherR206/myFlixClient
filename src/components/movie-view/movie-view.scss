@@ -1,15 +1,27 @@
 .movie-view-card {
     position: relative;
-    min-height: auto;
+    display: flex; 
+    flex-direction: column;
+    max-height: 75vh; // Keeps the whole view from being too tall
     border-radius: 15px;
     overflow: hidden;
+    background-color: $card-bg;
+
+    .img-fluid {
+        height: 100%;
+        max-height: 75vh;
+        object-fit: cover;
+        border-radius: 15px 0 0 15px;
+    }
 
     .card-body {
         height: 100%;
         display: flex;
         flex-direction: column;
         position: relative;
-        padding-bottom: 80px !important;
+        padding: 2rem !important;
+        padding-bottom: 90px !important;
+        overflow-y: auto;
         font-family: $f-main;
         font-size: $sz-reg;
     }
@@ -19,7 +31,7 @@
         font-size: $head2-sz;
         font-weight: $wt-bold;
         display: -webkit-box;
-        -webkit-line-clamp: 1; // Truncate to 1 line
+        -webkit-line-clamp: 1; 
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -30,23 +42,16 @@
         font-family: $f-main;
         font-size: $sz-large;
         font-weight: $wt-reg;
+        margin-bottom: 1rem;
     }
     
-    .img-fluid {
-        height: 100%;
-        min-height: 500px;
-        object-fit: cover;
-        border-radius: 15px 0 0 15px;
-    }
-
     .btn-corner {
         position: absolute !important;
         bottom: 25px;
         right: 25px;
         z-index: 20;
-        width: auto !important;
+        padding: 6px 50px !important;
         text-decoration: none;
-        padding: 10px 25px !important;
         margin: 0 !important;
     }
 
@@ -56,8 +61,8 @@
         right: 20px;
         z-index: 30;
         flex-shrink: 0 !important;
-        width: 40px !important;
-        height: 40px !important;
+        width: 50px !important;
+        height: 50px !important;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -67,26 +72,19 @@
         background: rgba(255, 255, 255, 0.35) !important;
         backdrop-filter: blur(12px) saturate(200%);
         border: 1px solid rgba(190, 190, 190, 0.539) !important;
+        border-radius: 50%;
 
         &:hover {
-            background: rgba($brand-purple, 0.1) !important;
-            border: 1px solid $brand-purple !important;
+            background: rgba($primary, 0.1) !important;
+            border: 1px solid rgba($primary, 0.4) !important;
             transform: scale(1.1) translateY(-2px);
             box-shadow: 0 8px 25px rgba($brand-purple, 0.1);
-
-            i {
-                color: $brand-purple !important;
-                filter: drop-shadow(0 0 5px rgba($brand-purple, 0.2));
-            }
         }
 
         i {
-            font-size: 1.2rem;
-            line-height: 1;
-            padding: 1px;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.3s ease;
+            color: $primary;
+            font-size: $font-size-lg;
+            filter: drop-shadow(0 0 5px rgba($brand-purple, 0.2));
         }
     }
 }
