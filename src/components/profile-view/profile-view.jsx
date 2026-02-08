@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFilter } from "../../redux/reducers/filter";
 import { setUser } from "../../redux/reducers/user";
@@ -17,18 +17,28 @@ export const ProfileView = () => {
 
     const allMovies = useSelector((state) => state.movies);
     const filter = useSelector((state) => state.filter);
-
     const { authFetch, user } = useApi();
 
-    const favoriteMovies = allMovies.filter((m) => user?.favoriteMovies?.includes(m._id));
+    const favoriteMovies = useMemo(() => {
+        return allMovies.filter((m) => user?.favoriteMovies?.includes(m._id));
+    }, [allMovies, user]);
 
-    const filterFavorites = favoriteMovies.filter((m) =>
-        m.title.toLowerCase().includes(filter.toLowerCase())
-    );
+    const deepFilter = (movieList, searchTerm) => {
+        if (!searchTerm) return movieList;
+        const term = searchTerm.toLowerCase();
 
-    const filterAllMovies = allMovies.filter((m) =>
-        m.title.toLowerCase().includes(filter.toLowerCase())
-    );
+        return movieList.filter((m) => {
+            return (
+                m.title.toLowerCase().includes(term) ||
+                m.genres?.some(g => g.genreName.toLowerCase().includes(term)) ||
+                m.directors?.some(d => d.directorName.toLowerCase().includes(term)) ||
+                m.cast?.some(c => c.castName.toLowerCase().includes(term))
+            );
+        });
+    };
+
+    const filterFavorites = useMemo(() => deepFilter(favoriteMovies, filter), [favoriteMovies, filter]);
+    const filterAllMovies = useMemo(() => deepFilter(allMovies, filter), [allMovies, filter]);
 
     const handleRemoveFavorite = async (movieId) => {
         try {
@@ -95,7 +105,7 @@ export const ProfileView = () => {
                 >
                     <div className="d-flex flex-column gap-3">
                         <Card className="user-mngmt-column shadow-sm border-0">
-                            <Card.Body className="p-4">
+                            <Card.Body className="p-3">
                                 <Tabs
                                     defaultActiveKey="info"
                                     id="profile-tabs"
@@ -106,7 +116,7 @@ export const ProfileView = () => {
                                             <UserInfo />
                                         </div>
                                     </Tab>
-                                    <Tab eventKey="edit" title="Account Settings">
+                                    <Tab eventKey="edit" title="Edit Settings">
                                         <div className="mt-3">
                                             <UpdateUser />
                                         </div>
@@ -154,7 +164,7 @@ export const ProfileView = () => {
                                         variant="outline-primary"
                                         size="sm"
                                         onClick={() => dispatch(setFilter(""))}
-                                        className="px-2"
+                                        className="px-4"
                                     >
                                         Clear Search Results
                                     </Button>
@@ -169,7 +179,32 @@ export const ProfileView = () => {
                                             </Col>
                                         ))
                                     )}
+                                    {filterFavorites.length === 0 && filter.length > 0 && (
+                                        <Col xs={12} className="text-center mt-3">
+                                            <p className="text-muted">No favorites match "{filter}"</p>
+                                            <Button 
+                                                variant="outline-secondary" 
+                                                size="sm" 
+                                                onClick={() => dispatch(setFilter(""))}
+                                            >
+                                                View All Favorites
+                                            </Button>
+                                        </Col>
+                                    )}
                                 </Row>
+
+                                {filterAllMovies.length > 3 && (
+                                    <div className="text-center mt-3">
+                                        <Button
+                                            variant="link"
+                                            size="sm"
+                                            onClick={() => dispatch(setFilter(""))}
+                                            className="text-decoration-none text-muted"
+                                        >
+                                            Clear Search Results
+                                        </Button>
+                                    </div>
+                                )}
                             </Card.Body>
                         </Card>
                     )}
@@ -194,7 +229,7 @@ export const ProfileView = () => {
                                             lg={3}
                                         >
                                             <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-                                                <div className="favorite-poster-wrapper mb-2">
+                                                <div className="favorite-poster-wrapper mb-2" style={{ aspectRatio: '2/3', overflow: 'hidden' }}>
                                                     <img
                                                         src={movie.imagePath}
                                                         alt={movie.title}
@@ -241,12 +276,12 @@ export const ProfileView = () => {
                 <Modal.Body className="text-center mb-3 py-4">
                     <i
                         className="bi bi-exclamation-triangle-fill text-danger mb-4"
-                        style={{ fontSize: "3rem" }}
+                        style={{ fontSize: "3.4rem" }}
                     ></i>
-                    <h5>Are you absolutely certain?</h5>
+                    <h4 className="mb-4">Are you absolutely certain?</h4>
                     <p className="text-muted">This will <strong>permanently</strong> delete your Profile and "myFlix
                         Faves" movies.</p>
-                    <p><strong>This action cannot be undone.</strong></p>
+                    <p className="text-muted"><strong>This action cannot be undone.</strong></p>
                 </Modal.Body>
                 <Modal.Footer className="border-0 pb-4">
                     <Button

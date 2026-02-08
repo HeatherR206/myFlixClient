@@ -18,34 +18,38 @@ export const NavBar = () => {
 
     const clearFilter = () => dispatch(setFilter(""));
 
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        dispatch(setFilter(value));
+
+        const isHome = location.pathname === "/";
+        const isProfile = location.pathname.includes("/users/");
+
+        if (value !== "" && !isHome && !isProfile) {
+            navigate("/");
+        }
+    };
+
     return (
-        <Navbar className="navbar ms-auto text-end text-lg-start gap-2 gap-lg-3" variant="dark" expand="lg" sticky="top">
+        <Navbar className="navbar shadow-sm mb-4 text-end text-lg-start gap-2 gap-lg-3" variant="dark" expand="lg" sticky="top">
             <Container>
-                <Navbar.Brand as={Link} to="/" onClick={clearFilter}>
-                    myFlix Movies
+                <Navbar.Brand as={Link} to="/" onClick={clearFilter} className="fw-bold">
+                    myFlix
                 </Navbar.Brand>
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
                 <Navbar.Collapse id="basic-navbar-nav">
                     {user && (
-                        <div className="mx-lg-auto w-lg px-lg-4">
+                        <div className="mx-lg-auto search-container px-lg-4">
                             <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
-                                <InputGroup className="search-bar-custom mb-3">
+                                <InputGroup className="position-relative">
                                     <Form.Control
                                         type="text"
-                                        placeholder="Search movies..."
+                                        placeholder="Search titles, actors, genres..."
                                         value={filter}
-                                        className="pe-5"
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            dispatch(setFilter(value));
-
-                                            const isHome = location.pathname === "/";
-                                            const isProfile = location.pathname.includes("/users/");
-
-                                            if (!isHome && !isProfile) {
-                                                navigate("/");
-                                            }
-                                        }}
+                                        className="search-bar-input pe-5 rounded-pill"
+                                        onChange={handleSearchChange}
                                     />
                                     {filter && (
                                         <Button

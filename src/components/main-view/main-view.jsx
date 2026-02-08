@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
 import { setFilter } from "../../redux/reducers/filter";
@@ -22,9 +22,28 @@ export const MainView = () => {
     const [loading, setLoading] = useState(false);
     const initialLoadDone = useRef(false);
 
-    const filteredMovies = movies.filter((movie) =>
-        movie.title.toLowerCase().includes(filter.toLowerCase())
-    );
+    const filteredMovies = useMemo(() => {
+        if (!filter) return movies;
+
+        const searchTerm = filter.toLowerCase();
+
+        return movies.filter((movie) => {
+            const matchTitle = movie.title.toLowerCase().includes(searchTerm);
+            
+            const matchGenre = movie.genres?.some(g => 
+                g.genreName.toLowerCase().includes(searchTerm)
+            );
+            const matchDirector = movie.directors?.some(d => 
+                d.directorName.toLowerCase().includes(searchTerm)
+            );
+            const matchCast = movie.cast?.some(c => 
+                c.castName.toLowerCase().includes(searchTerm)
+            ); 
+
+            return matchTitle || matchGenre || matchDirector || matchCast;
+        });
+    }, [movies, filter]);
+
 
     useEffect(() => {
         if (!token) {
@@ -53,11 +72,11 @@ export const MainView = () => {
         fetchMovies();
     }, [token, dispatch]);
 
-    useEffect(() => {
-        return () => {
-            dispatch(setFilter(""));
-        };
-    }, [dispatch]);
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch(setFilter(""));
+    //     };
+    // }, [dispatch]);
 
     return (
         <>
@@ -71,7 +90,7 @@ export const MainView = () => {
                                 user ? (
                                     <Navigate to="/" />
                                 ) : (
-                                    <Col md={6}>
+                                    <Col md={7}>
                                         <Card className="mt-4 shadow-sm">
                                             <Card.Body>
                                                 <SignupView />
@@ -151,7 +170,14 @@ export const MainView = () => {
                                     </Col>
                                 ) : (
                                     filteredMovies.map((movie) => (
-                                        <Col className="mb-5" key={movie._id} md={5} lg={4}>
+                                        <Col 
+                                            key={movie._id} 
+                                            xs={12}
+                                            md={6}
+                                            lg={4}
+                                            xl={3}
+                                            className="mb-4"
+                                        >
                                             <MovieCard movie={movie} />
                                         </Col>
                                     ))
