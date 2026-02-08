@@ -1,79 +1,99 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { setUser } from "../../redux/reducers/user";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { setFilter } from "../../redux/reducers/filter";
-import { clearToken } from "../../redux/reducers/token";
 import { useApi } from "../../hooks/useApi";
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Form, Nav, Navbar, InputGroup } from "react-bootstrap";
 
 export const NavBar = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.filter);
-    const { user } = useApi();
+    const { user, logout } = useApi();
 
     const onLoggedOut = () => {
-        dispatch(setUser(null));
-        dispatch(clearToken());
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        logout();
+        navigate("/login");
     };
 
     const clearFilter = () => dispatch(setFilter(""));
 
-    return (
-        <Navbar className="navbar" variant="dark" expand="lg" sticky="top">
-            <Container>
-                <Navbar.Brand as={Link} to="/" onClick={clearFilter}>myFlix Movies</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        dispatch(setFilter(value));
 
+        const isHome = location.pathname === "/";
+        const isProfile = location.pathname.includes("/users/");
+
+        if (value !== "" && !isHome && !isProfile) {
+            navigate("/");
+        }
+    };
+
+    return (
+        <Navbar className="navbar shadow-sm mb-4 text-end text-lg-start gap-2 gap-lg-3" variant="dark" expand="lg" sticky="top">
+            <Container>
+                <Navbar.Brand as={Link} to="/" onClick={clearFilter} className="fw-bold">
+                    myFlix
+                </Navbar.Brand>
+
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+                <Navbar.Collapse id="basic-navbar-nav">
                     {user && (
-                        <div className="mx-auto w-50">
+                        <div className="mx-lg-auto search-container px-lg-4">
                             <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
-                                <div className="position-relative w-100">
+                                <InputGroup className="position-relative">
                                     <Form.Control
                                         type="text"
-                                        placeholder="Search movies..."
+                                        placeholder="Search titles, actors, genres..."
                                         value={filter}
-                                        className="search-input pe-5"
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            dispatch(setFilter(value));
-                                            
-                                            const isHome = window.location.pathname === "/";
-                                            const isProfile = window.location.pathname.includes("/users/");
-
-                                            if (!isHome && !isProfile) {
-                                                navigate("/");
-                                            }
-                                        }}
+                                        className="search-bar-input pe-5 rounded-pill"
+                                        onChange={handleSearchChange}
                                     />
                                     {filter && (
                                         <Button
                                             variant="link"
-                                            className="position-absolute end-0 top-50 text-muted pe-3 translate-middle-y text-decoration-none"
+                                            className="position-absolute rounded-circle end-0 top-50 text-muted pe-3 translate-middle-y text-decoration-none"
                                             onClick={clearFilter}
                                             style={{ zIndex: 5, fontSize: "0.8rem" }}
                                         >
                                             <i className="bi bi-x-circle-fill"></i>
                                         </Button>
                                     )}
-                                </div>
+                                </InputGroup>
                             </Form>
                         </div>
                     )}
 
-                    <Nav className="ms-auto">
+                    <Nav className="ms-auto gap-lg-3">
                         {!user ? (
                             <>
-                                <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                                <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+                                <Nav.Link as={NavLink} to="/login">
+                                    Login
+                                </Nav.Link>
+                                <Nav.Link as={NavLink} to="/signup">
+                                    Signup
+                                </Nav.Link>
                             </>
                         ) : (
                             <>
-                                <Nav.Link as={Link} to="/" onClick={clearFilter}>Home</Nav.Link>
-                                <Nav.Link as={Link} to={`/users/${user.username}`} onClick={clearFilter}>
+                                <Nav.Link
+                                    as={NavLink}
+                                    to="/"
+                                    end
+                                    className={({ isActive }) =>
+                                        isActive ? "nav-link active" : "nav-link"
+                                    }
+                                    onClick={clearFilter}
+                                >
+                                    Home
+                                </Nav.Link>
+                                <Nav.Link
+                                    as={NavLink}
+                                    to={`/users/${user.username}`}
+                                    onClick={clearFilter}
+                                >
                                     {user.username}
                                 </Nav.Link>
                                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>

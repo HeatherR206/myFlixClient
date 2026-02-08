@@ -1,74 +1,174 @@
 .user-mngmt-column {
     @include glass-effect(0.9, 12px, 0.2);
-    background-color: rgba($bg-card, 0.9) !important;
-    border: 2px solid $brand-lavender !important;
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
     border-radius: 15px;
 
     .card-body {
         padding: 1.5rem;
-    }
+    }    
 }
 
 .danger-zone-card {
-    background-color: rgba($danger, 0.8) !important;
-    border: 1px dashed rgba($danger, 0.4) !important;
-    transition: all 0.3s ease;
-    
+    border-radius: 15px;
+    background-color: rgba(255, 209, 213, 0.872) !important;
+    @include hover-lift(-2px, $danger);
+    transition: all 0.3s ease-in-out;
 
     &:hover {
-        background-color: rgba($danger, 0.08) !important;
-        border-style: solid;
-        box-shadow: 0 4px 12px rgba($danger, 0.1);
+        background-color: rgba(254, 235, 237, 0.936) !important;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 2.5px dashed rgba($danger, 0.8) !important;
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            border: 2.5px solid rgba($danger, 0.8) !important;
+        }
     }
 
     .card-title {
-        font-size: 1.1rem;
-        letter-spacing: 0.5px;
+        color: $danger;
+        font-size: $sz-title;
+        letter-spacing: 0.9px;
+    }
+}
+
+.custom-modal {
+    .modal-content {
+        background-color: $bg-card !important;
+        border: 2px solid $danger;
+        border-radius: 20px;
+        color: $text-main;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .btn-close {
+            filter: invert(1);
+        }
+    }
+
+    .modal-body {
+        h4 {
+            font-family: $f-head;
+            font-weight: 700;
+            font-size: $head4-sz;
+            color: $text-main;
+
+        }
+        .text-muted {
+            color: $card-bg !important;
+            font-size: $sz-large;
+        }
+    }
+
+    .modal-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        padding: 1.2rem;
+
+        .btn {
+            margin: 0;
+        }
     }
 }
 
 .my-faves {
-    background-color: $bg-card !important; 
-    border: 2px solid $brand-lavender;
-    margin-top: 1.5rem;
-}
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
+    border-radius: 15px;
 
-.favorite-poster-wrapper {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid $border-main !important;
-    box-shadow: 0 4px 8px $shadow-main;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    cursor: pointer;
+    .favorite-poster-wrapper {
+        position: relative;
+        aspect-ratio: 2 / 3;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid $border-main !important;
+        box-shadow: 0 4px 8px $shadow-main;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: $box-shadow-hover;
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 15px rgba($brand-purple, 0.6);
+        }
+    }
+
+    .favorite-poster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 
-.favorite-poster-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.search-card {
+    background-color: $bg-card !important;
+    border: 3px solid $brand-lavender !important;
+    border-radius: 15px;
 }
 
-.custom-tabs {
-    .nav-link {
-        color: $brand-purple;
+.custom-modal {
+    .modal-content {
+        background-color: $bg-card !important;
+        border: 2px solid $danger;
+        border-radius: 20px;
+        color: $text-main;
+    }
 
-        &:hover {
-            background-color: $brand-lavender;
-            border-color: $brand-lavender;
+    .modal-header {
+        border-bottom: 1px solid rgba($text-main, 0.2);
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    }
+
+    .modal-title {
+        color: $danger !important;
+        font-family: $f-head;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    .modal-body {
+        h5 {
             color: $text-main;
+            font-weight: 700;
+            margin-top: 1rem;
         }
 
-        &.active {
-            color: $emphasis-color !important;
-            background-color: $brand-purple !important;
-            border-color: $brand-purple !important;
+        p.text-muted {
+            color: rgba($text-main, 0.7) !important;
+        }
+
+        strong {
+            color: danger;
+        }
+
+        i.bi-exclamation-triangle-fill {
+            filter: drop-shadow(0 0 10px rgba($danger, 0.4));
+        }
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding-top: 0;
+
+        .delete-btn {
+            bottom: 20px;
+            left: 20px;
+        }
+        .btn-corner {
+            bottom: 20px;
+            right: 20px;
         }
     }
 }
