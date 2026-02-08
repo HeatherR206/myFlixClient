@@ -30,16 +30,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0;
+        text-decoration: none !important;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         background: rgba(255, 255, 255, 0.2) !important;
         backdrop-filter: blur(12px) cubic-bezier(0.175, 0.885, 0.32, 1.275);
         border: 1px solid rgba(190, 190, 190, 0.8) !important;
         border-radius: 50% !important;
-        transition: all 0.2s ease;
 
         &:hover {
-            background: rgba($secondary, 0.1);
+            background: rgba($primary, 0.1) !important;
             border: 1px solid rgba($primary, 0.4);
-            transform: scale(1.2);
+            transform: scale(1.2) translateY(-1px);
         }
 
         i {
@@ -117,7 +119,8 @@
         min-height: 150px;
         flex-basis: 150px;
         display: flex;
-        img {
+
+        .img-fluid {
             border-radius: 13px 0 0 13px;
             object-fit: cover;
             width: 100%;
