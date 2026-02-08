@@ -7,18 +7,17 @@ A high-performance React application that allows users to explore a rich databas
 ### **✨ Key Features**   
 
 
-* **Authentication:** User signup/login with JWT-based persistence.
+* **Deep Search:** Advanced multi-parameter search filtering across Titles, Genres, Directors, and Cast members using optimized `useMemo` hook.
+
+* **Global State Persistence:** Redux Toolkit architecture ensures search parameters and "Favorite" states persist across navigation and component unmounting.
   
-* **Password Security:** Real-time strength validation and visibility toggling.
+* **Secure Authentication:** JWT-based login system featuring real-time password strength validation (zxcvbn) and secure visibility toggling.
   
 * **Movie Discovery:** Filterable movie database with detailed director and genre views.
 
-* **Global State Management:** Centralized Redux Toolkit store for lag-free searching and real-time "Favorite" 
-synchronization. 
+* **Modern Design System:** A unified, functional aesthetic with custom Glassmorphism aesthetics utilizing SCSS variables, responsive horizontal/vertical layouts, and independent column scrolling.
 
-* **Responsive UI/UX:** A unified, functional aesthetic using Glassmorphism design, interactive components horizontal/vertical layouts, and independent column scrolling. 
-
-* **Account Management:** User profile updates and secure account deletion with modal confirmation.
+* **Account Management:** Full CRUD capabilities for user profiles, including real-time validation feedback and secure account deletion workflows.
 
 ---
 
@@ -50,29 +49,33 @@ I encourage you to "Signup" but you can also explore myFlix as a "Guest":
 
 ---
 
-### **📈 Project Evolution (12/2025 - 01/2026)**
+### **📈 Project Evolution (12/2025 - 02/2026)**
 
 This project has undergone a significant architectural refactor to improve scalability and user experience.
 
 | Feature              | Dec 3 (Initial Setup) | Current State                                        |
 | :------------------- | :-------------------- | :--------------------------------------------------- |
 | **State Management** | Local `useState`      | Redux Toolkit (Global Store)                         |
-| **Styling**          | Basic CSS / Bootstrap | Modular SCSS with Glassmorphism and custom variables |
-| **User Interaction** | Basic login           | User Dashboard & Favorite Movie Sync                 |
+| **Search Logic**     | Simple Title filter    | Multi-parameter "Deep Search"
+| **Styling**          | Basic CSS / Bootstrap | Glassmorphism Design System (Sass) |
+| **User Interaction** | Standard Forms    | Real-time Validation & Feedback Loops                 |
 | **UX Design**        | Text/Emoji Icons      | Bootstrap Icons & Real-time Validation               |
-| **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Auth                      |
-| **Deployment**       | Localhost only        | Live Production via Vercel and GitHub                |
+| **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Persistence                      |
+| **Deployment**       | Localhost only        | CI/CD via Vercel and GitHub Actions         |
 
 ---
 
 ### **📂 Project Structure & Highlights**
 
-* **Centralized API Logic:** The custom `useApi` hook handles all authenticated fetch logic (headers and error states) in one place.
+* **Optimized Rendering:** Implementation of useMemo in high-traffic components (MainView, ProfileView) prevents unnecessary re-calculations of filtered movie arrays.
+  
+* **Clean API Layer:** A custom useApi hook centralizes authenticated fetch logic, error handling, and JWT header injection.
+
 * **Global State:** The use of `/redux` manages movie data and user favorites across the app.
 
-* **Responsive Design System:** SASS variables (`variables.scss`) enable glassmorphism, mixins, and modular styling. **Bootstrap Grid** ensures the form inputs are visually organized across mobile and desktop and eliminates the "staircase" effect in forms.
+* **Scalable SCSS Architecture:** Modular style system where variables.scss dictates the brand identity, while component-specific styles are encapsulated within their respective directories.
 
-* **User Feedback Tools:** Real-time **Password Strength Meter** and interactive heart icons for favorites.
+* **Robust Feedback Loops:** Integration of character counters, password meters, and modal confirmations to ensure a "human-first" user experience.
 
 
 #### **Project Structure**
