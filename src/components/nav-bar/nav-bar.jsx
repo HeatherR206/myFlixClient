@@ -37,7 +37,16 @@ export const NavBar = () => {
                     myFlix
                 </Navbar.Brand>
 
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ border: "none"}}>
+                    <span style={{ 
+                        color: "#f8eafb", 
+                        fontWeight: "bold", 
+                        textTransform: "uppercase",
+                        fontSize: "0.9rem" 
+                    }}>
+                        Menu
+                    </span>
+                </Navbar.Toggle>
 
                 <Navbar.Collapse id="basic-navbar-nav">
                     {user && (

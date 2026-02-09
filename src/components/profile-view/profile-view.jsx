@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFilter } from "../../redux/reducers/filter";
 import { setUser } from "../../redux/reducers/user";
@@ -95,13 +95,9 @@ export const ProfileView = () => {
         <Container fluid className="profile-view-container mt-3">
             <Row className="profile-view-row">
                 <Col
-                    lg={5}
-                    className="mb-4 left-hide-scrollbar"
-                    style={{
-                        maxHeight: "90vh",
-                        overflowY: "auto",
-                        paddingRight: "15px",
-                    }}
+                    xs={{ span: 12, order: 2 }}
+                    lg={{ span: 5, order: 1 }}
+                    className="mb-4 left-hide-scrollbar profile-side-column"
                 >
                     <div className="d-flex flex-column gap-3">
                         <Card className="user-mngmt-column shadow-sm border-0">
@@ -146,12 +142,9 @@ export const ProfileView = () => {
                 </Col>
 
                 <Col
-                    lg={7}
+                    xs={{ span: 12, order: 1 }}
+                    lg={{ span: 7, order: 2 }}
                     className="mb-4 right-scroll-column"
-                    style={{
-                        maxHeight: "90vh",
-                        overflowY: "auto",
-                    }}
                 >
                     {filter.length > 0 && (
                         <Card className="search-card mb-4 border-primary shadow-sm">
@@ -161,12 +154,12 @@ export const ProfileView = () => {
                                         Search Results
                                     </Card.Title>
                                     <Button
-                                        variant="outline-primary"
+                                        variant="outline-secondary"
                                         size="sm"
                                         onClick={() => dispatch(setFilter(""))}
-                                        className="px-4"
+                                        className="px-3"
                                     >
-                                        Clear Search Results
+                                        Clear Search
                                     </Button>
                                 </div>
                                 <Row>
@@ -174,7 +167,7 @@ export const ProfileView = () => {
                                         <p className="text-muted">No movies match "{filter}"</p>
                                     ) : (
                                         filterAllMovies.map((movie) => (
-                                            <Col className="mb-2" key={movie._id} md={12} lg={12}>
+                                            <Col className="mb-3" key={movie._id} md={12} lg={12}>
                                                 <MovieCard movie={movie} isHorizontal={true} />
                                             </Col>
                                         ))
@@ -185,6 +178,7 @@ export const ProfileView = () => {
                                             <Button 
                                                 variant="outline-secondary" 
                                                 size="sm" 
+                                                className="px-3"
                                                 onClick={() => dispatch(setFilter(""))}
                                             >
                                                 View All Favorites
@@ -196,12 +190,12 @@ export const ProfileView = () => {
                                 {filterAllMovies.length > 3 && (
                                     <div className="text-center mt-3">
                                         <Button
-                                            variant="link"
+                                            variant="outline-secondary"
                                             size="sm"
                                             onClick={() => dispatch(setFilter(""))}
-                                            className="text-decoration-none text-muted"
+                                            className="px-3"
                                         >
-                                            Clear Search Results
+                                            Clear Search
                                         </Button>
                                     </div>
                                 )}
@@ -273,9 +267,9 @@ export const ProfileView = () => {
                         Confirm Account Deletion
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="text-center mb-3 py-4">
+                <Modal.Body className="text-center">
                     <i
-                        className="bi bi-exclamation-triangle-fill text-danger mb-4"
+                        className="bi bi-exclamation-triangle-fill text-danger"
                         style={{ fontSize: "3.4rem" }}
                     ></i>
                     <h4 className="mb-4">Are you absolutely certain?</h4>
@@ -283,17 +277,17 @@ export const ProfileView = () => {
                         Faves" movies.</p>
                     <p className="text-muted"><strong>This action cannot be undone.</strong></p>
                 </Modal.Body>
-                <Modal.Footer className="border-0 pb-4">
+                <Modal.Footer className="border-0 mt-5">
                     <Button
                         variant="outline-danger"
-                        className="rounded-pill px-4 border-0 btn-sm"
+                        className="delete-btn px-4 border-0 btn-sm"
                         onClick={confirmDeleteAccount}
                     >
                         Yes, Delete Everything
                     </Button>
                     <Button
                         variant="primary"
-                        className="rounded-pill px-4 btn-lg"
+                        className="btn-corner px-4 btn-lg"
                         onClick={() => setShowDeleteModal(false)}
                     >
                         Cancel
