@@ -36,7 +36,7 @@ export const LoginView = () => {
 
     return (
         <div className="login-container py-4">
-            <h2 className="display-5 fw-bold text-center mb-4 text-primary">Welcome back!</h2>
+            <h2 className="display-5 fw-bold text-center mb-3 text-primary">Welcome back!</h2>
             <Form onSubmit={handleSubmit} className="m-4">
                 <Form.Group controlId="formUsername">
                     <Form.Label className="fw-bold">Username:</Form.Label>

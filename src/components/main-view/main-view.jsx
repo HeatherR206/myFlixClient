@@ -72,12 +72,6 @@ export const MainView = () => {
         fetchMovies();
     }, [token, dispatch]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         dispatch(setFilter(""));
-    //     };
-    // }, [dispatch]);
-
     return (
         <>
             <NavBar />
