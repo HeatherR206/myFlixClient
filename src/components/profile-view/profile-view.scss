@@ -6,13 +6,13 @@
 
     .card-body {
         padding: 1.5rem;
-    }    
+    }
 }
 
 .danger-zone-card {
     border-radius: 15px;
     background-color: rgba(255, 209, 213, 0.872) !important;
-    @include hover-lift(-2px, $danger);
+    @include danger-lift;
     transition: all 0.3s ease-in-out;
 
     &:hover {
@@ -40,52 +40,12 @@
     }
 }
 
-.custom-modal {
-    .modal-content {
-        background-color: $bg-card !important;
-        border: 2px solid $danger;
-        border-radius: 20px;
-        color: $text-main;
-    }
-
-    .modal-header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        .btn-close {
-            filter: invert(1);
-        }
-    }
-
-    .modal-body {
-        h4 {
-            font-family: $f-head;
-            font-weight: 700;
-            font-size: $head4-sz;
-            color: $text-main;
-
-        }
-        .text-muted {
-            color: $card-bg !important;
-            font-size: $sz-large;
-        }
-    }
-
-    .modal-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        justify-content: space-between;
-        padding: 1.2rem;
-
-        .btn {
-            margin: 0;
-        }
-    }
-}
-
-.my-faves {
+.my-faves, .search-card {
     background-color: $bg-card !important;
     border: 3px solid $brand-lavender !important;
     border-radius: 15px;
-
+}
+.my-faves {
     .favorite-poster-wrapper {
         position: relative;
         aspect-ratio: 2 / 3;
@@ -109,48 +69,44 @@
     }
 }
 
-.search-card {
-    background-color: $bg-card !important;
-    border: 3px solid $brand-lavender !important;
-    border-radius: 15px;
-}
-
 .custom-modal {
     .modal-content {
         background-color: $bg-card !important;
-        border: 2px solid $danger;
+        border: 3px solid $danger;
         border-radius: 20px;
         color: $text-main;
     }
 
     .modal-header {
-        border-bottom: 1px solid rgba($text-main, 0.2);
-
+        border-bottom: none;
         .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
+            filter: invert(1);
         }
-    }
-
-    .modal-title {
-        color: $danger !important;
-        font-family: $f-head;
-        font-weight: 800;
-        letter-spacing: 0.5px;
+    
+        .modal-title {
+            color: $danger !important;
+            font-family: $f-head;
+            font-size: $head3-sz;
+            font-weight: $wt-bold;
+            letter-spacing: 0.5px;
+        }
     }
 
     .modal-body {
-        h5 {
+        h4 {
+            font-family: $f-head;
+            font-weight: $wt-bold;
+            font-size: $head5-sz;
             color: $text-main;
-            font-weight: 700;
-            margin-top: 1rem;
         }
 
         p.text-muted {
-            color: rgba($text-main, 0.7) !important;
-        }
+            color: $body-bg !important;
+            font-size: $sz-reg;
 
-        strong {
-            color: danger;
+            strong {
+                color: $text-main;
+            }
         }
 
         i.bi-exclamation-triangle-fill {
@@ -159,16 +115,52 @@
     }
 
     .modal-footer {
+        position: relative;
         border-top: none;
-        padding-top: 0;
 
         .delete-btn {
+            position: absolute;
             bottom: 20px;
             left: 20px;
         }
+
         .btn-corner {
+            position: absolute;
             bottom: 20px;
             right: 20px;
         }
     }
 }
+
+.profile-side-column, .right-scroll-column {
+    max-height: none;
+    overflow-y: visible;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.8) transparent;
+
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.85) !important;
+        border: 2px solid rgb(72, 74, 72);
+        background-clip: padding-box;
+
+        &:hover {
+            background: $brand-lavender !important;
+        }
+    }
+
+    @media (min-width: 992px) {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+.left-hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
