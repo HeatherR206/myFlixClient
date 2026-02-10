@@ -28,7 +28,9 @@ Live myFlix application: https://myflixclient-five.vercel.app
 GitHub API Repository: https://github.com/HeatherR206/myFlix.git
 
 #### **Test Credentials**
-I encourage you to "Signup" but you may also utilize "Guest Login" to explore myFlix.
+
+I encourage you to "Signup" but you may explore myFlix utilizing "Guest Login".
+
 ---
 
 ### **🛠️ Technical Stack & Architecture**
