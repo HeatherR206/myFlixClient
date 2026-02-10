@@ -27,9 +27,9 @@ html {
 .form-control {
     transition: all 0.2s ease-in-out;
     background-color: rgba(255, 255, 255, 0.9);
-    border: 2px solid $border-main;
+    border: 2px solid $shadow-main;
     color: $brand-purple;
-    border-radius: 10px;
+    border-radius: 8px;
 
     &:hover {
         background-color: $text-alt;
@@ -55,7 +55,27 @@ html {
 }
 
 .input-group {
-    .btn-outline-secondary,
+    .eye-toggle.btn-outline-secondary {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 8px !important;
+        border-bottom-right-radius: 8px !important;
+        border-width: 2px; 
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 2px solid $shadow-main;
+
+        &:hover {
+            background-color: $brand-lavender;
+            border: 2px solid $brand-purple;
+            color: $text-alt;
+        }
+    }
+
+    .form-control {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
     .btn-outline-info {
         background-color: $bg-card;
         border: 2px solid $border-main;
@@ -86,7 +106,7 @@ html {
             border-color: $brand-lavender;
             box-shadow: 0 0 0 0.35rem rgba($brand-lavender, 0.4);
         }
-        .btn-outline-secondary,
+        .btn-eye-toggle,
         .btn-outline-info {
             border-color: $brand-lavender;
         }
@@ -94,8 +114,10 @@ html {
 }
 
 .search-container {
-    width: auto;
-    min-width: 360px;
+    width: 100%;
+    min-width: 0;
+    margin: 1rem 0;
+
     .form-control {
         border-radius: 50px !important;
         padding-left: 1.5rem;
@@ -121,6 +143,12 @@ html {
         padding-right: 1.2rem;
         padding-left: 1.2rem;
     }
+
+    @media (min-width: 992px) {
+        width: auto;
+        min-width: 360px;
+        margin: 0;
+    }
 }
 
 .btn-primary {
@@ -129,7 +157,7 @@ html {
     border: 1px solid $brand-purple;
     border-radius: 50px;
     margin: 8px 0;
-    padding: 6px 30px;
+    padding: 6px auto;
     font-weight: $wt-semi;
     width: auto;
     cursor: pointer;
@@ -262,8 +290,12 @@ html {
         letter-spacing: 0.5px;
         transition: color 0.2s ease;
         color: #ffffff;
+        padding-left: 1rem;
+        padding-right: 1rem;
         width: fit-content;
         margin-left: auto;
+        margin-right: 0;
+        text-align: right;
 
         &:hover {
             color: $brand-lavender !important;
@@ -273,6 +305,11 @@ html {
             font-weight: $wt-bold;
             color: $brand-green !important;
             border-bottom: 2px solid $brand-green;
+        }
+
+        @media (min-width: 992px) {
+            margin-left: 0;
+            margin-right: auto;
         }
     }
 

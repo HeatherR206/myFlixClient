@@ -64,6 +64,7 @@ export const LoginView = () => {
                         <Button
                             variant="outline-secondary"
                             onClick={() => setShowPassword(!showPassword)}
+                            className="eye-toggle"
                         >
                             <i className={`bi bi-eye${showPassword ? "-slash" : ""}`}></i>
                         </Button>
