@@ -8,8 +8,7 @@
     overflow: hidden;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: $shadow-main;
+        transform: translateY(-3px);
     }
 
     .btn-corner {
@@ -111,39 +110,89 @@
 }
 
 .custom-card-horizontal {
-    min-height: auto;
-    max-height: 180px;
+    display: flex;
+    flex-direction: row;
+    height: 220px;
+    overflow: hidden;
+    border: 2px solid $border-main !important;
+    border-radius: 13px !important;
+    position: relative;
+
 
     .horizontal-poster-wrapper {
-        height: 100%;
-        min-height: 150px;
-        flex-basis: 150px;
-        display: flex;
+        flex: 0 0 35%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 11px 0 0 0 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
 
         .img-fluid {
-            border-radius: 13px 0 0 13px;
-            object-fit: cover;
             width: 100%;
             height: 100%;
+            object-fit: cover;
+            border-radius: 11px 0 0 0 !important;
+            filter: brightness(1.05);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 25px;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
+            pointer-events: none;
         }
     }
 
     .card-body {
-        font-size: $sz-reg;
-        font-weight: $wt-semi;
-        padding-top: 1rem;
-        padding-bottom: 50px;
+        flex: 1;
+        border-radius: 0 11px 11px 0;
+        background-color: rgba($card-bg, 0.5);
+        backdrop-filter: blur(5px);
+        padding: 1.25rem 3.5rem 3.5rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+
+        .card-title {
+            font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .summary-clamp {
+            -webkit-line-clamp: 4;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: $text-main;
+            opacity: 0.9;
+            min-height: 3.6rem;
+        }
     }
 
-    .summary-clamp {
-        -webkit-line-clamp: 2;
-        word-break: break-word;
-        min-height: 0;
-        font-size: $sz-reg;
+    .btn-corner {
+        position: absolute;
+        bottom: 1rem; 
+        right: 1rem;
+        margin: 0;
     }
+}
 
-    .card-title {
-        font-size: 1.2rem;
+@media (min-width: 768px) and (max-width: 1200px) {
+    .custom-card-horizontal {
+        min-height: 200px;
+        .card-body {
+            padding: 1rem; 
+            padding-bottom: 3.5rem;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-card-horizontal {
+        .horizontal-poster-wrapper {
+            flex: 0 0 30%;
+        }
     }
 }
 

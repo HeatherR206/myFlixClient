@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
-import { setFilter } from "../../redux/reducers/filter";
 import { useApi } from "../../hooks/useApi";
-import { Card, Col, Row, Button, Badge, Container } from "react-bootstrap";
+import { Card, Col, Row, Button, Container } from "react-bootstrap";
 import { API_URL } from "../../config";
 
 export const MovieView = () => {

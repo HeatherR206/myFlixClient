@@ -23,10 +23,10 @@ export const SignupView = () => {
 
     const calculateStrength = (pwd) => {
         let score = 0;
-        if (pwd.length >= 10) score += 25; // Length requirement
-        if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score += 25; // Mixed case
-        if (/[0-9]/.test(pwd)) score += 25; // Numbers
-        if (/[^A-Za-z0-9]/.test(pwd)) score += 25; // Special chars
+        if (pwd.length >= 10) score += 25;
+        if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score += 25;
+        if (/[0-9]/.test(pwd)) score += 25;
+        if (/[^A-Za-z0-9]/.test(pwd)) score += 25;
         return score;
     };
 
@@ -63,8 +63,8 @@ export const SignupView = () => {
     };
 
     return (
-        <div className="signup-container px-4 py-4">
-            <h2 className="display-5 fw-bold text-center mb-4 text-primary">Join myFlix!</h2>
+        <div className="signup-container px-4 py-3">
+            <h2 className="display-5 fw-bold text-center mb-3 text-primary">Join myFlix!</h2>
             <Form
                 onSubmit={handleSubmit}
                 className="signup-form mx-auto"
@@ -239,7 +239,7 @@ export const SignupView = () => {
                 </Row>
 
                 <Button
-                    className="signup-btn btn-lg mt-5 glow-on-hover"
+                    className="signup-btn btn-lg mt-3 glow-on-hover"
                     variant="primary"
                     type="submit"
                     disabled={strength < 50}

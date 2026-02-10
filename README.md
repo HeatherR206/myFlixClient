@@ -53,15 +53,14 @@ I encourage you to "Signup" but you can also explore myFlix as a "Guest":
 
 This project has undergone a significant architectural refactor to improve scalability and user experience.
 
-| Feature              | Dec 3 (Initial Setup) | Current State                                        |
-| :------------------- | :-------------------- | :--------------------------------------------------- |
-| **State Management** | Local `useState`      | Redux Toolkit (Global Store)                         |
-| **Search Logic**     | Simple Title filter    | Multi-parameter "Deep Search"
-| **Styling**          | Basic CSS / Bootstrap | Glassmorphism Design System (Sass) |
-| **User Interaction** | Standard Forms    | Real-time Validation & Feedback Loops                 |
-| **UX Design**        | Text/Emoji Icons      | Bootstrap Icons & Real-time Validation               |
-| **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Persistence                      |
-| **Deployment**       | Localhost only        | CI/CD via Vercel and GitHub Actions         |
+| Feature              | Dec 3 (Initial Setup) | Current State                          |
+| :------------------- | :-------------------- | :------------------------------------- |
+| **State Management** | Local `useState`      | Redux Toolkit (Memoized Global Store)  |
+| **Search Logic**     | Simple Title filter   | Multi-parameter "Deep Search"          |
+| **Styling**          | Basic CSS / Bootstrap | Glassmorphism Design System (Sass)     |
+| **User Interaction** | Standard Forms        | Real-time Validation & Feedback Loops  |
+| **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Persistence |
+| **Deployment**       | Localhost only        | CI/CD via Vercel and GitHub Actions    |
 
 ---
 
@@ -74,6 +73,10 @@ This project has undergone a significant architectural refactor to improve scala
 * **Global State:** The use of `/redux` manages movie data and user favorites across the app.
 
 * **Scalable SCSS Architecture:** Modular style system where variables.scss dictates the brand identity, while component-specific styles are encapsulated within their respective directories.
+
+* **Responsive Layout Ordering:** Implementation of Bootstrap’s order utilities to prioritize high-interaction features (Search and Favorites) on mobile viewports while maintaining a professional side-by-side dashboard on desktop.
+
+* **Visual Consistency Logic:** Precise SCSS border-radius and flexbox alignment to ensure seamless image-to-text transitions across dynamic card orientations (Horizontal vs. Vertical).
 
 * **Robust Feedback Loops:** Integration of character counters, password meters, and modal confirmations to ensure a "human-first" user experience.
 
@@ -119,7 +122,8 @@ npm install
 
 #### **3. Environmental Configuration**
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory.
+Note: For Parcel to pick these up, you need to prefix them or ensure they are defined during the build.
 
 ```text
 API_URL=http://localhost:8080

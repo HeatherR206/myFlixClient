@@ -9,10 +9,6 @@ html {
     height: 100%;
 }
 
-// .profile-view {
-//     overflow: hidden;
-// }
-
 .custom-profile-list {
     background-color: $bg-card !important;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -134,7 +130,7 @@ html {
     border-radius: 50px;
     margin: 8px 0;
     padding: 6px 30px;
-    font-weight: 500;
+    font-weight: $wt-semi;
     width: auto;
     cursor: pointer;
     @include hover-lift(-2px, $brand-lavender);
@@ -143,23 +139,45 @@ html {
     &:focus {
         background-color: $brand-lavender !important;
         border-color: $brand-purple !important;
+        font-weight: $wt-bold;
         box-shadow: 0 0 15px rgba($brand-purple, 0.6);
         transform: translateY(-1px);
     }
 }
 
 .btn-outline-primary {
-    border: 1px solid $brand-purple;
+    border: 1px solid rgba($brand-purple, 0.6);
     color: $brand-purple;
     border-radius: 50px;
     padding: 6px 30px;
     width: auto;
+    font-weight: $wt-semi;
     transition: all 0.3s ease-in-out;
+    @include hover-lift(-2px, $brand-lavender);
 
     &:hover {
-        background-color: $brand-purple !important;
-        border-color: $brand-lavender !important;
+        background-color: $brand-lavender !important;
+        border-color: $brand-purple !important;
         color: $text-alt;
+        font-weight: $wt-bold;
+        box-shadow: 0 0 15px rgba($brand-lavender, 0.6);
+    }
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    border: 1px solid $brand-lavender;
+    border-radius: 50px;
+    color: $brand-purple;
+    font-weight: $wt-semi;
+    transition: all 0.2s ease-in-out;
+    @include hover-lift(-2px, $brand-lavender);
+
+    &:hover {
+        background-color: $brand-lavender;
+        border: 1px solid $brand-purple;
+        color: $text-alt;
+        font-weight: $wt-bold;
         box-shadow: 0 0 15px rgba($brand-purple, 0.6);
     }
 }
@@ -211,28 +229,6 @@ html {
     scrollbar-color: rgba($brand-purple, 0.6) transparent;
 }
 
-.right-scroll-column {
-    &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.85) !important;
-        border: 2px solid rgb(72, 74, 72);
-        background-clip: padding-box;
-
-        &:hover {
-            background: $brand-lavender !important;
-        }
-    }
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.8) transparent;
-}
-
-.left-hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-}
-
 .custom-tabs {
     border-bottom: 2px solid rgba($brand-purple, 0.1);
     gap: 10px;
@@ -242,6 +238,7 @@ html {
             border: none;
             color: $text-muted;
             font-weight: $wt-semi;
+            width: fit-content;
             border-radius: 12px 12px 0 0;
             transition: all 0.3s ease;
 

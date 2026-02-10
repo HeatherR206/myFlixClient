@@ -114,11 +114,9 @@ export const MovieCard = ({ movie, isHorizontal = false }) => {
                 alt={movie.title}
             />
             <Card.Body className="d-flex flex-column">
-                {/* <div className="d-flex justify-content-between align-items-start mb-3"> */}
-                <Card.Title className="card-title-clamp pe-5 mb-3">
+                <Card.Title className="card-title-clamp pe-4 mb-3">
                     {movie.title}
                 </Card.Title>
-                {/* </div> */}
 
                 <div className="mb-3">
                     <Badge pill bg="none" className="custom-badge-outline text-muted">
@@ -127,7 +125,6 @@ export const MovieCard = ({ movie, isHorizontal = false }) => {
                 </div>
 
                 <Card.Text className="summary-clamp mb-3">{movie.summary}</Card.Text>
-                {/* <div className="mt-auto-container"> */}
                 <Link to={`/movies/${encodeURIComponent(movie._id)}`} className="btn btn-corner btn-primary rounded-pill glow-on-hover">
                         More Info
                 </Link>
