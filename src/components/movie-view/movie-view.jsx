@@ -70,74 +70,71 @@ export const MovieView = () => {
 
     return (
         <Row className="justify-content-center mt-5 pb-5">
-            <Col lg={12}>
-                <Card className="movie-view-card shadow-lg">
-                    <Row className="g-0 h-100">
-                        <Col md={5} lg={4}>
-                            <Card.Img
-                                src={movie.imagePath}
-                                className="img-fluid h-100 object-fit-cover"
-                                alt={movie.title}
-                            />
-                        </Col>
+            <Col md={10} lg={10}>
+                <Card className="movie-view-card shadow-lg border-0">
+                    {/* <Row className="g-0 h-100">
+                        <Col md={5} lg={4}> */}
+                    <Card.Img
+                        src={movie.imagePath}
+                        className="img-fluid"
+                        alt={movie.title}
+                    />
 
-                        <Col md={7} lg={8} className="d-flex flex-column">
-                            <Card.Body className="p-4 flex-grow-1">
-                                <div className="d-flex justify-content-between align-items-start mb-2">
-                                    <Card.Title className="fw-bold mb-3">{movie.title}</Card.Title>
-                                    <Button
-                                        variant="link"
-                                        onClick={toggleFavorite}
-                                        className="glass-heart-button shadow-sm"
-                                        title={
-                                            isFavorite
-                                                ? "Remove from Favorites"
-                                                : "Add to Favorites"
-                                        }
-                                    >
-                                        <i
-                                            className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart"}`}
-                                        ></i>
-                                    </Button>
-                                </div>
+                        {/* <Col md={7} lg={8} className="d-flex flex-column"> */}
+                    <Card.Body className="card-body">
+                        <div className="title-wrapper">
+                            <Card.Title className="card-title">{movie.title}</Card.Title>
+                            <Button
+                                variant="link"
+                                onClick={toggleFavorite}
+                                className="glass-heart-button"
+                                title={
+                                    isFavorite
+                                        ? "Remove from Favorites"
+                                        : "Add to Favorites"
+                                }
+                            >
+                                <i
+                                    className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart"}`}
+                                ></i>
+                            </Button>
+                        </div>
                                 
-                                <Card.Text className="lead movie-summary mb-3">
-                                    {movie.summary}
-                                </Card.Text>
+                        <Card.Text className="movie-summary">
+                            {movie.summary}
+                        </Card.Text>
 
-                                <div className="movie-metadata mt-4">
-                                    <p className="text-muted mb-1">
-                                        <strong>Release Date: </strong>
-                                        {movie.releaseDate
-                                            ? new Date(movie.releaseDate).toLocaleDateString()
-                                            : "N/A"}
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>Genre:</strong>{" "}
-                                        {movie.genres?.length > 0 ? movie.genres.map(g => g.genreName).join(", ") : "N/A"}
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>Director:</strong>{" "}
-                                        {movie.directors?.length > 0 ? movie.directors.map(d => d.directorName).join(", ") : "N/A"}
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>Cast:</strong>{" "}
-                                        {movie.cast?.length > 0 ? movie.cast.map(c => c.castName).join(", ") : "N/A"}
-                                    </p>
-                                </div>
+                        <div className="movie-metadata mt-2">
+                            <p className="text-muted mb-1">
+                                <strong>Release Date: </strong>
+                                {movie.releaseDate
+                                    ? new Date(movie.releaseDate).toLocaleDateString()
+                                    : "N/A"}
+                            </p>
+                            <p className="mb-1">
+                                <strong>Genre:</strong>{" "}
+                                {movie.genres?.length > 0 ? movie.genres.map(g => g.genreName).join(", ") : "N/A"}
+                            </p>
+                            <p className="mb-1">
+                                <strong>Director:</strong>{" "}
+                                {movie.directors?.length > 0 ? movie.directors.map(d => d.directorName).join(", ") : "N/A"}
+                            </p>
+                            <p className="mb-0">
+                                <strong>Cast:</strong>{" "}
+                                {movie.cast?.length > 0 ? movie.cast.map(c => c.castName).join(", ") : "N/A"}
+                            </p>
+                        </div>
 
-                                <Button
-                                    variant="primary"
-                                    onClick={() => {
-                                        navigate(-1)
-                                    }}
-                                    className="btn-corner glow-on-hover"
-                                >
-                                    Back
-                                </Button>
-                            </Card.Body>
-                        </Col>
-                    </Row>
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                navigate(-1)
+                            }}
+                            className="btn-corner glow-on-hover"
+                        >
+                            Back
+                        </Button>
+                    </Card.Body>
                 </Card>
             </Col>
         </Row>
