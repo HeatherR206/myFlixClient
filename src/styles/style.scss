@@ -81,14 +81,14 @@ html {
         border-bottom-right-radius: 0 !important;
     }
 
-    &:focus-within {
-        .form-control {
-        }
+    // &:focus-within {
+    //     .form-control {
+    //     }
 
-        .btn-eye-toggle,
-        .btn-outline-info {
-        }
-    }
+    //     .btn-eye-toggle,
+    //     .btn-outline-info {
+    //     }
+    // }
 }
 
 .search-container {
@@ -101,15 +101,17 @@ html {
         padding-left: 1.5rem;
         background-color: $text-alt;
         color: $text-main;
-        border: 2px solid rgba($brand-lavender, 0.8);
+        border: 2px solid rgba($bg-card, 0.8);
         transition: all 0.3s ease;
 
         &:hover {
-            border: 2px solid $brand-green;
+            border: 2px solid $brand-lavender;
+            box-shadow: 0 0 0 0.35rem rgba($brand-lavender, 0.65);
         }
 
         &:focus {
-            box-shadow: 0 0 0 0.35rem rgba($brand-green, 0.65);
+            box-shadow: 0 0 0 0.35rem rgba($emphasis-color, 0.65);
+            border: 2px solid $emphasis-color;
             border-top-right-radius: 50px !important;
             border-bottom-right-radius: 50px !important;
         }
