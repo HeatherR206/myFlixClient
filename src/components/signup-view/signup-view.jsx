@@ -53,9 +53,7 @@ export const SignupView = () => {
                     navigate("/login");
                 } else {
                     const errorData = await response.json();
-                    const message = errorData.errors
-                        ? errorData.errors.map((e) => e.msg).join(", ")
-                        : "Signup failed";
+                    const message = errorData.errors ? errorData.errors.map((e) => e.msg).join(", ") : "Signup failed";
                     alert(message);
                 }
             })
@@ -63,26 +61,16 @@ export const SignupView = () => {
     };
 
     return (
-        <div className="signup-container px-4 py-3">
-            <h2 className="display-5 fw-bold text-center mb-3 text-primary">Join myFlix!</h2>
-            <Form
-                onSubmit={handleSubmit}
-                className="signup-form mx-auto"
-                style={{ maxWidth: "800px" }}
-            >
+        <div className="signup-container px-3 py-2">
+            <h3 className="display-6 fw-bold text-center text-primary">Join myFlix!</h3>
+            <Form onSubmit={handleSubmit} className="signup-form mx-auto" style={{ maxWidth: "800px" }}>
                 <Row>
-                    <Col md={12} className="my-3">
+                    <Col md={10} className="my-3">
                         <Form.Group controlId="formSignupUsername">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold">Username</Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
                                 {username.length > 0 && (
-                                    <small
-                                        className={
-                                            username.length >= LIMITS.username
-                                                ? "text-danger"
-                                                : "text-muted"
-                                        }
-                                    >
+                                    <small className={username.length >= LIMITS.username ? "text-danger" : "text-muted"}>
                                         {username.length}/{LIMITS.username}
                                     </small>
                                 )}
@@ -98,24 +86,16 @@ export const SignupView = () => {
                                 maxLength={LIMITS.username}
                                 placeholder="Choose a unique username"
                             />
-                            <Form.Text className="small text-muted">
-                                Minimum 6 characters.
-                            </Form.Text>
+                            <Form.Text className="small text-muted">Minimum 6 characters.</Form.Text>
                         </Form.Group>
                     </Col>
 
-                    <Col md={12} className="mb-3">
+                    <Col md={10} className="mb-3">
                         <Form.Group controlId="formSignupPassword">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold">Password</Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">Password</Form.Label>
                                 {password.length > 0 && (
-                                    <small
-                                        className={
-                                            password.length >= LIMITS.password
-                                                ? "text-danger"
-                                                : "text-muted"
-                                        }
-                                    >
+                                    <small className={password.length >= LIMITS.password ? "text-danger" : "text-muted"}>
                                         {password.length}/{LIMITS.password}
                                     </small>
                                 )}
@@ -130,11 +110,7 @@ export const SignupView = () => {
                                     maxLength={LIMITS.password}
                                     placeholder="Create a strong password"
                                 />
-                                <Button
-                                    variant="outline-secondary"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="eye-toggle"
-                                >
+                                <Button variant="outline-secondary" onClick={() => setShowPassword(!showPassword)} className="eye-toggle">
                                     <i className={`bi bi-eye${showPassword ? "-slash" : ""}`}></i>
                                 </Button>
                             </InputGroup>
@@ -160,15 +136,9 @@ export const SignupView = () => {
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupFirstName">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold">First Name</Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">First Name</Form.Label>
                                 {firstName.length > 0 && (
-                                    <small
-                                        className={
-                                            firstName.length >= LIMITS.firstName
-                                                ? "text-danger"
-                                                : "text-muted"
-                                        }
-                                    >
+                                    <small className={firstName.length >= LIMITS.firstName ? "text-danger" : "text-muted"}>
                                         {firstName.length}/{LIMITS.firstName}
                                     </small>
                                 )}
@@ -187,15 +157,9 @@ export const SignupView = () => {
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupLastName">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold">Last Name</Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">Last Name</Form.Label>
                                 {lastName.length > 0 && (
-                                    <small
-                                        className={
-                                            lastName.length >= LIMITS.lastName
-                                                ? "text-danger"
-                                                : "text-muted"
-                                        }
-                                    >
+                                    <small className={lastName.length >= LIMITS.lastName ? "text-danger" : "text-muted"}>
                                         {lastName.length}/{LIMITS.lastName}
                                     </small>
                                 )}
@@ -213,7 +177,7 @@ export const SignupView = () => {
 
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupEmail">
-                            <Form.Label className="fw-bold">Email</Form.Label>
+                            <Form.Label className="fw-bold text-muted small text-uppercase">Email</Form.Label>
                             <Form.Control
                                 className="w-ch-email"
                                 size="lg"
@@ -227,7 +191,7 @@ export const SignupView = () => {
 
                     <Col md={6} className="mb-3">
                         <Form.Group controlId="formSignupBirthDate">
-                            <Form.Label className="fw-bold">Birth Date</Form.Label>
+                            <Form.Label className="fw-bold text-muted small text-uppercase">Birth Date</Form.Label>
                             <Form.Control
                                 className="w-ch-date"
                                 size="lg"
@@ -240,7 +204,7 @@ export const SignupView = () => {
                 </Row>
 
                 <Button
-                    className="signup-btn btn-lg mt-3 glow-on-hover"
+                    className="signup-btn w-100 btn-lg mt-3 glow-on-hover rounded-pill"
                     variant="primary"
                     type="submit"
                     disabled={strength < 50}

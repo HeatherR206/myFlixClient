@@ -12,13 +12,16 @@ export const LoginView = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (event, manualUser, manualPass) => {
+        if (event) event.preventDefault();
+
+        const userToLogin = manualUser || username;
+        const passToLogin = manualPass || password;
 
         fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username: userToLogin, password: passToLogin }),
         })
             .then((response) => {
                 if (response.ok) return response.json();
@@ -34,14 +37,22 @@ export const LoginView = () => {
             .catch((e) => alert(e.message));
     };
 
+    const onGuestLogin = () => {
+        const guestUser = "myFlixGuest";
+        const guestPass = "My-flix_Movies8647!";
+
+        handleSubmit(null, guestUser, guestPass);
+    };
+
     return (
         <div className="login-container py-4">
-            <h2 className="display-5 fw-bold text-center mb-3 text-primary">Welcome back!</h2>
+            <h3 className="display-6 fw-bold text-center mb-2 text-primary">Welcome back!</h3>
             <Form onSubmit={handleSubmit} className="m-4">
                 <Form.Group controlId="formUsername">
-                    <Form.Label className="fw-bold">Username:</Form.Label>
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
                     <Form.Control
                         size="lg"
+                        className="w-ch-username mb-3"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -50,33 +61,30 @@ export const LoginView = () => {
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formPassword">
-                    <Form.Label className="fw-bold mt-3">Password:</Form.Label>
-                    <InputGroup>
+                <Form.Group controlId="formPassword" size="lg" className="mb-3">
+                    <Form.Label className="fw-bold text-muted small text-uppercase">Password</Form.Label>
+                    <InputGroup size="lg" className="w-ch-password">
                         <Form.Control
-                            size="lg"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             minLength="10"
                         />
-                        <Button
-                            variant="outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="eye-toggle"
-                        >
+                        <Button variant="outline-secondary" onClick={() => setShowPassword(!showPassword)} className="eye-toggle">
                             <i className={`bi bi-eye${showPassword ? "-slash" : ""}`}></i>
                         </Button>
                     </InputGroup>
                 </Form.Group>
 
-                <Button
-                    className="login-btn btn-lg mt-5 glow-on-hover"
-                    variant="primary"
-                    type="submit"
-                >
+                <Button className="login-btn btn-lg mt-5 w-100 rounded-pill glow-on-hover" variant="primary" type="submit">
                     Login
+                </Button>
+
+                <div className="text-center my-3 text-muted rounded pill">or</div>
+
+                <Button className="guest-login btn-lg w-100 mb-2 rounded-pill glow-on-hover" variant="outline-info" onClick={onGuestLogin}>
+                    Guest Login
                 </Button>
             </Form>
         </div>

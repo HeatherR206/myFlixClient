@@ -28,22 +28,21 @@ html {
     transition: all 0.2s ease-in-out;
     background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid $shadow-main;
-    color: $brand-purple;
+    color: $text-muted;
     border-radius: 8px;
 
     &:hover {
-        background-color: $text-alt;
-        border: 2px solid $brand-purple;
+        border: 2px solid $brand-lavender;
         cursor: pointer;
     }
 
     &:focus {
         background-color: $text-alt;
-        color: $text-main;
+        color: $brand-purple;
         font-weight: $font-weight-bold;
         border: 2px solid $brand-purple;
         outline: none;
-        box-shadow: 0 0 0 0.35rem rgba($brand-lavender, 0.3);
+        box-shadow: none;
     }
 
     &::placeholder {
@@ -60,14 +59,20 @@ html {
         border-bottom-left-radius: 0 !important;
         border-top-right-radius: 8px !important;
         border-bottom-right-radius: 8px !important;
-        border-width: 2px; 
         background-color: rgba(255, 255, 255, 0.9);
         border: 2px solid $shadow-main;
+        box-shadow: none !important;
 
         &:hover {
-            background-color: $brand-lavender;
+            background-color: $text-alt;
+            border: 2px solid $brand-lavender;
+            color: $brand-purple;
+        }
+
+        &:focus {
+            background-color: $text-alt;
             border: 2px solid $brand-purple;
-            color: $text-alt;
+            color: $brand-purple;
         }
     }
 
@@ -76,39 +81,12 @@ html {
         border-bottom-right-radius: 0 !important;
     }
 
-    .btn-outline-info {
-        background-color: $bg-card;
-        border: 2px solid $border-main;
-        color: $brand-purple;
-        transition: all 0.2s ease-in-out;
-
-        &:hover {
-            background-color: $brand-lavender;
-            border: 2px solid $brand-purple;
-            color: $text-alt;
-        }
-
-        &:focus {
-            background-color: $brand-purple;
-            color: $brand-green;
-            border: none;
-            outline: none;
-            box-shadow: 0 0 0 0.35rem $brand-purple;
-        }
-
-        i {
-            font-size: 1.2rem;
-        }
-    }
-
     &:focus-within {
         .form-control {
-            border-color: $brand-lavender;
-            box-shadow: 0 0 0 0.35rem rgba($brand-lavender, 0.4);
         }
+
         .btn-eye-toggle,
         .btn-outline-info {
-            border-color: $brand-lavender;
         }
     }
 }
@@ -155,9 +133,7 @@ html {
     color: $text-alt;
     background-color: $brand-purple !important;
     border: 1px solid $brand-purple;
-    border-radius: 50px;
     margin: 8px 0;
-    padding: 6px auto;
     font-weight: $wt-semi;
     width: auto;
     cursor: pointer;
@@ -168,7 +144,7 @@ html {
         background-color: $brand-lavender !important;
         border-color: $brand-purple !important;
         font-weight: $wt-bold;
-        box-shadow: 0 0 15px rgba($brand-purple, 0.6);
+        box-shadow: 0 0 15px rgba($brand-purple, 0.5);
         transform: translateY(-1px);
     }
 }
@@ -176,8 +152,6 @@ html {
 .btn-outline-primary {
     border: 1px solid rgba($brand-purple, 0.6);
     color: $brand-purple;
-    border-radius: 50px;
-    padding: 6px 30px;
     width: auto;
     font-weight: $wt-semi;
     transition: all 0.3s ease-in-out;
@@ -191,34 +165,25 @@ html {
         box-shadow: 0 0 15px rgba($brand-lavender, 0.6);
     }
 }
-
 .btn-outline-secondary {
     background-color: transparent;
     border: 1px solid $brand-lavender;
-    border-radius: 50px;
-    color: $brand-purple;
-    font-weight: $wt-semi;
+    color: $brand-lavender;
     transition: all 0.2s ease-in-out;
-    @include hover-lift(-2px, $brand-lavender);
-
     &:hover {
-        background-color: $brand-lavender;
-        border: 1px solid $brand-purple;
         color: $text-alt;
-        font-weight: $wt-bold;
-        box-shadow: 0 0 15px rgba($brand-purple, 0.6);
+        background-color: $brand-lavender;
+        border: 1px solid $brand-lavender;
+        font-weight: $wt-semi;
     }
 }
 
 .btn-outline-danger {
-    width: 9rem;
-    min-width: 100px;
-    border-radius: 50px;
-    padding: 4px 20px;
     width: auto;
+    min-width: 100px;
     margin: 10px 0;
     box-shadow: none;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
         border: 1px solid $text-alt !important;
@@ -229,6 +194,20 @@ html {
 .glow-on-hover {
     &:hover {
         box-shadow: 0 6px 15px rgba($brand-lavender, 0.7);
+    }
+}
+
+.login-container {
+    .guest-login.btn-outline-info {
+        background-color: transparent;
+        border: 1px solid $brand-lavender;
+        transition: all 0.3s ease-in-out;
+        color: $brand-lavender;
+
+        &:hover {
+            background-color: $brand-lavender;
+            color: $text-alt;
+        }
     }
 }
 
@@ -351,7 +330,7 @@ html {
     .navbar-collapse {
         padding-top: 1rem;
         padding-bottom: 1rem;
-        padding-right: 0.5rem; 
+        padding-right: 0.5rem;
     }
 }
 
