@@ -43,7 +43,7 @@ I encourage you to "Signup" but you may explore myFlix utilizing "Guest Login".
 | **Styling**    | SCSS (Sass)           | Scalable design system using mixins, variables, and nested rules |
 | **Security**   | Zxcvbn-style logic    | Client-side password validation with visual feedback.            |
 | **Build Tool** | Parcel                | Zero-config bundling with "clean" scripts for deployment.        |
-| **Dev Ops**    | Vercel & Prettier     | CI/CD automation and envorded code formatting consistency.       |
+| **Dev Ops**    | Vercel & Prettier     | CI/CD automation and enforced code formatting consistency.       |
 
 ---
 
@@ -56,7 +56,7 @@ This project has undergone a significant architectural refactor to improve scala
 | **State Management** | Local `useState`      | Redux Toolkit (Memoized Global Store)  |
 | **Search Logic**     | Simple Title filter   | Multi-parameter "Deep Search"          |
 | **Styling**          | Basic CSS / Bootstrap | Glassmorphism Design System (Sass)     |
-| **User Interaction** | Standard Forms        | Real-time Validation & Feedback Loops  |
+| **User Interaction** | Standard Forms        | Real-time Validation, Feedback Loops, Guest Login  |
 | **API Integration**  | Standard Fetch        | Custom `useApi` Hook & JWT Persistence |
 | **Deployment**       | Localhost only        | CI/CD via Vercel and GitHub Actions    |
 
