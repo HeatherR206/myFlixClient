@@ -72,15 +72,7 @@ export const MovieView = () => {
         <Row className="justify-content-center mt-5 pb-5">
             <Col md={10} lg={10}>
                 <Card className="movie-view-card shadow-lg border-0">
-                    {/* <Row className="g-0 h-100">
-                        <Col md={5} lg={4}> */}
-                    <Card.Img
-                        src={movie.imagePath}
-                        className="img-fluid"
-                        alt={movie.title}
-                    />
-
-                        {/* <Col md={7} lg={8} className="d-flex flex-column"> */}
+                    <Card.Img src={movie.imagePath} className="img-fluid" alt={movie.title} />
                     <Card.Body className="card-body">
                         <div className="title-wrapper">
                             <Card.Title className="card-title">{movie.title}</Card.Title>
@@ -88,49 +80,37 @@ export const MovieView = () => {
                                 variant="link"
                                 onClick={toggleFavorite}
                                 className="glass-heart-button"
-                                title={
-                                    isFavorite
-                                        ? "Remove from Favorites"
-                                        : "Add to Favorites"
-                                }
+                                title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                             >
-                                <i
-                                    className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart"}`}
-                                ></i>
+                                <i className={`bi ${isFavorite ? "bi-heart-fill text-danger" : "bi-heart"}`}></i>
                             </Button>
                         </div>
-                                
-                        <Card.Text className="movie-summary">
-                            {movie.summary}
-                        </Card.Text>
+
+                        <Card.Text className="movie-summary">{movie.summary}</Card.Text>
 
                         <div className="movie-metadata mt-2">
                             <p className="text-muted mb-1">
                                 <strong>Release Date: </strong>
-                                {movie.releaseDate
-                                    ? new Date(movie.releaseDate).toLocaleDateString()
-                                    : "N/A"}
+                                {movie.releaseDate ? new Date(movie.releaseDate).toLocaleDateString() : "N/A"}
                             </p>
                             <p className="mb-1">
-                                <strong>Genre:</strong>{" "}
-                                {movie.genres?.length > 0 ? movie.genres.map(g => g.genreName).join(", ") : "N/A"}
+                                <strong>Genre:</strong> {movie.genres?.length > 0 ? movie.genres.map((g) => g.genreName).join(", ") : "N/A"}
                             </p>
                             <p className="mb-1">
                                 <strong>Director:</strong>{" "}
-                                {movie.directors?.length > 0 ? movie.directors.map(d => d.directorName).join(", ") : "N/A"}
+                                {movie.directors?.length > 0 ? movie.directors.map((d) => d.directorName).join(", ") : "N/A"}
                             </p>
                             <p className="mb-0">
-                                <strong>Cast:</strong>{" "}
-                                {movie.cast?.length > 0 ? movie.cast.map(c => c.castName).join(", ") : "N/A"}
+                                <strong>Cast:</strong> {movie.cast?.length > 0 ? movie.cast.map((c) => c.castName).join(", ") : "N/A"}
                             </p>
                         </div>
 
                         <Button
                             variant="primary"
                             onClick={() => {
-                                navigate(-1)
+                                navigate(-1);
                             }}
-                            className="btn-corner glow-on-hover"
+                            className="btn-corner glow-on-hover px-4 rounded-pill"
                         >
                             Back
                         </Button>

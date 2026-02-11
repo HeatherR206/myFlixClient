@@ -1,5 +1,5 @@
 .movie-view-card {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     min-height: auto;
     border-radius: 15px;
@@ -21,9 +21,8 @@
     .img-fluid {
         width: 100%;
         height: 55vh;
-        // height: 100%;
         object-fit: cover;
-        border-radius: 13px 13px 0 0 !important; 
+        border-radius: 13px 13px 0 0 !important;
     }
 
     .card-title {
@@ -31,35 +30,22 @@
         font-family: $f-head;
         font-size: clamp(1.5rem, 3vw, 2.2rem);
         font-weight: $wt-bold;
-        // padding-right: 0px;
         line-height: 1.1;
         margin: 0;
-        // margin-bottom: 1rem;
-        // display: -webkit-box;
-        // -webkit-line-clamp: 3; 
-        // -webkit-box-orient: vertical;
-        // overflow: hidden;
-    }   
+    }
 
     .glass-heart-button {
         position: relative;
         flex-shrink: 0 !important;
         width: 50px !important;
         height: 50px !important;
-        // top: 20px;
-        // right: 20px;
-        // z-index: 30;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        // padding: 0;
-        // text-decoration: none !important;
-        // transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         background: rgba(255, 255, 255, 0.35) !important;
         backdrop-filter: blur(12px) saturate(200%);
         border: 1px solid rgba(190, 190, 190, 0.539) !important;
-        
 
         &:hover {
             background: rgba($primary, 0.1) !important;
@@ -77,15 +63,12 @@
 
     .card-body {
         flex: 1;
-        // height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        // position: relative;
         padding: 2rem !important;
         padding-bottom: 120px !important;
-        // overflow-y: auto;
         font-family: $f-main;
         font-size: $sz-reg;
         min-height: 0;
@@ -109,18 +92,17 @@
             font-size: clamp(0.9rem, 1vw, 1.1rem);
             margin-bottom: 0.5rem;
         }
-    }   
+    }
 
     @media (min-width: 768px) {
         flex-direction: row;
         height: 600px;
         max-height: 85vh;
-        
+
         .img-fluid {
             flex: 0 0 40%;
             width: 40%;
             height: 100% !important;
-            // object-fit: cover;
             border-radius: 13px 0 0 13px !important;
         }
 
@@ -129,19 +111,14 @@
             width: 60%;
             overflow-y: auto;
             display: block;
-            // display: flex;
-            // flex-direction: column;
-            // justify-content: flex-start;
         }
     }
-    
+
     .btn-corner {
         position: absolute !important;
         bottom: 25px;
         right: 25px;
         z-index: 20;
-        padding: 6px 50px !important;
-        // text-decoration: none;
-        // margin: 0 !important;
+        width: auto;
     }
 }

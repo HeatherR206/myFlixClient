@@ -40,11 +40,13 @@
     }
 }
 
-.my-faves, .search-card {
+.my-faves,
+.search-card {
     background-color: $bg-card !important;
     border: 3px solid $brand-lavender !important;
     border-radius: 15px;
 }
+
 .my-faves {
     .favorite-poster-wrapper {
         position: relative;
@@ -82,7 +84,7 @@
         .btn-close {
             filter: invert(1);
         }
-    
+
         .modal-title {
             color: $danger !important;
             font-family: $f-head;
@@ -132,13 +134,13 @@
     }
 }
 
-.profile-side-column, .right-scroll-column {
+.profile-side-column,
+.right-scroll-column {
     max-height: none;
     overflow-y: visible;
 
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.8) transparent;
-
 
     &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.85) !important;
@@ -163,4 +165,3 @@
         display: none;
     }
 }
-

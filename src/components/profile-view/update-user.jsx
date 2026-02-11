@@ -122,17 +122,9 @@ export const UpdateUser = () => {
                     <Col md={6}>
                         <Form.Group controlId="formUsername" className="mb-3">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold text-muted small text-uppercase">
-                                    Username
-                                </Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">Username</Form.Label>
                                 {touched.username && (
-                                    <small
-                                        className={
-                                            formData.username.length >= LIMITS.username
-                                                ? "text-danger"
-                                                : "text-muted"
-                                        }
-                                    >
+                                    <small className={formData.username.length >= LIMITS.username ? "text-danger" : "text-muted"}>
                                         {formData.username.length}/{LIMITS.username}
                                     </small>
                                 )}
@@ -153,9 +145,7 @@ export const UpdateUser = () => {
 
                     <Col md={6}>
                         <Form.Group controlId="formEmail" className="mb-3">
-                            <Form.Label className="fw-bold text-muted small text-uppercase">
-                                Email
-                            </Form.Label>
+                            <Form.Label className="fw-bold text-muted small text-uppercase">Email</Form.Label>
                             <Form.Control
                                 type="email"
                                 name="email"
@@ -174,9 +164,7 @@ export const UpdateUser = () => {
                             {formData.password.length}/{LIMITS.password}
                         </small>
                     )}
-                    <Form.Label className="fw-bold text-muted small text-uppercase">
-                        New Password
-                    </Form.Label>
+                    <Form.Label className="fw-bold text-muted small text-uppercase">New Password</Form.Label>
                     <InputGroup className="w-ch-password">
                         <Form.Control
                             type={showPassword ? "text" : "password"}
@@ -186,22 +174,13 @@ export const UpdateUser = () => {
                             placeholder="Leave blank to keep current"
                             minLength="10"
                         />
-                        <Button
-                            variant="outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="eye-toggle"
-                        >
+                        <Button variant="outline-secondary" onClick={() => setShowPassword(!showPassword)} className="eye-toggle">
                             <i className={`bi bi-eye${showPassword ? "-slash" : ""}`}></i>
                         </Button>
                     </InputGroup>
                     {formData.password.length > 0 && (
                         <div className="mt-2">
-                            <ProgressBar
-                                now={strength}
-                                variant={getVariant()}
-                                style={{ height: "8px" }}
-                                animated={strength < 100}
-                            />
+                            <ProgressBar now={strength} variant={getVariant()} style={{ height: "8px" }} animated={strength < 100} />
                             <small className={`text-${getVariant()} fw-bold`}>
                                 {strength <= 25 && "Weak"}
                                 {strength > 25 && strength <= 75 && "Moderate"}
@@ -218,9 +197,7 @@ export const UpdateUser = () => {
                     <Col md={6}>
                         <Form.Group controlId="formFirstName">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold text-muted small text-uppercase">
-                                    First Name
-                                </Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">First Name</Form.Label>
                                 {touched.firstName && (
                                     <small className="text-muted">
                                         {formData.firstName.length}/{LIMITS.firstName}
@@ -241,9 +218,7 @@ export const UpdateUser = () => {
                     <Col md={6}>
                         <Form.Group controlId="formLastName">
                             <div className="d-flex justify-content-between">
-                                <Form.Label className="fw-bold text-muted small text-uppercase">
-                                    Last Name
-                                </Form.Label>
+                                <Form.Label className="fw-bold text-muted small text-uppercase">Last Name</Form.Label>
                                 {touched.lastName && (
                                     <small className="text-muted">
                                         {formData.lastName.length}/{LIMITS.lastName}
@@ -265,9 +240,7 @@ export const UpdateUser = () => {
                 <Row>
                     <Col md={6}>
                         <Form.Group controlId="formBirthDate">
-                            <Form.Label className="fw-bold text-muted small text-uppercase">
-                                Birth Date
-                            </Form.Label>
+                            <Form.Label className="fw-bold text-muted small text-uppercase">Birth Date</Form.Label>
                             <Form.Control
                                 type="date"
                                 name="birthDate"
@@ -279,10 +252,7 @@ export const UpdateUser = () => {
                     </Col>
                 </Row>
                 {updateSuccess && (
-                    <div
-                        className="alert alert-success border-0 shadow-sm d-flex align-items-center mb-3"
-                        role="alert"
-                    >
+                    <div className="alert alert-success border-0 shadow-sm d-flex align-items-center mb-3" role="alert">
                         <i className="bi bi-check-circle-fill me-2"></i>
                         <div>
                             <strong>Success!</strong> Your profile has been updated.
@@ -294,27 +264,19 @@ export const UpdateUser = () => {
                         variant="outline-danger"
                         type="button"
                         onClick={handleReset}
-                        className="btn-sm fw-semibold border-0"
+                        className="btn-sm fw-semibold px-2 border-0 rounded-pill"
+                        style={{ fontSize: "0.8rem" }}
                     >
                         Reset
                     </Button>
-                    <Button
-                        variant="primary"
-                        type="submit"
-                        className="glow-on-hover"
-                        disabled={isSaving}
-                    >
+                    <Button variant="primary" type="submit" className="save-btn px-4 glow-on-hover rounded-pill" disabled={isSaving}>
                         {isSaving ? (
                             <>
-                                <span
-                                    className="spinner-border spinner-border-sm me-2"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
+                                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                 Saving...
                             </>
                         ) : (
-                            "Save Changes"
+                            "Save"
                         )}
                     </Button>
                 </div>

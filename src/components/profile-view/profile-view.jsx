@@ -30,9 +30,9 @@ export const ProfileView = () => {
         return movieList.filter((m) => {
             return (
                 m.title.toLowerCase().includes(term) ||
-                m.genres?.some(g => g.genreName.toLowerCase().includes(term)) ||
-                m.directors?.some(d => d.directorName.toLowerCase().includes(term)) ||
-                m.cast?.some(c => c.castName.toLowerCase().includes(term))
+                m.genres?.some((g) => g.genreName.toLowerCase().includes(term)) ||
+                m.directors?.some((d) => d.directorName.toLowerCase().includes(term)) ||
+                m.cast?.some((c) => c.castName.toLowerCase().includes(term))
             );
         });
     };
@@ -42,12 +42,9 @@ export const ProfileView = () => {
 
     const handleRemoveFavorite = async (movieId) => {
         try {
-            const response = await authFetch(
-                `${API_URL}/users/${user.username}/movies/${movieId}`,
-                {
-                    method: "DELETE",
-                }
-            );
+            const response = await authFetch(`${API_URL}/users/${user.username}/movies/${movieId}`, {
+                method: "DELETE",
+            });
 
             if (response && response.ok) {
                 let updatedUser;
@@ -94,19 +91,11 @@ export const ProfileView = () => {
     return (
         <Container fluid className="profile-view-container mt-3">
             <Row className="profile-view-row">
-                <Col
-                    xs={{ span: 12, order: 2 }}
-                    lg={{ span: 5, order: 1 }}
-                    className="mb-4 left-hide-scrollbar profile-side-column"
-                >
+                <Col xs={{ span: 12, order: 2 }} lg={{ span: 5, order: 1 }} className="mb-4 left-hide-scrollbar profile-side-column">
                     <div className="d-flex flex-column gap-3">
                         <Card className="user-mngmt-column shadow-sm border-0">
                             <Card.Body className="p-3">
-                                <Tabs
-                                    defaultActiveKey="info"
-                                    id="profile-tabs"
-                                    className="custom-tabs text-sm"
-                                >
+                                <Tabs defaultActiveKey="info" id="profile-tabs" className="custom-tabs text-sm">
                                     <Tab eventKey="info" title="Account Details">
                                         <div className="mt-3">
                                             <UserInfo />
@@ -122,16 +111,13 @@ export const ProfileView = () => {
                         </Card>
                         <Card className="danger-zone-card p-3 border border-danger mt-2">
                             <Card.Body className="p-3 text-center">
-                                <Card.Title className="fw-extra-bold text-danger mb-3">
-                                    ! Danger Zone !
-                                </Card.Title>
+                                <Card.Title className="fw-extra-bold text-danger mb-3">! Danger Zone !</Card.Title>
                                 <div className="fw-bold text-muted mb-1">
-                                    Deleting your account is <strong>permanent</strong> and will
-                                    erase all saved data.
+                                    Deleting your account is <strong>permanent</strong> and will erase all saved data.
                                 </div>
                                 <Button
                                     variant="outline-danger"
-                                    className="delete-button rounded-pill px-4 fw-bold mt-3"
+                                    className="delete-button rounded-pill px-4 fw-semibold mt-3"
                                     onClick={() => setShowDeleteModal(true)}
                                 >
                                     Delete My Account
@@ -141,23 +127,17 @@ export const ProfileView = () => {
                     </div>
                 </Col>
 
-                <Col
-                    xs={{ span: 12, order: 1 }}
-                    lg={{ span: 7, order: 2 }}
-                    className="mb-4 right-scroll-column"
-                >
+                <Col xs={{ span: 12, order: 1 }} lg={{ span: 7, order: 2 }} className="mb-4 right-scroll-column">
                     {filter.length > 0 && (
                         <Card className="search-card mb-4 border-primary shadow-sm">
                             <Card.Body>
                                 <div className="d-flex justify-content-between align-items-center mb-3">
-                                    <Card.Title className="mb-0 fw-extra-bold">
-                                        Search Results
-                                    </Card.Title>
+                                    <Card.Title className="mb-0 fw-extra-bold">Search Results</Card.Title>
                                     <Button
                                         variant="outline-secondary"
                                         size="sm"
                                         onClick={() => dispatch(setFilter(""))}
-                                        className="px-3"
+                                        className="clear-search px-3 glow-on-hover rounded-pill"
                                     >
                                         Clear Search
                                     </Button>
@@ -175,10 +155,10 @@ export const ProfileView = () => {
                                     {filterFavorites.length === 0 && filter.length > 0 && (
                                         <Col xs={12} className="text-center mt-3">
                                             <p className="text-muted">No favorites match "{filter}"</p>
-                                            <Button 
-                                                variant="outline-secondary" 
-                                                size="sm" 
-                                                className="px-3"
+                                            <Button
+                                                variant="outline-secondary"
+                                                size="sm"
+                                                className="view-all-faves px-3 glow-on-hover rounded-pill"
                                                 onClick={() => dispatch(setFilter(""))}
                                             >
                                                 View All Favorites
@@ -193,7 +173,7 @@ export const ProfileView = () => {
                                             variant="outline-secondary"
                                             size="sm"
                                             onClick={() => dispatch(setFilter(""))}
-                                            className="px-3"
+                                            className="clear-search px-3 glow-on-hover rounded-pill"
                                         >
                                             Clear Search
                                         </Button>
@@ -209,21 +189,16 @@ export const ProfileView = () => {
                             <Row>
                                 {filterFavorites.length === 0 ? (
                                     <Col>
-                                        <p className="text-muted mt-3">
-                                            No favorite movies match your search.
-                                        </p>
+                                        <p className="text-muted mt-3">No favorite movies match your search.</p>
                                     </Col>
                                 ) : (
                                     filterFavorites.map((movie) => (
-                                        <Col
-                                            className="mb-4 text-center"
-                                            key={movie._id}
-                                            xs={6}
-                                            md={4}
-                                            lg={3}
-                                        >
+                                        <Col className="mb-4 text-center" key={movie._id} xs={6} md={4} lg={3}>
                                             <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-                                                <div className="favorite-poster-wrapper mb-2" style={{ aspectRatio: '2/3', overflow: 'hidden' }}>
+                                                <div
+                                                    className="favorite-poster-wrapper mb-2"
+                                                    style={{ aspectRatio: "2/3", overflow: "hidden" }}
+                                                >
                                                     <img
                                                         src={movie.imagePath}
                                                         alt={movie.title}
@@ -237,8 +212,8 @@ export const ProfileView = () => {
                                             </Link>
                                             <Button
                                                 variant="outline-danger"
-                                                size="sm"
-                                                className="border-0"
+                                                type="button"
+                                                className="btn-sm fw-semibold px-2 border-0 rounded-pill"
                                                 onClick={() => handleRemoveFavorite(movie._id)}
                                                 style={{
                                                     textDecoration: "none",
@@ -256,38 +231,31 @@ export const ProfileView = () => {
                 </Col>
             </Row>
 
-            <Modal
-                show={showDeleteModal}
-                onHide={() => setShowDeleteModal(false)}
-                centered
-                className="custom-modal"
-            >
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered className="custom-modal">
                 <Modal.Header closeButton className="border-0">
-                    <Modal.Title className="fw-bold text-danger">
-                        Confirm Account Deletion
-                    </Modal.Title>
+                    <Modal.Title className="fw-bold text-danger">Confirm Account Deletion</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="text-center">
-                    <i
-                        className="bi bi-exclamation-triangle-fill text-danger"
-                        style={{ fontSize: "3.4rem" }}
-                    ></i>
+                    <i className="bi bi-exclamation-triangle-fill text-danger" style={{ fontSize: "3.4rem" }}></i>
                     <h4 className="mb-4">Are you absolutely certain?</h4>
-                    <p className="text-muted">This will <strong>permanently</strong> delete your Profile and "myFlix
-                        Faves" movies.</p>
-                    <p className="text-muted"><strong>This action cannot be undone.</strong></p>
+                    <p className="text-muted">
+                        This will <strong>permanently</strong> delete your Profile and "myFlix Faves" movies.
+                    </p>
+                    <p className="text-muted">
+                        <strong>This action cannot be undone.</strong>
+                    </p>
                 </Modal.Body>
                 <Modal.Footer className="border-0 mt-5">
                     <Button
                         variant="outline-danger"
-                        className="delete-btn px-4 border-0 btn-sm"
+                        className="delete-btn px-2 border-0 btn-sm rounded-pill"
                         onClick={confirmDeleteAccount}
                     >
                         Yes, Delete Everything
                     </Button>
                     <Button
                         variant="primary"
-                        className="btn-corner px-4 btn-lg"
+                        className="btn-corner px-4 rounded-pill glow-on-hover"
                         onClick={() => setShowDeleteModal(false)}
                     >
                         Cancel
