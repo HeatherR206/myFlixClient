@@ -89,7 +89,6 @@ $input-color: $text-main;
 $input-border-radius: 8px;
 $input-placeholder-color: $shadow-main;
 
-
 $form-select-font-family: $f-main;
 $form-select-font-size: 14px;
 $form-select-color: $text-main;
@@ -108,7 +107,6 @@ $h2-font-size: $head2-sz;
 $h3-font-size: $head3-sz;
 $h4-font-size: $head4-sz;
 $h5-font-size: $head5-sz;
-
 
 $headings-font-weight: 700;
 $headings-color: $brand-purple;
@@ -137,6 +135,12 @@ h6 {
     opacity: 0.8;
 }
 
-::-webkit-input-placeholder { font-size: $sz-reg; }
-::-moz-placeholder { font-size: $sz-reg; }
-:-ms-input-placeholder { font-size: $sz-reg; }
+::-webkit-input-placeholder {
+    font-size: $sz-reg;
+}
+::-moz-placeholder {
+    font-size: $sz-reg;
+}
+:-ms-input-placeholder {
+    font-size: $sz-reg;
+}
