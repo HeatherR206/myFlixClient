@@ -50,6 +50,9 @@ export const UpdateUser = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (LIMITS[name] && value.length > LIMITS[name]) return;
+
         setFormData({ ...formData, [name]: value });
         setTouched({ ...touched, [name]: true });
     };
@@ -83,17 +86,16 @@ export const UpdateUser = () => {
 
             if (response && response.ok) {
                 const updatedUser = await response.json();
-
                 setUpdateSuccess(true);
                 setTimeout(() => setUpdateSuccess(false), 4000);
 
                 localStorage.setItem("user", JSON.stringify(updatedUser));
                 dispatch(setUser(updatedUser));
-
                 setFormData((prev) => ({ ...prev, password: "" }));
                 setTouched({});
             } else {
-                throw new Error("Update failed. Please check your connection.");
+                const errorText = await response.text();
+                throw new Error(errorText || "Update failed. Please try again.");
             }
         } catch (error) {
             alert(error.message);

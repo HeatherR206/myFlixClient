@@ -79,6 +79,10 @@ export const ProfileView = () => {
                 dispatch(clearToken());
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
+            } else {
+                const errorText = await response.text();
+                setShowDeleteModal(false);
+                alert(errorText || "Something went wrong. Please try again.");
             }
         } catch (error) {
             console.error("Delete account error:", error);
