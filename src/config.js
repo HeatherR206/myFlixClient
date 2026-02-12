@@ -1,6 +1,3 @@
-// config.js
-const isProduction = process.env.API_URL === 'production';
+const isLocal = window.location.hostname === "localhost";
 
-export const API_URL = isProduction 
-    ? 'https://my-flix-movies-0d84af3d4373.herokuapp.com/'
-    : 'http://localhost:8080';
+export const API_URL = isLocal ? "http://localhost:8080" : "https://my-flix-movies-0d84af3d4373.herokuapp.com";
